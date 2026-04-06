@@ -340,7 +340,7 @@ a.ref-tag:hover{background:var(--violet);color:#fff;text-decoration:none;}
 .empiric-card .ec-alt{font-size:13px;color:var(--amber);margin-top:4px;}
 .empiric-card .ec-note{font-size:12px;color:var(--text-muted);margin-top:6px;font-style:italic;}
 .empiric-card .ec-divider{font-family:'Source Code Pro',monospace;font-size:9px;color:var(--text-light);text-transform:uppercase;letter-spacing:.08em;margin:8px 0 4px;padding-top:6px;border-top:1px dashed var(--border);}
-@media(max-width:700px){.profi-cats{grid-template-columns:1fr;}.rx-row{flex-direction:column;gap:2px;}.rx-label{min-width:0;}}
+@media(max-width:700px){.profi-cats{grid-template-columns:1fr;}.rx-row{flex-direction:column;gap:2px;}.rx-label{min-width:0;}.ind-grid{grid-template-columns:1fr!important;}}
 
 /* ═══════════════════════════════════════════
    THEORY HTML CONTENT
@@ -1219,15 +1219,58 @@ function renderIAP(){
   h+='<div class="sub-tabs">';
   iapSubs.forEach(function(s){h+='<button class="sub-tab'+(s.id===currentIAPSub?' active':'')+'" onclick="currentIAPSub=\''+s.id+'\';refreshCurrentView();">'+s.label+'</button>';});
   h+='</div>';
-  var iapNotes={dair:'Lavado quirurgico + retencion del implante (DAIR). Indicado en infeccion aguda (<4 sem postoperatoria o <3 sem hematogena), implante estable, partes blandas aceptables.',rev1t:'Revision en 1 tiempo: retirada y reimplantacion en un acto. Germen conocido y sensible, partes blandas aceptables, sin fistula.',rev2t:'Revision en 2 tiempos: retirada + espaciador con antibiotico. 6 semanas de antibioterapia IV. Reimplantacion cuando PCR normalizada y clinica resuelta.'};
-  h+='<div class="note-box">'+esc(iapNotes[currentIAPSub])+' '+makeRef('ICM 2025, Parte III')+'</div>';
+
+  // Visual indication cards per sub-tab
+  var iapCards={
+    dair:{
+      title:'Lavado quirurgico + retencion del implante',
+      si:['Infeccion aguda postoperatoria (&lt;4 semanas)','Infeccion hematogena aguda (&lt;3 semanas de sintomas)','Implante estable y bien fijado','Partes blandas aceptables (sin fistula ni necrosis)'],
+      no:['Infeccion cronica (&gt;4 semanas)','Implante aflojado','Fistula activa o necrosis de partes blandas','Germen dificil (hongos, micobacterias, enterococo resistente)'],
+      clave:'Rifampicina en estafilococos con biofilm (NO iniciar si drenaje persistente de herida). NO en monoterapia.'
+    },
+    rev1t:{
+      title:'Retirada y reimplantacion en un acto quirurgico',
+      si:['Germen conocido y sensible a antibioticos orales','Partes blandas aceptables','Sin fistula','Buen stock oseo'],
+      no:['Germen desconocido o multirresistente','Fistula activa','Partes blandas comprometidas','Perdida osea severa'],
+      clave:'Menor morbilidad que 2 tiempos. Requiere germen sensible identificado preoperatoriamente.'
+    },
+    rev2t:{
+      title:'Retirada + espaciador con antibiotico → reimplantacion diferida',
+      si:['Infeccion cronica (&gt;4 semanas)','Germen desconocido o multirresistente','Fistula activa','Fracaso de lavado (DAIR) previo','Gold standard en infeccion cronica'],
+      no:['Paciente no apto para 2 cirugias','Contraindicacion anestesica'],
+      clave:'6 semanas de antibioterapia IV entre tiempos. Reimplantar cuando PCR normalizada y clinica resuelta. No suspender AB entre tiempos en infeccion fungica.'
+    }
+  };
+  var ic=iapCards[currentIAPSub];
+  h+='<div class="rx-card" style="margin-bottom:16px;"><div class="rx-card-head"><h3>'+ic.title+'</h3></div><div class="rx-card-body">';
+  h+='<div class="ind-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">';
+  // SI
+  h+='<div style="background:var(--emerald-light);border-radius:var(--radius-sm);padding:12px;"><div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--emerald);font-weight:600;margin-bottom:6px;">&#10003; Indicaciones</div>';
+  ic.si.forEach(function(s){h+='<div style="font-size:13px;margin-bottom:4px;display:flex;gap:6px;align-items:baseline;"><span style="color:var(--emerald);">&#8226;</span><span>'+s+'</span></div>';});
+  h+='</div>';
+  // NO
+  h+='<div style="background:var(--red-light);border-radius:var(--radius-sm);padding:12px;"><div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--red);font-weight:600;margin-bottom:6px;">&#10007; Contraindicaciones</div>';
+  ic.no.forEach(function(s){h+='<div style="font-size:13px;margin-bottom:4px;display:flex;gap:6px;align-items:baseline;"><span style="color:var(--red);">&#8226;</span><span>'+s+'</span></div>';});
+  h+='</div></div>';
+  // Clave
+  h+='<div class="note-box" style="margin-top:10px;"><strong style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;display:block;margin-bottom:4px;">Punto clave</strong>'+esc(ic.clave)+'</div>';
+  h+='<div style="margin-top:6px;">'+makeRef('ICM 2025, Parte III')+'</div>';
+  h+='</div></div>';
 
   // Empiric treatment
   var empKey=currentIAPSub==='dair'?'iap_dair':'iap_rev';
   h+=renderEmpiric(empKey);
 
-  // Sample collection checklist
-  h+=renderCollapsible('muestras','Checklist toma de muestras intraoperatorias','violet',renderMuestrasChecklist());
+  // Sample collection checklist — always visible, not collapsible
+  h+='<div class="rx-card" style="margin:16px 0;border-left:4px solid var(--violet);"><div style="padding:14px 18px;">';
+  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--violet);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px;">'+ICO.flask+' Checklist toma de muestras intraoperatorias</div>';
+  h+='<div style="display:grid;gap:6px;">';
+  MUESTRAS_CHECKLIST.forEach(function(m){
+    h+='<label style="display:flex;align-items:baseline;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" style="width:16px;height:16px;accent-color:var(--violet);flex-shrink:0;"><span>'+esc(m.item)+'</span></label>';
+  });
+  h+='</div>';
+  h+='<div style="margin-top:8px;">'+makeRef('ICM 2025, 18.1')+'</div>';
+  h+='</div></div>';
 
   h+='<div class="form-label" style="margin-top:12px;">Si dispones del cultivo, selecciona el microorganismo</div>';
   h+=orgSelectHTML('iapSel');
