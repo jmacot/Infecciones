@@ -46,6 +46,10 @@ a{color:var(--sky);text-decoration:none;}a:hover{text-decoration:underline;}
    SKIP LINK & MESH
    ═══════════════════════════════════════════ */
 .skip-link{position:absolute;top:-60px;left:8px;background:var(--sky);color:#fff;padding:8px 16px;border-radius:0 0 8px 8px;z-index:9999;font-size:13px;transition:top 0.2s;}.skip-link:focus{top:0;}
+.btn-home{position:fixed;top:12px;left:12px;z-index:200;display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:999px;font-family:'Source Code Pro',monospace;font-size:10px;font-weight:500;background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.75);text-decoration:none;transition:var(--transition);}
+.btn-home:hover{background:rgba(255,255,255,0.25);color:#fff;text-decoration:none;}
+[data-theme="dark"] .btn-home{background:rgba(0,0,0,0.3);border-color:rgba(255,255,255,0.1);}
+@media(max-width:480px){.btn-home{padding:4px 8px;font-size:9px;top:8px;left:8px;}}
 .mesh-bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;}
 .mesh-orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:0.22;animation:glowPulse 8s ease-in-out infinite alternate;}
 [data-theme="dark"] .mesh-orb{opacity:0.1;}
@@ -57,7 +61,8 @@ a{color:var(--sky);text-decoration:none;}a:hover{text-decoration:underline;}
 /* ═══════════════════════════════════════════
    HEADER
    ═══════════════════════════════════════════ */
-.app-header{background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%);color:#fff;padding:16px 20px;position:sticky;top:0;z-index:100;}
+.app-header{background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%);color:#fff;padding:16px 20px 16px 80px;position:sticky;top:0;z-index:100;}
+@media(max-width:480px){.app-header{padding:14px 12px 14px 60px;}}
 .app-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#38bdf8,#a78bfa);}
 .hdr-glow{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;}
 .hdr-glow.s{width:200px;height:200px;background:rgba(56,189,248,0.35);top:-80px;left:10%;}
@@ -364,6 +369,7 @@ a.ref-tag:hover{background:var(--violet);color:#fff;text-decoration:none;}
 /* ═══════════════════════════════════════════
    SVG ICONS
    ═══════════════════════════════════════════ */
+svg{max-width:100%;height:auto;}
 .lc-icon svg,.sec-ico svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .theory-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 
@@ -456,13 +462,11 @@ a.ref-tag:hover{background:var(--violet);color:#fff;text-decoration:none;}
 <a href="#main" class="skip-link">Saltar al contenido</a>
 <div class="mesh-bg"><div class="mesh-orb orb1"></div><div class="mesh-orb orb2"></div><div class="mesh-orb orb3"></div></div>
 
+<a href="https://jmacot.github.io/" class="btn-home" title="Volver al inicio">&#8592; Inicio</a>
 <header class="app-header">
   <div class="hdr-glow s"></div><div class="hdr-glow v"></div>
   <div class="hdr-inner">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <a href="https://jmacot.github.io/" class="btn-back" style="padding:5px 10px;font-size:10px;text-decoration:none;">&#8592; Hub</a>
-      <div><div class="hdr-title">Infecciones COT</div><div class="hdr-sub">Guia de antibioterapia musculoesqueletica</div></div>
-    </div>
+    <div><div class="hdr-title">Infecciones COT</div><div class="hdr-sub">Guia de antibioterapia musculoesqueletica</div></div>
     <div style="display:flex;align-items:center;gap:10px;">
       <div class="allergy-pill" id="allergyPill" onclick="toggleAllergyDrop(event)">
         <span class="pill-icon">&#128137;</span>
@@ -494,7 +498,7 @@ a.ref-tag:hover{background:var(--violet);color:#fff;text-decoration:none;}
 
 <div class="disclaimer">
   <strong style="display:block;margin-bottom:6px;color:var(--text);font-size:13px;">Aviso importante</strong>
-  Herramienta orientativa. No sustituye el criterio clinico, el antibiograma local ni la consulta con Enfermedades Infecciosas. Ajustar dosis segun funcion renal, hepatica y peso.
+  Herramienta orientativa. No sustituye el criterio clinico, el antibiograma local ni la consulta con Enfermedades Infecciosas. Ajustar dosis segun funcion renal, hepatica y peso. <strong>Sensibilidad intermedia en antibiograma:</strong> en infecciones con biofilm (protesis, osteosintesis) tratar como resistente — la concentracion necesaria para erradicar biofilm (MBBC) puede ser 100-1000x superior a la CIM (ICM 2025, Cap. 22). Consultar Infecciosas.
   <div style="margin-top:8px;font-size:11px;">
     <a href="https://www.guiaprioam.com/" target="_blank" rel="noopener">PRIOAM</a> |
     <a href="https://antibioterapia.hospitalmacarena.es/" target="_blank" rel="noopener">H. Macarena</a> |
@@ -525,16 +529,7 @@ var REF_URLS=[
   {match:'Macarena',text:'pie diabetico',url:'https://antibioterapia.hospitalmacarena.es/tratamiento-empirico/infecciones-de-piel-y-partes-blandas/'},
   {match:'Macarena',text:'protesica',url:'https://antibioterapia.hospitalmacarena.es/tratamiento-empirico/infecciones-osteoarticulares/'},
   {match:'Macarena',text:'',url:'https://antibioterapia.hospitalmacarena.es/'},
-  // PRIOAM — specific sections (best known paths)
-  {match:'PRIOAM',text:'profilaxis',url:'https://www.guiaprioam.com/indice-702/profilaxis-antibiotica-en-cirugia/'},
-  {match:'PRIOAM',text:'osteo',url:'https://www.guiaprioam.com/indice-702/osteomielitis/'},
-  {match:'PRIOAM',text:'artritis',url:'https://www.guiaprioam.com/indice-702/artritis-septica/'},
-  {match:'PRIOAM',text:'espondilo',url:'https://www.guiaprioam.com/indice-702/espondilodiscitis/'},
-  {match:'PRIOAM',text:'protesica',url:'https://www.guiaprioam.com/indice-702/infeccion-protesica-articular/'},
-  {match:'PRIOAM',text:'celulitis',url:'https://www.guiaprioam.com/indice-702/celulitis-erisipela/'},
-  {match:'PRIOAM',text:'fascitis',url:'https://www.guiaprioam.com/indice-702/fascitis-necrotizante/'},
-  {match:'PRIOAM',text:'mordedura',url:'https://www.guiaprioam.com/indice-702/mordeduras/'},
-  {match:'PRIOAM',text:'pie diabetico',url:'https://www.guiaprioam.com/indice-702/pie-diabetico/'},
+  // PRIOAM — all link to main site (specific paths unverifiable due to 403)
   {match:'PRIOAM',text:'',url:'https://www.guiaprioam.com/'},
   // Journals & societies
   {match:'IDSA PJI',text:'',url:'https://doi.org/10.1093/cid/cis803'},
@@ -1037,11 +1032,11 @@ function renderCollapsible(id,title,accent,content){
 }
 
 function renderMuestrasChecklist(){
-  var h='<div style="display:grid;gap:6px;">';
+  var h='<ul style="margin:4px 0 4px 16px;list-style:disc;">';
   MUESTRAS_CHECKLIST.forEach(function(m){
-    h+='<div style="display:flex;align-items:baseline;gap:8px;font-size:13px;"><span style="color:var(--sky);flex-shrink:0;">&#9745;</span><span>'+esc(m.item)+'</span><span style="margin-left:auto;">'+makeRef(m.ref)+'</span></div>';
+    h+='<li style="font-size:13px;margin-bottom:4px;">'+esc(m.item)+' '+makeRef(m.ref)+'</li>';
   });
-  return h+'</div>';
+  return h+'</ul>';
 }
 
 // ─────────────────────────────────────────────
@@ -1261,16 +1256,8 @@ function renderIAP(){
   var empKey=currentIAPSub==='dair'?'iap_dair':'iap_rev';
   h+=renderEmpiric(empKey);
 
-  // Sample collection checklist — always visible, not collapsible
-  h+='<div class="rx-card" style="margin:16px 0;border-left:4px solid var(--violet);"><div style="padding:14px 18px;">';
-  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--violet);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px;">'+ICO.flask+' Checklist toma de muestras intraoperatorias</div>';
-  h+='<div style="display:grid;gap:6px;">';
-  MUESTRAS_CHECKLIST.forEach(function(m){
-    h+='<label style="display:flex;align-items:baseline;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" style="width:16px;height:16px;accent-color:var(--violet);flex-shrink:0;"><span>'+esc(m.item)+'</span></label>';
-  });
-  h+='</div>';
-  h+='<div style="margin-top:8px;">'+makeRef('ICM 2025, 18.1')+'</div>';
-  h+='</div></div>';
+  // Sample collection — collapsible list
+  h+=renderCollapsible('muestras','Toma de muestras intraoperatorias (ICM 2025)','violet',renderMuestrasChecklist());
 
   h+='<div class="form-label" style="margin-top:12px;">Si dispones del cultivo, selecciona el microorganismo</div>';
   h+=orgSelectHTML('iapSel');
