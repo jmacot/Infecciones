@@ -328,39 +328,40 @@ a.ref-tag:hover{background:var(--violet);color:#fff;text-decoration:none;}
 .di-label{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#92400e;font-weight:600;}
 [data-theme="dark"] .di-label{color:var(--amber);}
 
-/* Algorithm — interactive tree */
-.algo-tree{margin:16px 0;}
-.algo-node{margin-bottom:12px;}
-.algo-q{background:var(--surface);backdrop-filter:blur(var(--glass-blur));border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;position:relative;overflow:hidden;}
-.algo-q::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--sky);}
-.algo-q.end::before{background:var(--violet);}
-.algo-q.warn::before{background:var(--amber);}
-.algo-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-family:'Source Code Pro',monospace;font-size:11px;font-weight:700;color:#fff;margin-right:8px;flex-shrink:0;background:var(--sky);}
-.algo-q.end .algo-num{background:var(--violet);}
-.algo-q.warn .algo-num{background:var(--amber);}
-.algo-choices{display:flex;gap:8px;margin-top:10px;}
-.algo-btn{flex:1;padding:10px 14px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;border:2px solid;cursor:pointer;transition:var(--transition);font-family:'Source Sans 3',sans-serif;text-align:center;}
-.algo-btn:hover{transform:translateY(-1px);}
-.algo-btn.yes{background:var(--emerald-light);border-color:var(--emerald);color:var(--emerald);}
-.algo-btn.yes:hover,.algo-btn.yes.picked{background:var(--emerald);color:#fff;}
-.algo-btn.no{background:var(--red-light);border-color:var(--red);color:var(--red);}
-.algo-btn.no:hover,.algo-btn.no.picked{background:var(--red);color:#fff;}
-.algo-btn.amber{background:var(--amber-light);border-color:var(--amber);color:#92400e;}
-.algo-btn.amber:hover,.algo-btn.amber.picked{background:var(--amber);color:#fff;}
-[data-theme="dark"] .algo-btn.amber{color:var(--amber);}
-.algo-result{margin-top:10px;padding:12px 16px;border-radius:var(--radius-sm);font-size:13px;display:none;animation:fadeSlide .3s ease;}
-.algo-result.visible{display:block;}
-.algo-result.res-yes{background:var(--emerald-light);border-left:3px solid var(--emerald);}
-.algo-result.res-no{background:var(--red-light);border-left:3px solid var(--red);}
-.algo-result.res-amber{background:var(--amber-light);border-left:3px solid var(--amber);}
-.algo-result.res-end{background:var(--violet-light);border-left:3px solid var(--violet);}
-.algo-child{margin-left:24px;padding-left:16px;border-left:2px solid var(--border);display:none;}
-.algo-child.visible{display:block;}
-.algo-showall{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);cursor:pointer;transition:var(--transition);font-family:'Source Code Pro',monospace;margin-bottom:12px;}
-.algo-showall:hover{background:var(--surface2);color:var(--text);}
-.algo-showall.active{background:var(--sky);color:#fff;border-color:var(--sky);}
+/* Algorithm — horizontal tree (Knee Align style) */
+.abg-chart{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;}
+.abg-tree{display:flex;flex-direction:column;align-items:center;min-width:600px;padding:8px 0;}
+.abg-top{padding:10px 24px;border-radius:20px;font-weight:600;font-size:14px;color:#fff;background:var(--sky);font-family:'Source Sans 3',sans-serif;}
+.abg-connector{display:flex;flex-direction:column;align-items:center;}
+.abg-vline{width:2px;height:16px;background:var(--border);}
+.abg-hline{height:2px;background:var(--border);}
+.abg-branches{display:grid;gap:12px;max-width:700px;width:100%;}
+.abg-branches.cols-2{grid-template-columns:1fr 1fr;}
+.abg-branches.cols-3{grid-template-columns:1fr 1fr 1fr;}
+.abg-branch{display:flex;flex-direction:column;align-items:center;text-align:center;transition:all .4s cubic-bezier(.16,1,.3,1);}
+.abg-branch.dimmed{opacity:.15;filter:grayscale(1);pointer-events:none;}
+.abg-branch.highlighted .abg-result{box-shadow:0 0 0 3px rgba(2,132,199,.3);}
+.abg-cond{padding:6px 12px;border-radius:8px;font-size:11px;font-weight:600;border:1.5px solid var(--sky);background:var(--sky-light);color:#1e40af;max-width:200px;}
+[data-theme="dark"] .abg-cond{color:#38bdf8;background:rgba(2,132,199,.15);}
+.abg-result{padding:10px 14px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;transition:var(--transition);max-width:220px;width:100%;}
+.abg-result:hover{transform:translateY(-2px);}
+.abg-result.r-red{background:var(--red-light);color:var(--red);border:2px solid var(--red);}
+.abg-result.r-amber{background:var(--amber-light);color:#92400e;border:2px solid var(--amber);}
+[data-theme="dark"] .abg-result.r-amber{color:var(--amber);}
+.abg-result.r-green{background:var(--emerald-light);color:var(--emerald);border:2px solid var(--emerald);}
+.abg-result.r-violet{background:var(--violet-light);color:var(--violet);border:2px solid var(--violet);}
+.abg-result.r-sky{background:#dbeafe;color:#1d4ed8;border:2px solid #3b82f6;}
+[data-theme="dark"] .abg-result.r-sky{background:rgba(59,130,246,.15);color:#60a5fa;}
+.abg-result.r-grey{background:var(--surface2);color:var(--text-muted);border:2px dashed var(--text-light);}
+.abg-desc{font-size:11px;color:var(--text-muted);max-width:200px;line-height:1.4;margin-top:6px;}
+.abg-detail{display:none;margin-top:12px;padding:14px 16px;border-radius:var(--radius);background:var(--surface);backdrop-filter:blur(var(--glass-blur));border:1px solid var(--border);font-size:13px;text-align:left;max-width:600px;width:100%;animation:fadeSlide .3s ease;}
+.abg-detail.visible{display:block;}
+.abg-detail-grid{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px;}
+.abg-detail-grid .dl{color:var(--text-light);font-weight:600;}
+.abg-reset{display:none;margin-top:8px;font-size:12px;color:var(--sky);cursor:pointer;font-family:'Source Code Pro',monospace;background:none;border:none;}
+.abg-reset:hover{text-decoration:underline;}
+.abg-reset.visible{display:inline-block;}
 @keyframes fadeSlide{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
-@media(max-width:500px){.algo-choices{flex-direction:column;}.algo-child{margin-left:12px;padding-left:12px;}}
 
 /* FAQ accordion */
 .faq-item{background:var(--surface);backdrop-filter:blur(var(--glass-blur));border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;overflow:hidden;}
@@ -1752,115 +1753,185 @@ function renderAbgConceptos(){
   return h;
 }
 
-var algoShowAll=false;
-function algoToggleAll(){
-  algoShowAll=!algoShowAll;
-  document.querySelectorAll('.algo-child').forEach(function(c){c.classList.toggle('visible',algoShowAll);});
-  document.querySelectorAll('.algo-result').forEach(function(r){r.classList.toggle('visible',algoShowAll);});
-  document.querySelectorAll('.algo-btn').forEach(function(b){b.classList.remove('picked');});
-  var btn=document.getElementById('algoShowAllBtn');
-  if(btn){btn.classList.toggle('active',algoShowAll);btn.textContent=algoShowAll?'Ocultar ramas':'Ver todo el algoritmo';}
+function abgAlgoSelect(branchId){
+  // Dim all branches at same level, highlight selected
+  var el=document.getElementById(branchId);
+  if(!el)return;
+  var parent=el.parentElement;
+  parent.querySelectorAll(':scope>.abg-branch').forEach(function(b){
+    b.classList.add('dimmed');b.classList.remove('highlighted');
+  });
+  el.classList.remove('dimmed');
+  el.classList.add('highlighted');
+  // Show detail panel
+  var detail=document.getElementById(branchId+'-detail');
+  parent.querySelectorAll(':scope>.abg-branch .abg-detail').forEach(function(d){d.classList.remove('visible');});
+  if(detail)detail.classList.add('visible');
+  // Show reset
+  var reset=document.getElementById('abgAlgoReset');
+  if(reset)reset.classList.add('visible');
+  // Auto-scroll on mobile
+  var chart=document.getElementById('abgChart');
+  if(chart&&chart.scrollWidth>chart.clientWidth){
+    var cr=chart.getBoundingClientRect(),br=el.getBoundingClientRect();
+    chart.scrollTo({left:Math.max(0,chart.scrollLeft+br.left-cr.left-(cr.width/2)+(br.width/2)),behavior:'smooth'});
+  }
 }
-function algoPick(nodeId,choice){
-  // Show the result and child for this choice, hide sibling
-  var resY=document.getElementById(nodeId+'-res-yes');
-  var resN=document.getElementById(nodeId+'-res-no');
-  var childY=document.getElementById(nodeId+'-child-yes');
-  var childN=document.getElementById(nodeId+'-child-no');
-  var btnY=document.getElementById(nodeId+'-btn-yes');
-  var btnN=document.getElementById(nodeId+'-btn-no');
-  if(resY)resY.classList.toggle('visible',choice==='yes');
-  if(resN)resN.classList.toggle('visible',choice==='no');
-  if(childY)childY.classList.toggle('visible',choice==='yes');
-  if(childN)childN.classList.toggle('visible',choice==='no');
-  if(btnY){btnY.classList.toggle('picked',choice==='yes');}
-  if(btnN){btnN.classList.toggle('picked',choice==='no');}
+function abgAlgoReset(){
+  document.querySelectorAll('#abgChart .dimmed,#abgChart .highlighted').forEach(function(e){e.classList.remove('dimmed','highlighted');});
+  document.querySelectorAll('#abgChart .abg-detail').forEach(function(d){d.classList.remove('visible');});
+  var reset=document.getElementById('abgAlgoReset');
+  if(reset)reset.classList.remove('visible');
 }
 
 function renderAbgAlgoritmo(){
   var h='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin-bottom:4px;">Algoritmo: interpretacion de antibiograma en infeccion osea</div>';
-  h+='<div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Pulsa SI o NO en cada pregunta para avanzar por las ramas de decision.</div>';
-  h+='<button class="algo-showall" id="algoShowAllBtn" onclick="algoToggleAll()">Ver todo el algoritmo</button>';
+  h+='<div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Pulsa en cada resultado para ver el detalle. El arbol se despliega en ramas horizontales.</div>';
 
-  h+='<div class="algo-tree">';
+  h+='<div class="abg-chart" id="abgChart">';
+  h+='<div class="abg-tree">';
 
-  // Node 1: Recepcion
-  h+='<div class="algo-node">';
-  h+='<div class="algo-q"><div style="display:flex;align-items:center;"><span class="algo-num">1</span><strong>Recibo el antibiograma</strong></div>';
-  h+='<div style="font-size:13px;color:var(--text-muted);margin-top:4px;margin-left:30px;">Revisar cada antibiotico: anotar categoria (sensible, intermedia o resistente) y concentracion minima inhibitoria si esta disponible.</div>';
+  // ── LEVEL 1: Root node ──
+  h+='<div class="abg-top">Recibo el antibiograma</div>';
+  h+='<div class="abg-connector"><div class="abg-vline"></div><div class="abg-hline" style="width:80%;max-width:520px;"></div></div>';
+
+  // ── LEVEL 2: 3 branches — Resistente / Intermedia / Sensible ──
+  h+='<div class="abg-branches cols-3">';
+
+  // Branch: RESISTENTE
+  h+='<div class="abg-branch" id="ab-r" onclick="abgAlgoSelect(\'ab-r\')">';
+  h+='<div class="abg-vline"></div>';
+  h+='<div class="abg-cond">Resultado: R</div>';
+  h+='<div class="abg-vline"></div>';
+  h+='<div class="abg-result r-red">Resistente</div>';
+  h+='<div class="abg-desc">Cambiar de antibiotico</div>';
   h+='</div>';
 
-  // Node 2: Hay R?
-  h+='<div class="algo-node" style="margin-top:12px;">';
-  h+='<div class="algo-q"><div style="display:flex;align-items:center;"><span class="algo-num">2</span><strong>El antibiotico que uso aparece como R (resistente)?</strong></div>';
-  h+='<div class="algo-choices">';
-  h+='<button class="algo-btn no" id="n2-btn-yes" onclick="algoPick(\'n2\',\'yes\')">SI, es resistente</button>';
-  h+='<button class="algo-btn yes" id="n2-btn-no" onclick="algoPick(\'n2\',\'no\')">NO, es sensible o intermedia</button>';
-  h+='</div>';
-  // Result: SI (R)
-  h+='<div class="algo-result res-no" id="n2-res-yes"><strong>Cambiar de antibiotico.</strong> Buscar alternativa sensible o intermedia en el antibiograma. Elegir el de <strong>menor espectro eficaz</strong>. Si S. aureus meticilin-resistente (oxacilina resistente): resistente a todos los betalactamicos → vancomicina o daptomicina.</div>';
-  h+='<div class="algo-result res-yes" id="n2-res-no">El antibiotico puede funcionar. Continuar evaluando si es sensible o intermedia.</div>';
+  // Branch: INTERMEDIA
+  h+='<div class="abg-branch" id="ab-i" onclick="abgAlgoSelect(\'ab-i\')">';
+  h+='<div class="abg-vline"></div>';
+  h+='<div class="abg-cond">Resultado: I</div>';
+  h+='<div class="abg-vline"></div>';
+  h+='<div class="abg-result r-amber">Sensibilidad intermedia</div>';
+  h+='<div class="abg-desc">Dosis incrementada + perfusion extendida</div>';
   h+='</div>';
 
-  // Branch NO (S o I) → child
-  h+='<div class="algo-child" id="n2-child-no">';
-
-  // Node 3: Hay I?
-  h+='<div class="algo-node">';
-  h+='<div class="algo-q"><div style="display:flex;align-items:center;"><span class="algo-num">3</span><strong>Aparece como I (sensibilidad intermedia)?</strong></div>';
-  h+='<div class="algo-choices">';
-  h+='<button class="algo-btn amber" id="n3-btn-yes" onclick="algoPick(\'n3\',\'yes\')">SI, es intermedia</button>';
-  h+='<button class="algo-btn yes" id="n3-btn-no" onclick="algoPick(\'n3\',\'no\')">NO, es sensible</button>';
-  h+='</div>';
-  // Result: SI (I)
-  h+='<div class="algo-result res-amber" id="n3-res-yes"><strong>Usar dosis incrementada</strong> segun tabla EUCAST. Si es betalactamico: <strong>perfusion extendida 3-4 horas</strong>. Documentar en historia clinica "dosis incrementada por sensibilidad intermedia".</div>';
-  // Result: NO (S)
-  h+='<div class="algo-result res-yes" id="n3-res-no">Mantener <strong>dosis estandar</strong>. En infeccion osea, considerar igualmente dosis altas por baja penetracion (10-30% del plasma).</div>';
+  // Branch: SENSIBLE
+  h+='<div class="abg-branch" id="ab-s" onclick="abgAlgoSelect(\'ab-s\')">';
+  h+='<div class="abg-vline"></div>';
+  h+='<div class="abg-cond">Resultado: S</div>';
+  h+='<div class="abg-vline"></div>';
+  h+='<div class="abg-result r-green">Sensible</div>';
+  h+='<div class="abg-desc">Dosis estandar</div>';
   h+='</div>';
 
-  // Both branches lead to node 4
-  h+='<div class="algo-child visible" id="n3-child-yes"></div>';
-  h+='<div class="algo-child visible" id="n3-child-no"></div>';
+  h+='</div>';// close branches cols-3
 
-  // Node 4: Protesica?
-  h+='<div class="algo-node">';
-  h+='<div class="algo-q"><div style="display:flex;align-items:center;"><span class="algo-num">4</span><strong>Es infeccion protesica articular?</strong></div>';
-  h+='<div class="algo-choices">';
-  h+='<button class="algo-btn amber" id="n4-btn-yes" onclick="algoPick(\'n4\',\'yes\')">SI</button>';
-  h+='<button class="algo-btn yes" id="n4-btn-no" onclick="algoPick(\'n4\',\'no\')">NO</button>';
-  h+='</div>';
-  // Result: SI
-  h+='<div class="algo-result res-amber" id="n4-res-yes"><strong>Consultar con Enfermedades Infecciosas</strong> (obligatorio). Consensuar antibiotico, duracion y estrategia quirurgica (lavado vs revision).</div>';
-  // Result: NO
-  h+='<div class="algo-result res-yes" id="n4-res-no">Proceder directamente con la prescripcion.</div>';
+  // ── DETAIL PANELS (shown on click) ──
+
+  // Detail: Resistente
+  h+='<div class="abg-detail" id="ab-r-detail" style="border-left:3px solid var(--red);">';
+  h+='<div style="font-weight:700;color:var(--red);margin-bottom:8px;">Resistente: cambiar de antibiotico</div>';
+  h+='<ul style="margin:0 0 8px 16px;list-style:disc;font-size:13px;"><li>Buscar alternativa sensible o intermedia en el antibiograma</li><li>Elegir el de <strong>menor espectro eficaz</strong></li><li>Si S. aureus meticilin-resistente (oxacilina resistente): resistente a todos los betalactamicos → vancomicina o daptomicina</li><li>Si no hay alternativas sensibles: consultar Enfermedades Infecciosas</li></ul>';
   h+='</div>';
 
-  // Node 5: Prescripcion (always visible after node 4)
-  h+='<div class="algo-node">';
-  h+='<div class="algo-q end"><div style="display:flex;align-items:center;"><span class="algo-num">5</span><strong>Prescripcion final</strong></div>';
-  h+='<div style="margin-top:8px;margin-left:30px;font-size:13px;">';
-  h+='<div style="display:grid;grid-template-columns:auto 1fr;gap:4px 12px;">';
-  h+='<span style="color:var(--text-light);font-weight:600;">Farmaco</span><span>Especifico segun antibiograma</span>';
-  h+='<span style="color:var(--text-light);font-weight:600;">Dosis</span><span>Estandar (sensible) o incrementada (intermedia)</span>';
-  h+='<span style="color:var(--text-light);font-weight:600;">Perfusion</span><span>Minimo 30 minutos; ideal 3-4 horas si betalactamico</span>';
-  h+='<span style="color:var(--text-light);font-weight:600;">Duracion</span><span>4-6 semanas osteomielitis; 3-6 meses protesica</span>';
-  h+='<span style="color:var(--text-light);font-weight:600;">Documentar</span><span>"Dosis incrementada por sensibilidad intermedia (EUCAST)" si aplica</span>';
-  h+='</div></div></div></div>';
+  // Detail: Intermedia
+  h+='<div class="abg-detail" id="ab-i-detail" style="border-left:3px solid var(--amber);">';
+  h+='<div style="font-weight:700;color:#92400e;margin-bottom:8px;">Sensibilidad intermedia: dosis incrementada</div>';
+  h+='<ul style="margin:0 0 8px 16px;list-style:disc;font-size:13px;"><li>Consultar la <strong>tabla de dosis incrementadas</strong> (EUCAST) → <a href="javascript:void(0)" onclick="event.stopPropagation();abgSub=\'dosis\';refreshCurrentView();">ver tabla</a></li><li>Si es betalactamico: <strong>perfusion extendida 3-4 horas</strong></li><li>Documentar en historia clinica "dosis incrementada por sensibilidad intermedia"</li><li>Monitorizar respuesta clinica a los 7-10 dias</li></ul>';
+  h+='</div>';
 
-  // Node 6: Monitorizacion
-  h+='<div class="algo-node">';
-  h+='<div class="algo-q warn"><div style="display:flex;align-items:center;"><span class="algo-num">6</span><strong>Monitorizacion</strong></div>';
-  h+='<div style="margin-top:8px;margin-left:30px;font-size:13px;">';
-  h+='<div style="display:grid;grid-template-columns:auto 1fr;gap:4px 12px;">';
-  h+='<span style="color:var(--text-light);font-weight:600;">Dia 7-10</span><span>Evaluar respuesta clinica (fiebre, PCR, herida)</span>';
-  h+='<span style="color:var(--text-light);font-weight:600;">Semanal</span><span>Proteina C reactiva / velocidad de sedimentacion; hemograma si linezolid</span>';
-  h+='<span style="color:var(--text-light);font-weight:600;">Si bacteriemia</span><span>Hemocultivos de control</span>';
-  h+='<span style="color:var(--text-light);font-weight:600;">Semana 6-8</span><span>Resonancia magnetica de control para evaluar resolucion</span>';
-  h+='<span style="color:var(--text-light);font-weight:600;">Sin mejoria</span><span>Repetir cultivos, escalar cobertura, valorar cirugia</span>';
-  h+='</div></div></div></div>';
+  // Detail: Sensible
+  h+='<div class="abg-detail" id="ab-s-detail" style="border-left:3px solid var(--emerald);">';
+  h+='<div style="font-weight:700;color:var(--emerald);margin-bottom:8px;">Sensible: dosis estandar</div>';
+  h+='<ul style="margin:0 0 8px 16px;list-style:disc;font-size:13px;"><li>Usar <strong>dosis habitual</strong> recomendada</li><li>En infeccion osea, considerar dosis altas igualmente (penetracion osea es solo 10-30% del plasma)</li><li>Perfusion minimo 30 minutos para betalactamicos</li></ul>';
+  h+='</div>';
 
-  h+='</div>';// close n2-child-no
-  h+='</div>';// close algo-tree
+  // ── LEVEL 3: Connector to "Es protesica?" ──
+  h+='<div class="abg-connector" style="margin-top:16px;"><div class="abg-vline"></div></div>';
+  h+='<div class="abg-top" style="background:var(--violet);">Es infeccion protesica articular?</div>';
+  h+='<div class="abg-connector"><div class="abg-vline"></div><div class="abg-hline" style="width:60%;max-width:400px;"></div></div>';
+
+  // ── LEVEL 4: 2 branches — Si / No protesica ──
+  h+='<div class="abg-branches cols-2" style="max-width:500px;">';
+
+  // Branch: SI protesica
+  h+='<div class="abg-branch" id="ab-psi" onclick="abgAlgoSelect(\'ab-psi\')">';
+  h+='<div class="abg-vline"></div>';
+  h+='<div class="abg-result r-amber">SI</div>';
+  h+='<div class="abg-desc">Consultar Enfermedades Infecciosas (obligatorio)</div>';
+  h+='</div>';
+
+  // Branch: NO protesica
+  h+='<div class="abg-branch" id="ab-pno" onclick="abgAlgoSelect(\'ab-pno\')">';
+  h+='<div class="abg-vline"></div>';
+  h+='<div class="abg-result r-green">NO</div>';
+  h+='<div class="abg-desc">Proceder con la prescripcion</div>';
+  h+='</div>';
+
+  h+='</div>';// close branches cols-2
+
+  // Detail: SI protesica
+  h+='<div class="abg-detail" id="ab-psi-detail" style="border-left:3px solid var(--amber);">';
+  h+='<div style="font-weight:700;color:#92400e;margin-bottom:8px;">Infeccion protesica: consulta obligatoria</div>';
+  h+='<ul style="margin:0 0 8px 16px;list-style:disc;font-size:13px;"><li>Consensuar antibiotico, duracion y estrategia quirurgica (lavado vs revision)</li><li>Duracion tipica: 3-6 meses segun escenario</li><li>Rifampicina en estafilococos con biofilm (no en monoterapia)</li></ul>';
+  h+='</div>';
+
+  // Detail: NO protesica
+  h+='<div class="abg-detail" id="ab-pno-detail" style="border-left:3px solid var(--emerald);">';
+  h+='<div style="font-weight:700;color:var(--emerald);margin-bottom:8px;">No protesica: prescripcion directa</div>';
+  h+='<ul style="margin:0 0 8px 16px;list-style:disc;font-size:13px;"><li>Osteomielitis: 4-6 semanas</li><li>Artritis septica: 3-4 semanas</li><li>Espondilodiscitis: 6-8 semanas</li><li>Partes blandas: segun gravedad</li></ul>';
+  h+='</div>';
+
+  // ── LEVEL 5: Prescripcion + Monitorizacion ──
+  h+='<div class="abg-connector" style="margin-top:16px;"><div class="abg-vline"></div></div>';
+  h+='<div class="abg-top" style="background:var(--slate);">Prescripcion y monitorizacion</div>';
+  h+='<div class="abg-connector"><div class="abg-vline"></div><div class="abg-hline" style="width:60%;max-width:400px;"></div></div>';
+
+  h+='<div class="abg-branches cols-2" style="max-width:500px;">';
+
+  // Branch: Prescripcion
+  h+='<div class="abg-branch" id="ab-rx" onclick="abgAlgoSelect(\'ab-rx\')">';
+  h+='<div class="abg-vline"></div>';
+  h+='<div class="abg-result r-violet">Prescripcion</div>';
+  h+='<div class="abg-desc">Farmaco, dosis, perfusion, duracion</div>';
+  h+='</div>';
+
+  // Branch: Monitorizacion
+  h+='<div class="abg-branch" id="ab-mon" onclick="abgAlgoSelect(\'ab-mon\')">';
+  h+='<div class="abg-vline"></div>';
+  h+='<div class="abg-result r-sky">Monitorizacion</div>';
+  h+='<div class="abg-desc">Seguimiento clinico y analitico</div>';
+  h+='</div>';
+
+  h+='</div>';// close branches cols-2
+
+  // Detail: Prescripcion
+  h+='<div class="abg-detail" id="ab-rx-detail" style="border-left:3px solid var(--violet);">';
+  h+='<div style="font-weight:700;color:var(--violet);margin-bottom:8px;">Prescripcion final</div>';
+  h+='<div class="abg-detail-grid">';
+  h+='<span class="dl">Farmaco</span><span>Especifico segun antibiograma</span>';
+  h+='<span class="dl">Dosis</span><span>Estandar (sensible) o incrementada (intermedia)</span>';
+  h+='<span class="dl">Perfusion</span><span>Minimo 30 minutos; ideal 3-4 horas si betalactamico</span>';
+  h+='<span class="dl">Duracion</span><span>Segun tipo de infeccion y escenario clinico</span>';
+  h+='<span class="dl">Documentar</span><span>"Dosis incrementada por sensibilidad intermedia (EUCAST)" si aplica</span>';
+  h+='</div></div>';
+
+  // Detail: Monitorizacion
+  h+='<div class="abg-detail" id="ab-mon-detail" style="border-left:3px solid #3b82f6;">';
+  h+='<div style="font-weight:700;color:#1d4ed8;margin-bottom:8px;">Monitorizacion</div>';
+  h+='<div class="abg-detail-grid">';
+  h+='<span class="dl">Dia 7-10</span><span>Evaluar respuesta clinica (fiebre, PCR, herida)</span>';
+  h+='<span class="dl">Semanal</span><span>Proteina C reactiva / velocidad de sedimentacion; hemograma si linezolid</span>';
+  h+='<span class="dl">Si bacteriemia</span><span>Hemocultivos de control</span>';
+  h+='<span class="dl">Semana 6-8</span><span>Resonancia magnetica de control</span>';
+  h+='<span class="dl">Sin mejoria</span><span>Repetir cultivos, escalar cobertura, valorar cirugia</span>';
+  h+='</div></div>';
+
+  h+='</div>';// close abg-tree
+  h+='</div>';// close abg-chart
+
+  h+='<div style="text-align:center;margin-top:8px;"><button class="abg-reset" id="abgAlgoReset" onclick="abgAlgoReset()">Restablecer algoritmo</button></div>';
 
   h+='<div class="info-card" style="margin-top:16px;"><strong>Referencias</strong> '+makeRef('EUCAST 2024')+' '+makeRef('PRIOAM')+' '+makeRef('Macarena')+'</div>';
   return h;
