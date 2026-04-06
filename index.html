@@ -1787,20 +1787,19 @@ function renderAbgAlgoritmo(){
   // Node 1: Recepcion
   h+='<div class="algo-node">';
   h+='<div class="algo-q"><div style="display:flex;align-items:center;"><span class="algo-num">1</span><strong>Recibo el antibiograma</strong></div>';
-  h+='<div style="font-size:13px;color:var(--text-muted);margin-top:4px;margin-left:30px;">Revisar cada antibiotico: anotar categoria (S, I o R) y CMI si esta disponible.</div>';
+  h+='<div style="font-size:13px;color:var(--text-muted);margin-top:4px;margin-left:30px;">Revisar cada antibiotico: anotar categoria (sensible, intermedia o resistente) y concentracion minima inhibitoria si esta disponible.</div>';
   h+='</div>';
 
   // Node 2: Hay R?
   h+='<div class="algo-node" style="margin-top:12px;">';
   h+='<div class="algo-q"><div style="display:flex;align-items:center;"><span class="algo-num">2</span><strong>El antibiotico que uso aparece como R (resistente)?</strong></div>';
   h+='<div class="algo-choices">';
-  h+='<button class="algo-btn no" id="n2-btn-yes" onclick="algoPick(\'n2\',\'yes\')">SI, es R</button>';
-  h+='<button class="algo-btn yes" id="n2-btn-no" onclick="algoPick(\'n2\',\'no\')">NO, es S o I</button>';
+  h+='<button class="algo-btn no" id="n2-btn-yes" onclick="algoPick(\'n2\',\'yes\')">SI, es resistente</button>';
+  h+='<button class="algo-btn yes" id="n2-btn-no" onclick="algoPick(\'n2\',\'no\')">NO, es sensible o intermedia</button>';
   h+='</div>';
   // Result: SI (R)
-  h+='<div class="algo-result res-no" id="n2-res-yes"><strong>Cambiar de antibiotico.</strong> Buscar alternativa con S o I en el antibiograma. Elegir el de <strong>menor espectro eficaz</strong>. Si SAMR (oxacilina R): resistente a todos los betalactamicos → vancomicina o daptomicina.</div>';
-  // Result: NO (S o I) → continuar
-  h+='<div class="algo-result res-yes" id="n2-res-no">El antibiotico puede funcionar. Continuar evaluando si es S o I.</div>';
+  h+='<div class="algo-result res-no" id="n2-res-yes"><strong>Cambiar de antibiotico.</strong> Buscar alternativa sensible o intermedia en el antibiograma. Elegir el de <strong>menor espectro eficaz</strong>. Si S. aureus meticilin-resistente (oxacilina resistente): resistente a todos los betalactamicos → vancomicina o daptomicina.</div>';
+  h+='<div class="algo-result res-yes" id="n2-res-no">El antibiotico puede funcionar. Continuar evaluando si es sensible o intermedia.</div>';
   h+='</div>';
 
   // Branch NO (S o I) → child
@@ -1810,11 +1809,11 @@ function renderAbgAlgoritmo(){
   h+='<div class="algo-node">';
   h+='<div class="algo-q"><div style="display:flex;align-items:center;"><span class="algo-num">3</span><strong>Aparece como I (sensibilidad intermedia)?</strong></div>';
   h+='<div class="algo-choices">';
-  h+='<button class="algo-btn amber" id="n3-btn-yes" onclick="algoPick(\'n3\',\'yes\')">SI, es I</button>';
-  h+='<button class="algo-btn yes" id="n3-btn-no" onclick="algoPick(\'n3\',\'no\')">NO, es S</button>';
+  h+='<button class="algo-btn amber" id="n3-btn-yes" onclick="algoPick(\'n3\',\'yes\')">SI, es intermedia</button>';
+  h+='<button class="algo-btn yes" id="n3-btn-no" onclick="algoPick(\'n3\',\'no\')">NO, es sensible</button>';
   h+='</div>';
   // Result: SI (I)
-  h+='<div class="algo-result res-amber" id="n3-res-yes"><strong>Usar dosis incrementada</strong> segun tabla EUCAST. Si es betalactamico: <strong>perfusion extendida 3-4h</strong>. Documentar en historia clinica "dosis incrementada por categoria I".</div>';
+  h+='<div class="algo-result res-amber" id="n3-res-yes"><strong>Usar dosis incrementada</strong> segun tabla EUCAST. Si es betalactamico: <strong>perfusion extendida 3-4 horas</strong>. Documentar en historia clinica "dosis incrementada por sensibilidad intermedia".</div>';
   // Result: NO (S)
   h+='<div class="algo-result res-yes" id="n3-res-no">Mantener <strong>dosis estandar</strong>. En infeccion osea, considerar igualmente dosis altas por baja penetracion (10-30% del plasma).</div>';
   h+='</div>';
@@ -1831,7 +1830,7 @@ function renderAbgAlgoritmo(){
   h+='<button class="algo-btn yes" id="n4-btn-no" onclick="algoPick(\'n4\',\'no\')">NO</button>';
   h+='</div>';
   // Result: SI
-  h+='<div class="algo-result res-amber" id="n4-res-yes"><strong>Consultar con Enfermedades Infecciosas</strong> (obligatorio). Consensuar antibiotico, duracion y estrategia quirurgica (DAIR vs revision).</div>';
+  h+='<div class="algo-result res-amber" id="n4-res-yes"><strong>Consultar con Enfermedades Infecciosas</strong> (obligatorio). Consensuar antibiotico, duracion y estrategia quirurgica (lavado vs revision).</div>';
   // Result: NO
   h+='<div class="algo-result res-yes" id="n4-res-no">Proceder directamente con la prescripcion.</div>';
   h+='</div>';
@@ -1842,10 +1841,10 @@ function renderAbgAlgoritmo(){
   h+='<div style="margin-top:8px;margin-left:30px;font-size:13px;">';
   h+='<div style="display:grid;grid-template-columns:auto 1fr;gap:4px 12px;">';
   h+='<span style="color:var(--text-light);font-weight:600;">Farmaco</span><span>Especifico segun antibiograma</span>';
-  h+='<span style="color:var(--text-light);font-weight:600;">Dosis</span><span>Estandar (S) o incrementada (I)</span>';
-  h+='<span style="color:var(--text-light);font-weight:600;">Perfusion</span><span>Min 30 min; ideal 3-4h si betalactamico</span>';
-  h+='<span style="color:var(--text-light);font-weight:600;">Duracion</span><span>4-6 sem osteomielitis; 3-6 meses protesica</span>';
-  h+='<span style="color:var(--text-light);font-weight:600;">Documentar</span><span>"Dosis incrementada por categoria I (EUCAST)" si aplica</span>';
+  h+='<span style="color:var(--text-light);font-weight:600;">Dosis</span><span>Estandar (sensible) o incrementada (intermedia)</span>';
+  h+='<span style="color:var(--text-light);font-weight:600;">Perfusion</span><span>Minimo 30 minutos; ideal 3-4 horas si betalactamico</span>';
+  h+='<span style="color:var(--text-light);font-weight:600;">Duracion</span><span>4-6 semanas osteomielitis; 3-6 meses protesica</span>';
+  h+='<span style="color:var(--text-light);font-weight:600;">Documentar</span><span>"Dosis incrementada por sensibilidad intermedia (EUCAST)" si aplica</span>';
   h+='</div></div></div></div>';
 
   // Node 6: Monitorizacion
@@ -1854,9 +1853,9 @@ function renderAbgAlgoritmo(){
   h+='<div style="margin-top:8px;margin-left:30px;font-size:13px;">';
   h+='<div style="display:grid;grid-template-columns:auto 1fr;gap:4px 12px;">';
   h+='<span style="color:var(--text-light);font-weight:600;">Dia 7-10</span><span>Evaluar respuesta clinica (fiebre, PCR, herida)</span>';
-  h+='<span style="color:var(--text-light);font-weight:600;">Semanal</span><span>PCR / VSG; hemograma si linezolid</span>';
+  h+='<span style="color:var(--text-light);font-weight:600;">Semanal</span><span>Proteina C reactiva / velocidad de sedimentacion; hemograma si linezolid</span>';
   h+='<span style="color:var(--text-light);font-weight:600;">Si bacteriemia</span><span>Hemocultivos de control</span>';
-  h+='<span style="color:var(--text-light);font-weight:600;">Sem 6-8</span><span>RM de control para evaluar resolucion</span>';
+  h+='<span style="color:var(--text-light);font-weight:600;">Semana 6-8</span><span>Resonancia magnetica de control para evaluar resolucion</span>';
   h+='<span style="color:var(--text-light);font-weight:600;">Sin mejoria</span><span>Repetir cultivos, escalar cobertura, valorar cirugia</span>';
   h+='</div></div></div></div>';
 
