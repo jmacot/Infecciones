@@ -127,6 +127,13 @@ a{color:var(--sky);text-decoration:none;}a:hover{text-decoration:underline;}
 .landing{animation:fadeInUp .4s ease-out;}
 .landing-section-label{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-light);margin:0 0 10px 4px;}
 .landing-primary{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
+.landing-featured{margin-bottom:16px;}
+.landing-featured .landing-card{display:flex;flex-direction:row;align-items:center;gap:16px;padding:20px 24px;border-left:4px solid var(--amber);}
+.landing-featured .lc-icon{flex-shrink:0;}
+.landing-featured .lc-title{font-size:16px;}
+.landing-featured .lc-desc{font-size:13px;max-width:none;}
+.landing-featured .lc-badge{margin-top:4px;}
+.landing-featured .lc-arrow{position:absolute;right:20px;top:50%;transform:translateY(-50%);}
 .landing-secondary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
 
 /* Primary cards */
@@ -283,6 +290,43 @@ a.ref-tag:hover{background:var(--violet);color:#fff;text-decoration:none;}
 
 .note-box{background:var(--sky-light);border-left:3px solid var(--sky);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 14px;margin:12px 0;font-size:13px;}
 .note-box.warn{background:var(--amber-light);border-left-color:var(--amber);}
+
+/* ═══════════════════════════════════════════
+   ANTIBIOGRAMA — S/I/R CARDS
+   ═══════════════════════════════════════════ */
+.sir-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+@media(max-width:600px){.sir-grid{grid-template-columns:1fr;}}
+.sir-card{border-radius:var(--radius);padding:16px;position:relative;overflow:hidden;}
+.sir-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.sir-card.s{background:var(--emerald-light);}.sir-card.s::before{background:var(--emerald);}
+.sir-card.i{background:var(--amber-light);}.sir-card.i::before{background:var(--amber);}
+.sir-card.r{background:var(--red-light);}.sir-card.r::before{background:var(--red);}
+.sir-letter{font-family:'Source Serif 4',serif;font-size:32px;font-weight:700;line-height:1;}
+.sir-card.s .sir-letter{color:var(--emerald);}.sir-card.i .sir-letter{color:var(--amber);}.sir-card.r .sir-letter{color:var(--red);}
+.sir-label{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-top:4px;font-weight:600;}
+.sir-card.s .sir-label{color:var(--emerald);}.sir-card.i .sir-label{color:#92400e;}.sir-card.r .sir-label{color:var(--red);}
+[data-theme="dark"] .sir-card.i .sir-label{color:var(--amber);}
+.sir-desc{font-size:13px;margin-top:6px;color:var(--text-muted);}
+.sir-action{font-size:12px;margin-top:8px;padding:6px 10px;border-radius:var(--radius-sm);font-weight:600;}
+.sir-card.s .sir-action{background:rgba(16,185,129,0.15);color:var(--emerald);}
+.sir-card.i .sir-action{background:rgba(245,158,11,0.15);color:#92400e;}
+[data-theme="dark"] .sir-card.i .sir-action{color:var(--amber);}
+.sir-card.r .sir-action{background:rgba(239,68,68,0.15);color:var(--red);}
+
+.di-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px;}
+.di-table th{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-light);padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);background:var(--surface2);}
+.di-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
+.di-table tr:hover td{background:var(--sky-light);}
+.di-table .dose-std{color:var(--text-muted);}
+.di-table .dose-inc{font-weight:600;color:var(--amber);}
+.di-table .dose-note{font-size:11px;color:var(--text-light);font-style:italic;}
+.di-family{font-family:'Source Code Pro',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--sky);background:var(--sky-light);padding:6px 10px;font-weight:600;}
+.di-family td{padding:6px 10px;border-bottom:1px solid var(--border);}
+
+.di-badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;font-family:'Source Code Pro',monospace;background:var(--amber-light);color:#92400e;}
+[data-theme="dark"] .di-badge{color:var(--amber);}
+.di-label{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#92400e;font-weight:600;}
+[data-theme="dark"] .di-label{color:var(--amber);}
 
 .allergy-alt{background:var(--amber-light);border:1px solid rgba(245,158,11,0.3);border-radius:var(--radius-sm);padding:8px 12px;margin-top:6px;font-size:13px;}
 .allergy-alt::before{content:'Alternativa alergia';display:block;font-family:'Source Code Pro',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--amber);margin-bottom:4px;font-weight:700;}
@@ -495,6 +539,7 @@ svg{max-width:100%;height:auto;}
 <div id="sec-osteoart" class="section-view"></div>
 <div id="sec-blandas" class="section-view"></div>
 <div id="sec-micro" class="section-view"></div>
+<div id="sec-antibiograma" class="section-view"></div>
 
 <div class="disclaimer">
   <strong style="display:block;margin-bottom:6px;color:var(--text);font-size:13px;">Aviso importante</strong>
@@ -536,7 +581,8 @@ var REF_URLS=[
   {match:'IDSA/IWGDF',text:'',url:'https://doi.org/10.1002/dmrr.3657'},
   {match:'IDSA',text:'',url:'https://www.idsociety.org/practice-guideline/skin-and-soft-tissue-infections/'},
   {match:'OVIVA',text:'',url:'https://doi.org/10.1056/NEJMoa1710926'},
-  {match:'OMS',text:'',url:'https://www.who.int/publications/i/item/9789240048126'}
+  {match:'OMS',text:'',url:'https://www.who.int/publications/i/item/9789240048126'},
+  {match:'EUCAST',text:'',url:'https://www.eucast.org/clinical_breakpoints'}
 ];
 
 // Context for which section we're in (set by renderSection)
@@ -573,7 +619,8 @@ var ICO={
   book:'<svg viewBox="0 0 24 24"'+S0+'><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>',
   search:'<svg viewBox="0 0 24 24"'+S0+'><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>',
   pointer:'<svg viewBox="0 0 24 24"'+S0+'><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
-  flask:'<svg viewBox="0 0 24 24"'+S0+'><path d="M9 3h6M10 3v7.4L4.2 19.5A1.5 1.5 0 005.5 22h13a1.5 1.5 0 001.3-2.5L14 10.4V3"/><path d="M8.5 14h7"/></svg>'
+  flask:'<svg viewBox="0 0 24 24"'+S0+'><path d="M9 3h6M10 3v7.4L4.2 19.5A1.5 1.5 0 005.5 22h13a1.5 1.5 0 001.3-2.5L14 10.4V3"/><path d="M8.5 14h7"/></svg>',
+  antibiogram:'<svg viewBox="0 0 24 24"'+S0+'><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/><circle cx="14.5" cy="14.5" r="2"/><path d="M6 14.5h2M14.5 6v2"/></svg>'
 };
 
 // ─────────────────────────────────────────────
@@ -619,10 +666,36 @@ var FACTORES_RIESGO=[
   {factor:'IBP (inhibidores bomba protones)',riesgo:'Disminuyen actividad neutrofilos, malabsorcion',mitigacion:'Suspension temporal o cambio a otra medicacion',ref:'ICM 2025, 1.4'}
 ];
 
+// ── EUCAST 2024: Dosis incrementadas para sensibilidad intermedia (I) ──
+var DOSIS_INCREMENTADAS=[
+  {family:'Cefalosporinas',items:[
+    {drug:'Cefazolina',std:'1 g c/8h IV',inc:'2 g c/8h IV',note:'Osteomielitis, profilaxis'},
+    {drug:'Ceftazidima',std:'1 g c/8h IV',inc:'2 g c/8h IV (perfusion 3h)',note:'IAP, nosocomial'},
+    {drug:'Ceftriaxona',std:'2 g c/24h IV',inc:'2 g c/12h IV',note:'Espondilodiscitis'},
+    {drug:'Cefepima',std:'1 g c/8h IV',inc:'2 g c/8h IV (perfusion 3h)',note:'ESCAPM'}
+  ]},
+  {family:'Carbapenemas',items:[
+    {drug:'Meropenem',std:'1 g c/8h IV',inc:'2 g c/8h IV (perfusion 3h)',note:'Polimicrobiana grave'},
+    {drug:'Imipenem',std:'500 mg c/6h IV',inc:'1 g c/6h IV',note:'Alternativa'}
+  ]},
+  {family:'Penicilinas con inhibidor',items:[
+    {drug:'Piperacilina/tazobactam',std:'4 g c/8h IV (perfusion 4h)',inc:'4 g c/6h IV (perfusion 3h)',note:'Pie diabetico, polimicrobiana'},
+    {drug:'Amoxicilina/ac. clavulanico',std:'1 g c/8h IV',inc:'2 g c/8h IV',note:'Menos frecuente en hueso'}
+  ]},
+  {family:'Fluoroquinolonas',items:[
+    {drug:'Ciprofloxacino VO',std:'500 mg c/12h',inc:'750 mg c/12h',note:'P. aeruginosa, secuencial'},
+    {drug:'Levofloxacino',std:'500 mg c/24h',inc:'500 mg c/12h',note:'Mejor penetracion osea'}
+  ]},
+  {family:'Monobactamicos',items:[
+    {drug:'Aztreonam',std:'1 g c/8h IV',inc:'2 g c/6h IV',note:'Alergia a betalactamicos'}
+  ]}
+];
+
 var ORGANISMS=[
   {id:'sams',name:'S. aureus meticilin-sensible (SAMS)',group:'gram_pos',
     iv:{drug:'Cloxacilina',dose:'2 g IV c/4-6h',alt:'Cefazolina 2 g IV c/8h'},
     ivAlergia:{drug:'Vancomicina',dose:'15-20 mg/kg IV c/8-12h',alt:'Daptomicina 6-8 mg/kg IV c/24h'},
+    dosisI:'Si cefazolina I: Cefazolina 2 g IV c/8h (dosis incrementada). Levofloxacino I: 500 mg c/12h',
     ivDur:{iap_dair:'2-6 sem (OVIVA: 5-7 dias pueden ser suficientes)',iap_rev:'4-6 sem IV',artritis:'2 sem IV',osteo_aguda:'2 sem IV min',osteo_cronica:'2-4 sem IV',espondilo:'2-4 sem IV'},
     pasoOral:'Afebril 48-72h, mejoria clinica, PCR en descenso, tolerancia oral, herida sin complicaciones',
     oral:{drug:'Levofloxacino + Rifampicina',dose:'500 mg c/12-24h + 600 mg c/24h',alt:'Clindamicina 300-450 mg c/8h + Rifampicina'},
@@ -703,6 +776,7 @@ var ORGANISMS=[
   {id:'ecoli',name:'E. coli / Klebsiella (sensible)',group:'gram_neg',
     iv:{drug:'Ceftriaxona',dose:'2 g IV c/24h',alt:'Amox-clav 1-2 g IV c/8h (si sensible)'},
     ivAlergia:{drug:'Ciprofloxacino',dose:'400 mg IV c/8-12h',alt:'Aztreonam 2 g IV c/8h'},
+    dosisI:'Si ceftriaxona I: 2 g IV c/12h (dosis incrementada). Ciprofloxacino I: 750 mg c/12h VO',
     ivDur:{iap_dair:'2-4 sem',iap_rev:'4-6 sem IV',artritis:'2 sem IV',osteo_aguda:'2 sem IV',osteo_cronica:'2-4 sem IV',espondilo:'2-4 sem IV'},
     pasoOral:'Quinolonas con excelente biodisponibilidad. Afebril 48-72h, antibiograma con opcion oral sensible',
     oral:{drug:'Ciprofloxacino',dose:'500-750 c/12h',alt:'Levofloxacino 500 c/24h'},
@@ -713,6 +787,7 @@ var ORGANISMS=[
   {id:'blee',name:'Enterobacterias BLEE',group:'gram_neg',
     iv:{drug:'Ertapenem',dose:'1 g IV c/24h',alt:'Meropenem 1-2 g IV c/8h'},
     ivAlergia:{drug:'Meropenem',dose:'1-2 g IV c/8h',alt:'Aztreonam 2 g IV c/8h (si sensible)'},
+    dosisI:'Si meropenem I: 2 g IV c/8h en perfusion 3h. Pip-tazo I: 4 g IV c/6h en perfusion 3h',
     ivDur:{iap_dair:'2-4 sem',iap_rev:'4-6 sem IV',artritis:'2-3 sem IV',osteo_aguda:'2-4 sem IV',osteo_cronica:'4 sem IV',espondilo:'4 sem IV'},
     pasoOral:'Opciones orales MUY limitadas. Solo si antibiograma con TMP-SMX o cipro sensible. Valorar OPAT con ertapenem',
     oral:{drug:'TMP-SMX (si sensible)',dose:'160/800 c/12h',alt:'Ciprofloxacino 750 c/12h (si sensible)'},
@@ -723,6 +798,7 @@ var ORGANISMS=[
   {id:'pseudo',name:'Pseudomonas aeruginosa',group:'gram_neg',
     iv:{drug:'Ceftazidima o Cefepima',dose:'2 g IV c/8h',alt:'Pip-tazo 4/0.5 g IV c/6-8h o Meropenem 1-2 g IV c/8h'},
     ivAlergia:{drug:'Ciprofloxacino IV + Aminoglucosido',dose:'CIP 400 c/8h + AMK 15 mg/kg c/24h',alt:'Aztreonam 2 g IV c/8h'},
+    dosisI:'Si ceftazidima I: 2 g IV c/8h en perfusion 3h. Meropenem I: 2 g IV c/8h en perfusion 3h. Ciprofloxacino I: 750 mg c/12h VO',
     ivDur:{iap_dair:'2-4 sem',iap_rev:'4-6 sem IV',artritis:'2-3 sem IV',osteo_aguda:'2-4 sem IV',osteo_cronica:'4 sem IV',espondilo:'4 sem IV'},
     pasoOral:'Solo si sensible a ciprofloxacino. Si no: OPAT obligatorio',
     oral:{drug:'Ciprofloxacino',dose:'750 mg c/12h',alt:'Levofloxacino 750 c/24h (menor actividad)'},
@@ -733,6 +809,7 @@ var ORGANISMS=[
   {id:'escapm',name:'Enterobacter / ESCAPM',group:'gram_neg',
     iv:{drug:'Cefepima',dose:'2 g IV c/8h',alt:'Meropenem 1-2 g IV c/8h'},
     ivAlergia:{drug:'Ciprofloxacino',dose:'400 IV c/8-12h',alt:'Aztreonam 2 g IV c/8h'},
+    dosisI:'Si cefepima I: 2 g IV c/8h en perfusion 3h. Meropenem I: 2 g IV c/8h en perfusion 3h',
     ivDur:{iap_dair:'2-4 sem',iap_rev:'4-6 sem IV',artritis:'2 sem IV',osteo_aguda:'2-4 sem IV',osteo_cronica:'2-4 sem IV',espondilo:'2-4 sem IV'},
     pasoOral:'Quinolonas si sensible. Afebril 48-72h, mejoria clinica',
     oral:{drug:'Ciprofloxacino',dose:'500-750 c/12h',alt:'TMP-SMX 160/800 c/12h'},
@@ -743,6 +820,7 @@ var ORGANISMS=[
   {id:'proteus',name:'Proteus mirabilis',group:'gram_neg',
     iv:{drug:'Ceftriaxona',dose:'2 g IV c/24h',alt:'Ampicilina 2 g IV c/4-6h (si sensible)'},
     ivAlergia:{drug:'Ciprofloxacino',dose:'400 IV c/8-12h',alt:'Aztreonam 2 g IV c/8h'},
+    dosisI:'Si ceftriaxona I: 2 g IV c/12h (dosis incrementada). Ciprofloxacino I: 750 mg c/12h VO',
     ivDur:{iap_dair:'2-4 sem',iap_rev:'4-6 sem IV',artritis:'2 sem IV',osteo_aguda:'2 sem IV',osteo_cronica:'2-4 sem IV',espondilo:'2-4 sem IV'},
     pasoOral:'Afebril 48-72h, mejoria clinica, antibiograma con opcion oral',
     oral:{drug:'Ciprofloxacino',dose:'500 c/12h',alt:'Amox-clav 875/125 c/8h'},
@@ -753,6 +831,7 @@ var ORGANISMS=[
   {id:'acineto',name:'Acinetobacter baumannii',group:'gram_neg',
     iv:{drug:'Meropenem (si sensible)',dose:'2 g IV c/8h (infusion 3h)',alt:'Ampicilina-sulbactam 3 g IV c/6h'},
     ivAlergia:{drug:'Colistina',dose:'Colistimetato 9 MU carga, 4.5 MU IV c/12h',alt:'Tigeciclina 100 carga, 50 IV c/12h'},
+    dosisI:'Si meropenem I: 2 g IV c/8h en perfusion extendida 3h (ya es dosis maxima habitual)',
     ivDur:{iap_dair:'Todo IV (sin opcion oral)',iap_rev:'6 sem IV completas',artritis:'4-6 sem IV',osteo_aguda:'4-6 sem IV',osteo_cronica:'6-8 sem IV',espondilo:'6-8 sem IV'},
     pasoOral:'NO hay opciones orales. OPAT (terapia parenteral ambulatoria) obligatorio',
     oral:{drug:'Sin opciones orales',dose:'Valorar OPAT',alt:'Consultar Infecciosas'},
@@ -898,12 +977,13 @@ var SECTIONS_PRIMARY=[
   {id:'osteoart',color:'emerald',icon:ICO.bone,title:'Infecciones Osteoarticulares',desc:'Artritis septica, osteomielitis, espondilodiscitis',badge:'4 patologias'},
   {id:'blandas',color:'amber',icon:ICO.bandage,title:'Partes Blandas',desc:'Celulitis, fascitis, herida Qx, mordeduras',badge:'5 escenarios'}
 ];
+var SECTION_ANTIBIOGRAMA={id:'antibiograma',color:'amber',icon:ICO.antibiogram,title:'Interpretar el Antibiograma',desc:'Que hacer cuando el antibiograma reporta sensibilidad intermedia (I): dosis incrementadas segun EUCAST',badge:'EUCAST 2024'};
 var SECTIONS_SECONDARY=[
   {id:'profilaxis',color:'sky',icon:ICO.shield,title:'Profilaxis Preoperatoria',desc:'Antibiotico antes de operar',badge:'11 procedimientos'},
   {id:'micro',color:'red',icon:ICO.bacteria,title:'Consulta por Microorganismo',desc:'Buscar por germen del cultivo',badge:'18 fichas'},
   {id:'espectro',color:'slate',icon:ICO.grid,title:'Espectro Antibacteriano',desc:'Tabla de actividad por antibiotico',badge:'42 antibioticos'}
 ];
-var SECTIONS=SECTIONS_PRIMARY.concat(SECTIONS_SECONDARY);
+var SECTIONS=SECTIONS_PRIMARY.concat([SECTION_ANTIBIOGRAMA]).concat(SECTIONS_SECONDARY);
 
 // ─────────────────────────────────────────────
 //  STATE
@@ -976,6 +1056,16 @@ function buildLanding(){
   });
   h+='</div>';
   h+='<div class="landing-section-label">Herramientas de consulta</div>';
+  // Featured: Antibiograma (full width)
+  var ab=SECTION_ANTIBIOGRAMA;
+  h+='<div class="landing-featured">';
+  h+='<div class="landing-card" data-color="'+ab.color+'" onclick="goSection(\''+ab.id+'\')" style="position:relative;">';
+  h+='<div class="lc-icon">'+ab.icon+'</div>';
+  h+='<div style="flex:1;"><div class="lc-title">'+esc(ab.title)+'</div><div class="lc-desc">'+esc(ab.desc)+'</div>';
+  h+='<div class="lc-badge">'+esc(ab.badge)+'</div></div>';
+  h+='<div class="lc-arrow">'+ARROW_RIGHT+'</div>';
+  h+='</div></div>';
+  // Secondary grid
   h+='<div class="landing-secondary">';
   SECTIONS_SECONDARY.forEach(function(s){
     h+='<div class="landing-card secondary" data-color="'+s.color+'" onclick="goSection(\''+s.id+'\')">';
@@ -995,7 +1085,7 @@ function renderSection(id){
   var sec=SECTIONS.filter(function(s){return s.id===id;})[0];
   var el=document.getElementById('sec-'+id);
   // Set context for reference URL matching
-  var ctxMap={profilaxis:'profilaxis',iap:'protesica',osteoart:'osteo artritis espondilo',blandas:'celulitis fascitis mordedura pie diabetico partes blandas',micro:''};
+  var ctxMap={profilaxis:'profilaxis',iap:'protesica',osteoart:'osteo artritis espondilo',blandas:'celulitis fascitis mordedura pie diabetico partes blandas',micro:'',antibiograma:''};
   _refContext=ctxMap[id]||'';
   var anyAllergy=allergies.bl||allergies.qn||allergies.vc;
   var alNames=[];if(allergies.bl)alNames.push('Betalactamicos');if(allergies.qn)alNames.push('Quinolonas');if(allergies.vc)alNames.push('Vancomicina');
@@ -1007,6 +1097,7 @@ function renderSection(id){
   else if(id==='osteoart') h+=renderOsteoart();
   else if(id==='blandas') h+=renderBlandas();
   else if(id==='micro') h+=renderMicro();
+  else if(id==='antibiograma') h+=renderAntibiograma();
 
   el.innerHTML=h;
 
@@ -1063,7 +1154,16 @@ function renderCascade(org,durKey){
   h+='<div class="cc-drug">'+esc(ivD)+'</div>';
   h+='<div class="cc-detail">'+esc(ivDo)+'</div>';
   h+='<div class="cc-detail">Alt: '+esc(ivA)+'</div>';
-  h+='<div class="cc-dur iv">'+esc(ivDurText)+'</div></div>';
+  h+='<div class="cc-dur iv">'+esc(ivDurText)+'</div>';
+  // Dosis incrementada (si aplica)
+  if(org.dosisI){
+    h+='<div style="margin-top:8px;background:var(--amber-light);border-radius:var(--radius-sm);padding:8px 12px;">';
+    h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;"><span class="di-badge">I</span>';
+    h+='<span class="di-label">Si sensibilidad intermedia</span></div>';
+    h+='<div style="font-size:13px;color:var(--text);">'+esc(org.dosisI)+'</div>';
+    h+='</div>';
+  }
+  h+='</div>';
   // Arrow
   h+='<div class="cascade-arrow">'+ARROW_SVG+'</div>';
   // Criteria
@@ -1447,6 +1547,93 @@ function changeMicroScenario(key){
     var c=document.getElementById('microContent');
     if(c&&org)c.innerHTML=renderMicroDetail(org);
   }
+}
+
+// ─────────────────────────────────────────────
+//  ANTIBIOGRAMA — SENSIBILIDAD INTERMEDIA
+// ─────────────────────────────────────────────
+function renderAntibiograma(){
+  // Theory card
+  var h=theoryCard('amber',
+    'Desde 2022, la <strong>sensibilidad intermedia (I)</strong> ya no significa "dudoso". Significa <strong>sensible usando dosis incrementadas</strong> (EUCAST). La CMI no ha cambiado: ha cambiado lo que sabemos sobre como dosificar.',
+    '<ul><li><strong>EUCAST 2022-2024:</strong> la categoria "I" se redefine como "Susceptible, Increased Exposure" → sensible con <span class="hl">dosis incrementadas</span></li><li><strong>Fundamento PK/PD:</strong> simulaciones Montecarlo demuestran que con dosis altas, la probabilidad de exito terapeutico es <span class="dose">&ge;90%</span> en microorganismos "I"</li><li><strong>Perfusion extendida</strong> (3-4h) en betalactamicos: optimiza el tiempo sobre CMI (T&gt;MIC), parametro clave de eficacia</li><li><strong>En hueso:</strong> compartimento con penetracion limitada → las dosis incrementadas son especialmente importantes en infecciones osteoarticulares</li><li>Un antibiograma con "I" <strong>NO es un fracaso</strong>. Es una oportunidad de optimizar dosificacion</li></ul>',
+    'EUCAST 2024 | PRIOAM | Macarena');
+
+  // S / I / R visual cards
+  h+='<div class="sir-grid">';
+  // S
+  h+='<div class="sir-card s"><div class="sir-letter">S</div>';
+  h+='<div class="sir-label">Sensible</div>';
+  h+='<div class="sir-desc">El microorganismo es inhibido con las concentraciones alcanzables con <strong>dosis estandar</strong>.</div>';
+  h+='<div class="sir-action">Dosis habitual, via recomendada</div></div>';
+  // I
+  h+='<div class="sir-card i"><div class="sir-letter">I</div>';
+  h+='<div class="sir-label">Sensibilidad Intermedia</div>';
+  h+='<div class="sir-desc">Sensible usando <strong>dosis incrementadas</strong>. La CMI esta en un rango donde dosis altas o perfusion extendida logran concentraciones eficaces.</div>';
+  h+='<div class="sir-action">Dosis incrementada + perfusion extendida</div></div>';
+  // R
+  h+='<div class="sir-card r"><div class="sir-letter">R</div>';
+  h+='<div class="sir-label">Resistente</div>';
+  h+='<div class="sir-desc">El microorganismo <strong>no es inhibido</strong> ni siquiera con dosis maximas. Fracaso terapeutico esperable.</div>';
+  h+='<div class="sir-action">Cambiar de antibiotico</div></div>';
+  h+='</div>';
+
+  // Key message box
+  h+='<div class="note-box warn" style="margin:16px 0;font-size:14px;"><strong style="display:block;margin-bottom:4px;">Concepto clave</strong>';
+  h+='"I" = Sensibilidad Intermedia = <strong>sensible con dosis incrementadas</strong>. La clave es <strong>dosificar mas</strong>, no cambiar de antibiotico.</div>';
+
+  // Dose table
+  h+='<div style="margin-top:20px;"><div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin-bottom:8px;">Tabla de dosis incrementadas</div>';
+  h+='<div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Antibioticos relevantes en infecciones osteoarticulares. Usar la dosis incrementada cuando el antibiograma reporta "I" (sensibilidad intermedia).</div>';
+  h+='<div class="table-wrap"><table class="di-table">';
+  h+='<thead><tr><th>Antibiotico</th><th>Dosis estandar (S)</th><th>Dosis incrementada (I)</th><th>Indicacion COT</th></tr></thead>';
+  h+='<tbody>';
+  DOSIS_INCREMENTADAS.forEach(function(fam){
+    h+='<tr class="di-family"><td colspan="4">'+esc(fam.family)+'</td></tr>';
+    fam.items.forEach(function(d){
+      h+='<tr>';
+      h+='<td style="font-weight:600;">'+esc(d.drug)+'</td>';
+      h+='<td class="dose-std">'+esc(d.std)+'</td>';
+      h+='<td class="dose-inc">'+esc(d.inc)+'</td>';
+      h+='<td class="dose-note">'+esc(d.note)+'</td>';
+      h+='</tr>';
+    });
+  });
+  h+='</tbody></table></div></div>';
+
+  // Quick reference — collapsible
+  h+=renderCollapsible('sir-ref','Que hacer ante una sensibilidad intermedia (I)','amber',
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">'+
+    '<div style="background:var(--emerald-light);border-radius:var(--radius-sm);padding:12px;">'+
+    '<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--emerald);font-weight:600;margin-bottom:6px;">&#10003; Si hacer</div>'+
+    '<div style="font-size:13px;margin-bottom:4px;"><span style="color:var(--emerald);">&#8226;</span> Usar <strong>dosis incrementada</strong> (tabla EUCAST)</div>'+
+    '<div style="font-size:13px;margin-bottom:4px;"><span style="color:var(--emerald);">&#8226;</span> Perfusion extendida si es betalactamico (3-4h)</div>'+
+    '<div style="font-size:13px;margin-bottom:4px;"><span style="color:var(--emerald);">&#8226;</span> Mantener via IV 3-6 semanas (infeccion protesica)</div>'+
+    '<div style="font-size:13px;margin-bottom:4px;"><span style="color:var(--emerald);">&#8226;</span> Consultar con Enfermedades Infecciosas</div>'+
+    '<div style="font-size:13px;margin-bottom:4px;"><span style="color:var(--emerald);">&#8226;</span> Documentar en historia clinica el cambio de dosis</div>'+
+    '<div style="font-size:13px;"><span style="color:var(--emerald);">&#8226;</span> Monitorizar respuesta clinica a los 7-10 dias</div>'+
+    '</div>'+
+    '<div style="background:var(--red-light);border-radius:var(--radius-sm);padding:12px;">'+
+    '<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--red);font-weight:600;margin-bottom:6px;">&#10007; No hacer</div>'+
+    '<div style="font-size:13px;margin-bottom:4px;"><span style="color:var(--red);">&#8226;</span> Cambiar de antibiotico automaticamente</div>'+
+    '<div style="font-size:13px;margin-bottom:4px;"><span style="color:var(--red);">&#8226;</span> Usar dosis estandar cuando el antibiograma dice "I"</div>'+
+    '<div style="font-size:13px;margin-bottom:4px;"><span style="color:var(--red);">&#8226;</span> Acortar duracion del tratamiento</div>'+
+    '<div style="font-size:13px;"><span style="color:var(--red);">&#8226;</span> Pasar a via oral antes de 2-3 semanas</div>'+
+    '</div></div>'+
+    '<div class="note-box" style="margin-top:12px;">'+
+    '<strong style="display:block;margin-bottom:4px;">Nota sobre vancomicina</strong>'+
+    'Vancomicina no tiene categoria "I" (EUCAST). La optimizacion se hace mediante <strong>monitorizacion de niveles sericos</strong> (valle 15-20 &#181;g/mL). No requiere dosis incrementadas sino ajuste por niveles.'+
+    '</div>'
+  );
+
+  // References
+  h+='<div class="info-card" style="margin-top:16px;"><strong>Referencias</strong>';
+  h+=makeRef('EUCAST 2024')+' ';
+  h+=makeRef('PRIOAM')+' ';
+  h+=makeRef('Macarena');
+  h+='</div>';
+
+  return h;
 }
 
 function filterMicroSearch(){
