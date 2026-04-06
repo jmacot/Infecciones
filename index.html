@@ -328,6 +328,44 @@ a.ref-tag:hover{background:var(--violet);color:#fff;text-decoration:none;}
 .di-label{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#92400e;font-weight:600;}
 [data-theme="dark"] .di-label{color:var(--amber);}
 
+/* Algorithm flow */
+.algo-flow{display:flex;flex-direction:column;align-items:center;gap:0;margin:16px 0;}
+.algo-step{width:100%;max-width:520px;background:var(--surface);backdrop-filter:blur(var(--glass-blur));border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;position:relative;overflow:hidden;}
+.algo-step::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;}
+.algo-step.step-q::before{background:var(--sky);}
+.algo-step.step-yes::before{background:var(--emerald);}
+.algo-step.step-no::before{background:var(--red);}
+.algo-step.step-end::before{background:var(--violet);}
+.algo-step.step-warn::before{background:var(--amber);}
+.algo-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-family:'Source Code Pro',monospace;font-size:11px;font-weight:700;color:#fff;margin-right:8px;flex-shrink:0;}
+.algo-step.step-q .algo-num{background:var(--sky);}
+.algo-step.step-end .algo-num{background:var(--violet);}
+.algo-step.step-warn .algo-num{background:var(--amber);}
+.algo-branch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
+@media(max-width:500px){.algo-branch{grid-template-columns:1fr;}}
+.algo-branch-card{border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;}
+.algo-branch-card.yes{background:var(--emerald-light);border-left:3px solid var(--emerald);}
+.algo-branch-card.no{background:var(--red-light);border-left:3px solid var(--red);}
+.algo-branch-label{font-family:'Source Code Pro',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:3px;}
+.algo-branch-card.yes .algo-branch-label{color:var(--emerald);}
+.algo-branch-card.no .algo-branch-label{color:var(--red);}
+.algo-arrow{display:flex;flex-direction:column;align-items:center;padding:2px 0;}
+.algo-arrow svg{width:20px;height:24px;color:var(--text-light);}
+
+/* FAQ accordion */
+.faq-item{background:var(--surface);backdrop-filter:blur(var(--glass-blur));border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;overflow:hidden;}
+.faq-q{display:flex;align-items:center;gap:8px;padding:12px 16px;cursor:pointer;font-size:14px;font-weight:600;color:var(--text);background:none;border:none;width:100%;text-align:left;font-family:'Source Sans 3',sans-serif;transition:var(--transition);}
+.faq-q:hover{background:var(--surface2);}
+.faq-q .faq-arr{font-size:10px;transition:transform .25s;color:var(--text-light);}
+.faq-q.open .faq-arr{transform:rotate(90deg);}
+.faq-a{display:none;padding:0 16px 14px;font-size:13px;color:var(--text-muted);line-height:1.6;}
+.faq-a.open{display:block;}
+
+/* PK/PD concept cards */
+.pkpd-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+@media(max-width:600px){.pkpd-grid{grid-template-columns:1fr;}}
+.pkpd-card{background:var(--surface);backdrop-filter:blur(var(--glass-blur));border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;}
+
 .allergy-alt{background:var(--amber-light);border:1px solid rgba(245,158,11,0.3);border-radius:var(--radius-sm);padding:8px 12px;margin-top:6px;font-size:13px;}
 .allergy-alt::before{content:'Alternativa alergia';display:block;font-family:'Source Code Pro',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--amber);margin-bottom:4px;font-weight:700;}
 
@@ -1550,56 +1588,46 @@ function changeMicroScenario(key){
 }
 
 // ─────────────────────────────────────────────
-//  ANTIBIOGRAMA — SENSIBILIDAD INTERMEDIA
+//  ANTIBIOGRAMA — GUIA COMPLETA
 // ─────────────────────────────────────────────
+var abgSub='sir';
 function renderAntibiograma(){
-  // Theory card
+  var subs=[{id:'sir',label:'Categorias S / I / R'},{id:'conceptos',label:'Conceptos clave'},{id:'algoritmo',label:'Algoritmo'},{id:'dosis',label:'Dosis incrementadas'},{id:'faq',label:'Preguntas frecuentes'}];
+  var h='<div class="sub-tabs" style="margin-bottom:16px;">';
+  subs.forEach(function(s){h+='<button class="sub-tab'+(s.id===abgSub?' active':'')+'" onclick="abgSub=\''+s.id+'\';refreshCurrentView();">'+s.label+'</button>';});
+  h+='</div>';
+  if(abgSub==='sir') h+=renderAbgSIR();
+  else if(abgSub==='conceptos') h+=renderAbgConceptos();
+  else if(abgSub==='algoritmo') h+=renderAbgAlgoritmo();
+  else if(abgSub==='dosis') h+=renderAbgDosis();
+  else if(abgSub==='faq') h+=renderAbgFAQ();
+  return h;
+}
+
+function renderAbgSIR(){
   var h=theoryCard('amber',
-    'Desde 2022, la <strong>sensibilidad intermedia (I)</strong> ya no significa "dudoso". Significa <strong>sensible usando dosis incrementadas</strong> (EUCAST). La CMI no ha cambiado: ha cambiado lo que sabemos sobre como dosificar.',
-    '<ul><li><strong>EUCAST 2022-2024:</strong> la categoria "I" se redefine como "Susceptible, Increased Exposure" → sensible con <span class="hl">dosis incrementadas</span></li><li><strong>Fundamento PK/PD:</strong> simulaciones Montecarlo demuestran que con dosis altas, la probabilidad de exito terapeutico es <span class="dose">&ge;90%</span> en microorganismos "I"</li><li><strong>Perfusion extendida</strong> (3-4h) en betalactamicos: optimiza el tiempo sobre CMI (T&gt;MIC), parametro clave de eficacia</li><li><strong>En hueso:</strong> compartimento con penetracion limitada → las dosis incrementadas son especialmente importantes en infecciones osteoarticulares</li><li>Un antibiograma con "I" <strong>NO es un fracaso</strong>. Es una oportunidad de optimizar dosificacion</li></ul>',
+    'El antibiograma evalua <em>in vitro</em> la respuesta de una bacteria a antibioticos. El resultado se expresa en <strong>categorias S, I y R</strong> segun puntos de corte EUCAST, basados en datos PK/PD y correlacion clinica.',
+    '<ul><li><strong>Metodo:</strong> la bacteria se enfrenta a concentraciones crecientes de antibiotico. Se mide la <strong>CMI</strong> (concentracion minima inhibitoria) en &#181;g/mL</li><li><strong>Puntos de corte:</strong> umbrales cientificos (no arbitrarios) que predicen probabilidad de exito con dosificacion estandar o incrementada</li><li><strong>Correlacion clinica:</strong> &gt;90% de concordancia entre sensibilidad in vitro y respuesta clinica cuando se respetan los principios PK/PD</li><li><strong>EUCAST 2022:</strong> redefinio la "I" como "sensible con exposicion aumentada" — no significa "dudoso"</li><li><strong>En hueso:</strong> la penetracion es solo el <span class="dose">10-30%</span> de la concentracion plasmatica → las dosis incrementadas son criticas</li></ul>',
     'EUCAST 2024 | PRIOAM | Macarena');
 
   // S / I / R visual cards
   h+='<div class="sir-grid">';
-  // S
   h+='<div class="sir-card s"><div class="sir-letter">S</div>';
   h+='<div class="sir-label">Sensible</div>';
-  h+='<div class="sir-desc">El microorganismo es inhibido con las concentraciones alcanzables con <strong>dosis estandar</strong>.</div>';
+  h+='<div class="sir-desc">Alta probabilidad (&gt;90%) de exito con <strong>dosis estandar</strong>. Sin mecanismos de resistencia significativos.</div>';
   h+='<div class="sir-action">Dosis habitual, via recomendada</div></div>';
-  // I
   h+='<div class="sir-card i"><div class="sir-letter">I</div>';
   h+='<div class="sir-label">Sensibilidad Intermedia</div>';
-  h+='<div class="sir-desc">Sensible usando <strong>dosis incrementadas</strong>. La CMI esta en un rango donde dosis altas o perfusion extendida logran concentraciones eficaces.</div>';
+  h+='<div class="sir-desc">Sensible con <strong>dosis incrementadas</strong>. La CMI esta en un rango donde la dosificacion estandar es marginal, pero dosis altas o perfusion extendida logran &gt;90% de exito.</div>';
   h+='<div class="sir-action">Dosis incrementada + perfusion extendida</div></div>';
-  // R
   h+='<div class="sir-card r"><div class="sir-letter">R</div>';
   h+='<div class="sir-label">Resistente</div>';
-  h+='<div class="sir-desc">El microorganismo <strong>no es inhibido</strong> ni siquiera con dosis maximas. Fracaso terapeutico esperable.</div>';
+  h+='<div class="sir-desc"><strong>No inhibido</strong> ni con dosis maximas. Mecanismos de resistencia estables (betalactamasas, bombas de eflujo, alteracion de diana).</div>';
   h+='<div class="sir-action">Cambiar de antibiotico</div></div>';
   h+='</div>';
 
-  // Key message box
   h+='<div class="note-box warn" style="margin:16px 0;font-size:14px;"><strong style="display:block;margin-bottom:4px;">Concepto clave</strong>';
   h+='"I" = Sensibilidad Intermedia = <strong>sensible con dosis incrementadas</strong>. La clave es <strong>dosificar mas</strong>, no cambiar de antibiotico.</div>';
-
-  // Dose table
-  h+='<div style="margin-top:20px;"><div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin-bottom:8px;">Tabla de dosis incrementadas</div>';
-  h+='<div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Antibioticos relevantes en infecciones osteoarticulares. Usar la dosis incrementada cuando el antibiograma reporta "I" (sensibilidad intermedia).</div>';
-  h+='<div class="table-wrap"><table class="di-table">';
-  h+='<thead><tr><th>Antibiotico</th><th>Dosis estandar (S)</th><th>Dosis incrementada (I)</th><th>Indicacion COT</th></tr></thead>';
-  h+='<tbody>';
-  DOSIS_INCREMENTADAS.forEach(function(fam){
-    h+='<tr class="di-family"><td colspan="4">'+esc(fam.family)+'</td></tr>';
-    fam.items.forEach(function(d){
-      h+='<tr>';
-      h+='<td style="font-weight:600;">'+esc(d.drug)+'</td>';
-      h+='<td class="dose-std">'+esc(d.std)+'</td>';
-      h+='<td class="dose-inc">'+esc(d.inc)+'</td>';
-      h+='<td class="dose-note">'+esc(d.note)+'</td>';
-      h+='</tr>';
-    });
-  });
-  h+='</tbody></table></div></div>';
 
   // Quick reference — collapsible
   h+=renderCollapsible('sir-ref','Que hacer ante una sensibilidad intermedia (I)','amber',
@@ -1625,15 +1653,216 @@ function renderAntibiograma(){
     'Vancomicina no tiene categoria "I" (EUCAST). La optimizacion se hace mediante <strong>monitorizacion de niveles sericos</strong> (valle 15-20 &#181;g/mL). No requiere dosis incrementadas sino ajuste por niveles.'+
     '</div>'
   );
+  h+='<div class="info-card" style="margin-top:16px;"><strong>Referencias</strong> '+makeRef('EUCAST 2024')+' '+makeRef('PRIOAM')+' '+makeRef('Macarena')+'</div>';
+  return h;
+}
 
-  // References
-  h+='<div class="info-card" style="margin-top:16px;"><strong>Referencias</strong>';
-  h+=makeRef('EUCAST 2024')+' ';
-  h+=makeRef('PRIOAM')+' ';
-  h+=makeRef('Macarena');
+function renderAbgConceptos(){
+  var h='';
+  // CMI
+  h+='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin-bottom:12px;">Concentracion Minima Inhibitoria (CMI)</div>';
+  h+='<div class="info-card" style="margin-top:0;"><p style="margin-bottom:8px;">La <strong>CMI</strong> es la concentracion mas baja de antibiotico (en &#181;g/mL) capaz de inhibir el crecimiento visible de una bacteria. Se determina por microdilución en caldo o E-test.</p>';
+  h+='<div class="note-box warn" style="margin:8px 0;"><strong style="display:block;margin-bottom:4px;">Error frecuente</strong>La CMI de ceftazidima 0.5 &#181;g/mL NO es "mejor" que CMI de meropenem 1 &#181;g/mL. <strong>Solo se pueden comparar CMI del mismo farmaco entre distintas cepas</strong>, nunca entre farmacos diferentes (tienen distintos puntos de corte, farmacocinetica y penetracion).</div>';
   h+='</div>';
 
+  // PK/PD
+  h+='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin:20px 0 12px;">Farmacocinetica / Farmacodinamica (PK/PD)</div>';
+  h+='<div class="pkpd-grid">';
+  h+='<div class="pkpd-card"><div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--sky);font-weight:600;margin-bottom:6px;">Farmacocinetica (PK)</div>';
+  h+='<div style="font-size:13px;color:var(--text-muted);">Que hace el cuerpo con el farmaco: absorcion, distribucion, metabolismo y eliminacion. Determina las concentraciones alcanzables en plasma y tejidos.</div></div>';
+  h+='<div class="pkpd-card"><div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--violet);font-weight:600;margin-bottom:6px;">Farmacodinamica (PD)</div>';
+  h+='<div style="font-size:13px;color:var(--text-muted);">Que hace el farmaco al microorganismo: inhibicion de pared (betalactamicos), de proteinas (linezolid), de acidos nucleicos (quinolonas). Define como mata.</div></div>';
+  h+='</div>';
+
+  // PK/PD table
+  h+='<div class="table-wrap" style="margin-top:12px;"><table class="di-table">';
+  h+='<thead><tr><th>Clase</th><th>Parametro predictivo</th><th>Objetivo</th><th>Implicacion</th></tr></thead><tbody>';
+  h+='<tr><td style="font-weight:600;">Betalactamicos</td><td>T&gt;CMI (tiempo sobre CMI)</td><td>40-60% del intervalo</td><td>Intervalos cortos o perfusion extendida</td></tr>';
+  h+='<tr><td style="font-weight:600;">Aminoglucosidos</td><td>Cmax/CMI (pico/CMI)</td><td>&ge; 10</td><td>Dosis unica diaria, picos altos</td></tr>';
+  h+='<tr><td style="font-weight:600;">Fluorquinolonas</td><td>AUC24/CMI (area bajo curva)</td><td>&ge; 125 (grave)</td><td>Dosis estandar suele ser suficiente</td></tr>';
+  h+='<tr><td style="font-weight:600;">Vancomicina</td><td>AUC24/CMI</td><td>&ge; 400</td><td>Monitorizar niveles sericos</td></tr>';
+  h+='</tbody></table></div>';
+
+  // Penetracion osea
+  h+='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin:20px 0 12px;">Penetracion osea: por que importa</div>';
+  h+='<div class="info-card" style="margin-top:0;">';
+  h+='<p style="margin-bottom:8px;">La concentracion de antibiotico en hueso es tipicamente <strong>10-30% de la concentracion plasmatica</strong>. Factores: liposolubilidad, union a proteinas, grado de inflamacion local.</p>';
+  h+='<div style="background:var(--sky-light);border-radius:var(--radius-sm);padding:12px;margin:8px 0;font-family:\'Source Code Pro\',monospace;font-size:12px;line-height:1.7;">';
+  h+='<div style="font-weight:600;margin-bottom:4px;">Ejemplo: Osteomielitis, S. aureus, CMI cefazolina = 1 &#181;g/mL</div>';
+  h+='Objetivo minimo en hueso: &ge; 1 &#181;g/mL<br>';
+  h+='Penetracion esperada: ~20% del plasma<br>';
+  h+='Plasma requerido: 1 / 0.20 = <span style="color:var(--sky);font-weight:700;">5 &#181;g/mL</span><br>';
+  h+='Con margen 3x: <span style="color:var(--sky);font-weight:700;">15 &#181;g/mL</span><br><br>';
+  h+='Cefazolina 1 g/8h → ~10 &#181;g/mL plasma → <span style="color:var(--red);font-weight:700;">INSUFICIENTE</span><br>';
+  h+='Cefazolina 2 g/8h → ~20 &#181;g/mL plasma → <span style="color:var(--emerald);font-weight:700;">ADECUADO</span>';
+  h+='</div>';
+  h+='<p style="margin-top:8px;font-style:italic;">Por esto en infecciones oseas, incluso con "S", se usan dosis altas. Y con "I" es obligatorio incrementar.</p>';
+  h+='</div>';
+
+  // Perfusion extendida
+  h+='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin:20px 0 12px;">Perfusion extendida en betalactamicos</div>';
+  h+='<div class="pkpd-grid">';
+  h+='<div class="pkpd-card" style="border-left:3px solid var(--red);">';
+  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--red);font-weight:600;margin-bottom:6px;">Suboptimo: bolo rapido</div>';
+  h+='<div style="font-size:12px;font-family:\'Source Code Pro\',monospace;color:var(--text-muted);line-height:1.6;">';
+  h+='Ceftazidima 2 g IV bolo 5 min c/12h<br>';
+  h+='Pico: 50-60 &#181;g/mL (muy alto)<br>';
+  h+='Cae bajo CMI en ~5h<br>';
+  h+='T&gt;CMI = 5h/12h = <span style="color:var(--red);font-weight:600;">41% (marginal)</span>';
+  h+='</div></div>';
+  h+='<div class="pkpd-card" style="border-left:3px solid var(--emerald);">';
+  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--emerald);font-weight:600;margin-bottom:6px;">Optimo: perfusion 3h</div>';
+  h+='<div style="font-size:12px;font-family:\'Source Code Pro\',monospace;color:var(--text-muted);line-height:1.6;">';
+  h+='Ceftazidima 2 g IV perfusion 3h c/8h<br>';
+  h+='Pico sostenido: 30-40 &#181;g/mL<br>';
+  h+='Mantiene &gt; CMI todo el intervalo<br>';
+  h+='T&gt;CMI = <span style="color:var(--emerald);font-weight:600;">&gt;90% (optimo)</span>';
+  h+='</div></div>';
+  h+='</div>';
+  h+='<div class="note-box" style="margin-top:8px;"><strong>Recomendacion:</strong> En infecciones oseas, usar perfusion minima de 30 minutos (ideal 3-4 horas) para maximizar T&gt;CMI. Es el gold standard en osteomielitis e infeccion protesica.</div>';
+
+  // Escalada/desescalada
+  h+=renderCollapsible('esc','Escalada y desescalada de cobertura','amber',
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">'+
+    '<div style="background:var(--red-light);border-radius:var(--radius-sm);padding:12px;">'+
+    '<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--red);font-weight:600;margin-bottom:6px;">Escalar (ampliar espectro)</div>'+
+    '<div style="font-size:13px;margin-bottom:4px;">&#8226; Fracaso clinico a los 7-10 dias</div>'+
+    '<div style="font-size:13px;margin-bottom:4px;">&#8226; Empeoramiento clinico o nuevos cultivos +</div>'+
+    '<div style="font-size:13px;">&#8226; Alergia/intolerancia al farmaco actual</div>'+
+    '</div>'+
+    '<div style="background:var(--emerald-light);border-radius:var(--radius-sm);padding:12px;">'+
+    '<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--emerald);font-weight:600;margin-bottom:6px;">Desescalar (restringir espectro)</div>'+
+    '<div style="font-size:13px;margin-bottom:4px;">&#8226; Respuesta favorable (afebril, PCR descendente)</div>'+
+    '<div style="font-size:13px;margin-bottom:4px;">&#8226; Cultivo sensible a antibiotico de menor espectro</div>'+
+    '<div style="font-size:13px;">&#8226; Paso a oral secuencial (sem 3-6 en protesica)</div>'+
+    '</div></div>'+
+    '<div class="note-box warn" style="margin-top:8px;"><strong>NUNCA desescalar</strong> en infeccion protesica aguda &lt;2 semanas. Requiere IV minimo 4 semanas.</div>'
+  );
+  h+='<div class="info-card" style="margin-top:16px;"><strong>Referencias</strong> '+makeRef('EUCAST 2024')+' '+makeRef('PRIOAM')+' '+makeRef('Macarena')+'</div>';
   return h;
+}
+
+function renderAbgAlgoritmo(){
+  var A='<div class="algo-arrow"><svg viewBox="0 0 24 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="26"/><polyline points="6,20 12,28 18,20"/></svg></div>';
+  var h='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin-bottom:4px;">Algoritmo: interpretacion de antibiograma en infeccion osea</div>';
+  h+='<div style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Flujo de decision desde la recepcion del antibiograma hasta la prescripcion final.</div>';
+  h+='<div class="algo-flow">';
+
+  // Step 1: Recepcion
+  h+='<div class="algo-step step-q"><div style="display:flex;align-items:center;"><span class="algo-num">1</span><strong>Recibo el antibiograma</strong></div>';
+  h+='<div style="font-size:13px;color:var(--text-muted);margin-top:4px;margin-left:30px;">Revisar cada antibiotico: anotar categoria (S, I o R) y CMI si esta disponible</div></div>';
+  h+=A;
+
+  // Step 2: Hay R?
+  h+='<div class="algo-step step-q"><div style="display:flex;align-items:center;"><span class="algo-num">2</span><strong>El antibiotico que estoy usando aparece como R?</strong></div>';
+  h+='<div class="algo-branch">';
+  h+='<div class="algo-branch-card yes"><div class="algo-branch-label">No (S o I)</div>El antibiotico puede funcionar. Ir al paso 3.</div>';
+  h+='<div class="algo-branch-card no"><div class="algo-branch-label">Si (R)</div><strong>Cambiar de antibiotico.</strong> Buscar alternativa con S o I en el antibiograma. Elegir el de menor espectro eficaz.</div>';
+  h+='</div></div>';
+  h+=A;
+
+  // Step 3: Hay I?
+  h+='<div class="algo-step step-q"><div style="display:flex;align-items:center;"><span class="algo-num">3</span><strong>Mi antibiotico aparece como I (sensibilidad intermedia)?</strong></div>';
+  h+='<div class="algo-branch">';
+  h+='<div class="algo-branch-card yes"><div class="algo-branch-label">No (S)</div>Mantener <strong>dosis estandar</strong>. En infeccion osea, considerar igualmente dosis altas por baja penetracion.</div>';
+  h+='<div class="algo-branch-card no" style="background:var(--amber-light);border-left-color:var(--amber);"><div class="algo-branch-label" style="color:#92400e;">Si (I)</div><strong>Usar dosis incrementada</strong> segun tabla EUCAST. Si es betalactamico: perfusion extendida 3-4h.</div>';
+  h+='</div></div>';
+  h+=A;
+
+  // Step 4: Protesica?
+  h+='<div class="algo-step step-q"><div style="display:flex;align-items:center;"><span class="algo-num">4</span><strong>Es infeccion protesica articular?</strong></div>';
+  h+='<div class="algo-branch">';
+  h+='<div class="algo-branch-card yes"><div class="algo-branch-label">No</div>Proceder con la prescripcion (paso 5).</div>';
+  h+='<div class="algo-branch-card no" style="background:var(--amber-light);border-left-color:var(--amber);"><div class="algo-branch-label" style="color:#92400e;">Si</div><strong>Consultar con Enfermedades Infecciosas</strong> (obligatorio). Consensuar antibiotico, duracion y estrategia quirurgica.</div>';
+  h+='</div></div>';
+  h+=A;
+
+  // Step 5: Prescripcion
+  h+='<div class="algo-step step-end"><div style="display:flex;align-items:center;"><span class="algo-num">5</span><strong>Prescripcion final</strong></div>';
+  h+='<div style="margin-top:8px;margin-left:30px;font-size:13px;">';
+  h+='<div style="display:grid;grid-template-columns:auto 1fr;gap:4px 12px;">';
+  h+='<span style="color:var(--text-light);font-weight:600;">Farmaco</span><span>Especifico segun antibiograma</span>';
+  h+='<span style="color:var(--text-light);font-weight:600;">Dosis</span><span>Estandar (S) o incrementada (I)</span>';
+  h+='<span style="color:var(--text-light);font-weight:600;">Perfusion</span><span>Min 30 min; ideal 3-4h si betalactamico</span>';
+  h+='<span style="color:var(--text-light);font-weight:600;">Duracion</span><span>4-6 sem osteomielitis; 3-6 meses protesica</span>';
+  h+='<span style="color:var(--text-light);font-weight:600;">Documentar</span><span>"Dosis incrementada por categoria I (EUCAST)" si aplica</span>';
+  h+='</div></div></div>';
+  h+=A;
+
+  // Step 6: Monitorizacion
+  h+='<div class="algo-step step-warn"><div style="display:flex;align-items:center;"><span class="algo-num">6</span><strong>Monitorizacion</strong></div>';
+  h+='<div style="margin-top:8px;margin-left:30px;font-size:13px;">';
+  h+='<div style="display:grid;grid-template-columns:auto 1fr;gap:4px 12px;">';
+  h+='<span style="color:var(--text-light);font-weight:600;">Dia 7-10</span><span>Evaluar respuesta clinica (fiebre, PCR, herida)</span>';
+  h+='<span style="color:var(--text-light);font-weight:600;">Semanal</span><span>PCR / VSG; hemograma si linezolid</span>';
+  h+='<span style="color:var(--text-light);font-weight:600;">Si bacteriemia</span><span>Hemocultivos de control</span>';
+  h+='<span style="color:var(--text-light);font-weight:600;">Sem 6-8</span><span>RM de control para evaluar resolucion</span>';
+  h+='<span style="color:var(--text-light);font-weight:600;">Sin mejoria</span><span>Repetir cultivos, escalar cobertura, valorar cirugia</span>';
+  h+='</div></div></div>';
+
+  h+='</div>';// close algo-flow
+  h+='<div class="info-card" style="margin-top:16px;"><strong>Referencias</strong> '+makeRef('EUCAST 2024')+' '+makeRef('PRIOAM')+' '+makeRef('Macarena')+'</div>';
+  return h;
+}
+
+function renderAbgDosis(){
+  var h='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin-bottom:8px;">Tabla de dosis incrementadas</div>';
+  h+='<div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Antibioticos relevantes en infecciones osteoarticulares. Usar la dosis incrementada cuando el antibiograma reporta "I" (sensibilidad intermedia). Perfusion extendida indicada especialmente en betalactamicos.</div>';
+  h+='<div class="table-wrap"><table class="di-table">';
+  h+='<thead><tr><th>Antibiotico</th><th>Dosis estandar (S)</th><th>Dosis incrementada (I)</th><th>Indicacion COT</th></tr></thead>';
+  h+='<tbody>';
+  DOSIS_INCREMENTADAS.forEach(function(fam){
+    h+='<tr class="di-family"><td colspan="4">'+esc(fam.family)+'</td></tr>';
+    fam.items.forEach(function(d){
+      h+='<tr>';
+      h+='<td style="font-weight:600;">'+esc(d.drug)+'</td>';
+      h+='<td class="dose-std">'+esc(d.std)+'</td>';
+      h+='<td class="dose-inc">'+esc(d.inc)+'</td>';
+      h+='<td class="dose-note">'+esc(d.note)+'</td>';
+      h+='</tr>';
+    });
+  });
+  h+='</tbody></table></div>';
+
+  h+='<div class="note-box" style="margin-top:12px;"><strong>Nota sobre vancomicina:</strong> No tiene categoria "I" (EUCAST). La optimizacion se hace mediante <strong>monitorizacion de niveles sericos</strong> (valle 15-20 &#181;g/mL).</div>';
+  h+='<div class="info-card" style="margin-top:16px;"><strong>Referencias</strong> '+makeRef('EUCAST 2024')+' '+makeRef('PRIOAM')+' '+makeRef('Macarena')+'</div>';
+  return h;
+}
+
+var FAQ_DATA=[
+  {q:'Si sale "I" en el antibiograma, es resistente?',
+   a:'<strong>No.</strong> "I" significa sensible con dosis incrementadas. La CMI es la misma que un "S" antiguo; lo que cambio es que ahora sabemos que necesitas dosificar mas. Con dosis incrementadas, la probabilidad de exito es &gt;90%.'},
+  {q:'Puedo usar fluorquinolona en vez de incrementar la dosis del betalactamico?',
+   a:'En infecciones osteoarticulares, <strong>no como primera linea</strong>. Los betalactamicos siguen siendo gold standard. Las fluorquinolonas tienen excelente penetracion osea pero menor actividad bactericida en protesica y riesgo de resistencia. <strong>Si usar fluorquinolona</strong>: como terapia secuencial oral (semanas 3-6) tras fase IV inicial.'},
+  {q:'Cuanto tiempo mantener la dosis incrementada?',
+   a:'Toda la fase IV: <strong>4-6 semanas</strong> en osteomielitis, <strong>4-6 semanas</strong> post-desbridamiento en protesica aguda, <strong>6 semanas minimo</strong> en protesica tardia. Al pasar a oral, la dosis incrementada ya no aplica (farmacocinetica diferente).'},
+  {q:'Necesito medir niveles sericos?',
+   a:'<strong>Vancomicina: SI</strong> (valle 15-20 &#181;g/mL). <strong>Betalactamicos: no es rutina</strong>, pero considerar si fracaso clinico. <strong>Fluorquinolonas: no</strong> (farmacocinetica predecible). <strong>Linezolid:</strong> hemograma semanal (toxicidad hematologica).'},
+  {q:'La perfusion extendida es siempre necesaria?',
+   a:'En infecciones oseas: <strong>obligatoria si "I"</strong> para betalactamicos. <strong>Recomendada aunque sea "S"</strong> porque mejora T&gt;CMI y penetracion osea. Minimo 30 minutos; ideal 3-4 horas. Requiere acceso venoso adecuado.'},
+  {q:'Por que usar vancomicina si el "I" es de un betalactamico?',
+   a:'Si el paciente tiene SAMR (oxacilina R), es resistente a <strong>todos los betalactamicos</strong> (cefalosporinas, carbapenemas, penicilinas). En ese caso vancomicina es la primera linea. Ademas, en infeccion postoperatoria nosocomial, se anade vancomicina empiricamente hasta descartar SAMR (10-30% de S. aureus nosocomial).'},
+  {q:'Que es la CMI y puedo comparar entre antibioticos?',
+   a:'La CMI (concentracion minima inhibitoria) es la concentracion mas baja que inhibe el crecimiento. <strong>Solo se puede comparar entre cepas del mismo farmaco</strong>, nunca entre farmacos diferentes. Ceftazidima CMI 0.5 no es "mejor" que meropenem CMI 1 — tienen distintos puntos de corte, farmacocinetica y mecanismos.'}
+];
+
+function renderAbgFAQ(){
+  var h='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin-bottom:12px;">Preguntas frecuentes</div>';
+  FAQ_DATA.forEach(function(f,i){
+    var uid='faq'+i;
+    h+='<div class="faq-item">';
+    h+='<button class="faq-q" onclick="toggleFaq(\''+uid+'\',this)"><span class="faq-arr">&#9654;</span>'+esc(f.q)+'</button>';
+    h+='<div class="faq-a" id="'+uid+'">'+f.a+'</div>';
+    h+='</div>';
+  });
+  h+='<div class="info-card" style="margin-top:16px;"><strong>Referencias</strong> '+makeRef('EUCAST 2024')+' '+makeRef('PRIOAM')+' '+makeRef('Macarena')+'</div>';
+  return h;
+}
+
+function toggleFaq(uid,btn){
+  var el=document.getElementById(uid);
+  el.classList.toggle('open');
+  btn.classList.toggle('open');
 }
 
 function filterMicroSearch(){
