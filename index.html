@@ -1869,7 +1869,7 @@ function renderAbgAlgoritmo(){
 
 function renderAbgDosis(){
   var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;"><div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;">Tabla de dosis incrementadas</div>';
-  h+='<a href="https://www.eucast.org/clinical_breakpoints" target="_blank" rel="noopener" class="di-badge" style="text-decoration:none;cursor:pointer;">Tabla EUCAST 2024 &#8599;</a></div>';
+  h+='<span class="di-badge" style="cursor:pointer;" onclick="abgSub=\'dosis\';refreshCurrentView();">Ver tabla de dosis</span></div>';
   h+='<div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Antibioticos relevantes en infecciones osteoarticulares. Usar la dosis incrementada cuando el antibiograma reporta "I" (sensibilidad intermedia). Perfusion extendida indicada especialmente en betalactamicos.</div>';
   h+='<div class="table-wrap"><table class="di-table">';
   h+='<thead><tr><th>Antibiotico</th><th>Dosis estandar (S)</th><th>Dosis incrementada (I)</th><th>Indicacion COT</th></tr></thead>';
@@ -1888,6 +1888,7 @@ function renderAbgDosis(){
   h+='</tbody></table></div>';
 
   h+='<div class="note-box" style="margin-top:12px;"><strong>Nota sobre vancomicina:</strong> No tiene categoria "I" (EUCAST). La optimizacion se hace mediante <strong>monitorizacion de niveles sericos</strong> (valle 15-20 &#181;g/mL).</div>';
+  h+='<div class="note-box" style="margin-top:8px;">Esta tabla es una seleccion de antibioticos relevantes para COT. La tabla completa de puntos de corte esta disponible en <a href="https://www.eucast.org/clinical_breakpoints" target="_blank" rel="noopener">EUCAST Clinical Breakpoints &#8599;</a></div>';
   h+='<div class="info-card" style="margin-top:16px;"><strong>Referencias</strong> '+makeRef('EUCAST 2024')+' '+makeRef('PRIOAM')+' '+makeRef('Macarena')+'</div>';
   return h;
 }
