@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espectro Antibacteriano</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1a3a5c">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e8edf4;--surface:rgba(255,255,255,0.55);--surface-solid:#fff;--surface2:rgba(255,255,255,0.35);
+  --border:rgba(255,255,255,0.5);--text:#1a1a2e;--text-muted:#555666;--text-light:#8890a4;
+  --sky:#0284c7;--sky-light:rgba(224,242,254,0.6);
+  --violet:#7c3aed;--violet-light:rgba(237,233,254,0.6);
+  --emerald:#10b981;--emerald-light:rgba(209,250,229,0.6);
+  --amber:#f59e0b;--amber-light:rgba(254,243,199,0.6);
+  --radius-sm:10px;--radius:16px;--glass-blur:16px;
+  --shadow:0 8px 32px rgba(0,0,0,0.04);
+  --transition:all 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+[data-theme="dark"]{
+  --bg:#111827;--surface:rgba(31,41,55,0.6);--surface-solid:#1f2937;--surface2:rgba(40,50,68,0.5);
+  --border:rgba(255,255,255,0.08);--text:#f1f5f9;--text-muted:#a8b8cc;--text-light:#64748b;
+  --sky-light:rgba(2,132,199,0.15);--violet-light:rgba(124,58,237,0.15);
+  --emerald-light:rgba(16,185,129,0.15);--amber-light:rgba(245,158,11,0.15);
+  --shadow:0 8px 32px rgba(0,0,0,0.2);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:13px;line-height:1.4;}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+.app-header{background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%);color:#fff;padding:12px 16px;position:sticky;top:0;z-index:100;}
+.app-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#38bdf8,#a78bfa);}
+[data-theme="dark"] .app-header{background:linear-gradient(135deg,#111827 0%,#1e293b 50%,#2d3748 100%);}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;gap:10px;max-width:1400px;margin:0 auto;flex-wrap:wrap;}
+.hdr-left{display:flex;align-items:center;gap:12px;}
+.hdr-title{font-family:'Source Serif 4',serif;font-size:15px;font-weight:700;}
+.hdr-sub{font-family:'Source Code Pro',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.6);}
+.btn-back{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:999px;font-family:'Source Code Pro',monospace;font-size:10px;background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);cursor:pointer;transition:var(--transition);text-decoration:none;}
+.btn-back:hover{background:rgba(255,255,255,0.2);color:#fff;text-decoration:none;}
+.sky-toggle{--s:18px;position:relative;cursor:pointer;width:calc(var(--s)*2.4);height:calc(var(--s)*1.2);display:block;}
+.sky-toggle input{display:none;}
+.sky-toggle .trk{position:absolute;inset:0;border-radius:999px;background:linear-gradient(135deg,#87CEEB,#60a5fa);transition:var(--transition);overflow:hidden;}
+.sky-toggle input:checked~.trk{background:linear-gradient(135deg,#1e293b,#334155);}
+.sky-toggle .th{position:absolute;top:2px;left:2px;width:calc(var(--s)*1.2 - 4px);height:calc(var(--s)*1.2 - 4px);border-radius:50%;background:#fbbf24;transition:var(--transition);}
+.sky-toggle input:checked~.trk .th{left:calc(100% - var(--s)*1.2 + 2px);background:#94a3b8;}
+.controls{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:8px 16px;max-width:1400px;margin:0 auto;}
+.search-box{padding:6px 12px;font-size:12px;font-family:'Source Sans 3',sans-serif;border:none;border-radius:var(--radius-sm);background:var(--bg);color:var(--text);box-shadow:inset 2px 2px 4px #cacfd9,inset -2px -2px 4px #eaeff5;outline:none;width:180px;transition:var(--transition);}
+[data-theme="dark"] .search-box{background:var(--surface2);box-shadow:inset 2px 2px 4px rgba(0,0,0,0.35),inset -2px -2px 4px rgba(55,65,81,0.25);}
+.search-box:focus{box-shadow:0 0 0 2px rgba(2,132,199,0.15),inset 2px 2px 4px #cacfd9,inset -2px -2px 4px #eaeff5;}
+.filter-btn{padding:4px 10px;border-radius:999px;font-size:10px;font-weight:600;font-family:'Source Code Pro',monospace;background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;transition:var(--transition);}
+.filter-btn:hover,.filter-btn.active{border-color:var(--sky);color:var(--sky);background:var(--sky-light);}
+.legend{padding:6px 16px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;max-width:1400px;margin:0 auto;}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-muted);}
+.legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+.table-wrapper{overflow-x:auto;padding:8px 16px 30px;max-width:1400px;margin:0 auto;}
+table{border-collapse:separate;border-spacing:2px;min-width:1050px;width:100%;}
+.col-group-header{padding:5px 6px;text-align:center;font-size:10px;font-weight:700;font-family:'Source Code Pro',monospace;letter-spacing:.06em;text-transform:uppercase;border-radius:6px;}
+.col-header{padding:6px 4px;text-align:center;font-size:9px;font-weight:600;font-family:'Source Code Pro',monospace;text-transform:uppercase;border-radius:5px 5px 0 0;}
+.cgh-gram-pos{background:var(--sky-light);color:var(--sky);}
+.cgh-gram-neg{background:var(--emerald-light);color:var(--emerald);}
+.cgh-anaerob{background:var(--violet-light);color:var(--violet);}
+.cgh-special{background:var(--amber-light);color:var(--amber);}
+.ch-gram-pos{background:rgba(2,132,199,0.08);color:var(--sky);}
+.ch-gram-neg{background:rgba(16,185,129,0.08);color:var(--emerald);}
+.ch-anaerob{background:rgba(124,58,237,0.08);color:var(--violet);}
+.ch-special{background:rgba(245,158,11,0.08);color:var(--amber);}
+.ch-family{background:var(--surface2);color:var(--text-muted);}
+.family-cell{padding:5px 8px;font-size:9px;font-weight:700;font-family:'Source Code Pro',monospace;letter-spacing:.06em;text-transform:uppercase;text-align:center;vertical-align:middle;border-radius:6px;min-width:80px;color:#fff;}
+.drug-cell{padding:4px 7px;font-size:11px;font-weight:500;vertical-align:middle;border-radius:6px;background:var(--surface);border:1px solid var(--border);white-space:nowrap;min-width:140px;backdrop-filter:blur(8px);}
+.drug-cell .dn{font-family:'Source Code Pro',monospace;font-size:10px;}
+.drug-cell .dc{font-size:9px;color:var(--text-muted);margin-top:1px;}
+.drug-cell.choice .dn{color:var(--sky);font-weight:700;}
+.drug-cell.choice::before{content:'* ';font-size:9px;color:var(--amber);}
+.act-cell{text-align:center;vertical-align:middle;border-radius:6px;cursor:pointer;transition:transform .12s;min-width:48px;height:30px;}
+.act-cell:hover{transform:scale(1.1);z-index:10;position:relative;}
+.act-none{background:var(--surface2);}
+.act-strong{background:linear-gradient(135deg,#065f46,#059669);}
+.act-bacteriostat{background:linear-gradient(135deg,#1e40af,#3b82f6);}
+.act-variable{background:repeating-linear-gradient(135deg,#92400e 0,#92400e 4px,#b45309 4px,#b45309 8px);}
+.act-choice{background:linear-gradient(135deg,#047857,#10b981);box-shadow:0 0 8px rgba(16,185,129,.25);}
+.act-choice-stat{background:linear-gradient(135deg,#1e40af,#3b82f6);box-shadow:0 0 8px rgba(59,130,246,.25);}
+.act-special{background:linear-gradient(135deg,#6d28d9,#8b5cf6);}
+.act-cell .ai{font-size:12px;line-height:30px;display:block;color:rgba(255,255,255,0.95);}
+.act-cell .al{font-size:7px;color:rgba(255,255,255,.6);line-height:1;display:block;padding-bottom:3px;}
+tr.drug-row:hover .drug-cell{border-color:rgba(2,132,199,.3);background:var(--sky-light);}
+tr.hidden{display:none;}
+.tooltip{position:fixed;background:var(--surface-solid);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:12px;pointer-events:none;z-index:999;max-width:240px;box-shadow:var(--shadow);display:none;}
+.tt-drug{font-family:'Source Serif 4',serif;font-weight:700;font-size:13px;color:var(--text);margin-bottom:3px;}
+.tt-org{color:var(--sky);font-size:11px;margin-bottom:6px;}
+.tt-badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:9px;font-weight:700;font-family:'Source Code Pro',monospace;}
+.tb-bact{background:var(--emerald-light);color:var(--emerald);}
+.tb-stat{background:var(--sky-light);color:var(--sky);}
+.tb-choice{background:rgba(16,185,129,0.2);color:#047857;}
+[data-theme="dark"] .tb-choice{color:var(--emerald);}
+.tb-var{background:var(--amber-light);color:#92400e;}
+[data-theme="dark"] .tb-var{color:var(--amber);}
+.tb-spec{background:var(--violet-light);color:var(--violet);}
+.org-filter-wrap{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 16px 6px;max-width:1400px;margin:0 auto;}
+.org-filter-label{font-family:'Source Code Pro',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);white-space:nowrap;}
+.org-btn{padding:3px 8px;border-radius:999px;font-size:9px;font-weight:600;font-family:'Source Code Pro',monospace;background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;transition:var(--transition);white-space:nowrap;}
+.org-btn:hover{border-color:var(--sky);color:var(--sky);}
+.org-btn.active{background:var(--sky-light);border-color:var(--sky);color:var(--sky);}
+.col-hl{box-shadow:inset 0 0 0 2px var(--sky);border-radius:6px;}
+.col-header.col-hl{background:var(--sky-light)!important;color:var(--sky)!important;font-weight:700;}
+.stats-bar{background:var(--surface);backdrop-filter:blur(var(--glass-blur));border-top:1px solid var(--border);padding:6px 16px;display:flex;gap:16px;font-size:10px;color:var(--text-muted);position:sticky;bottom:0;flex-wrap:wrap;}
+.stat-val{color:var(--text);font-weight:700;}
+.notes{padding:12px 16px;max-width:1400px;margin:0 auto;}
+.notes h3{font-family:'Source Code Pro',monospace;font-size:10px;color:var(--text-light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.note-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;}
+.note-item{background:var(--surface);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;font-size:11px;color:var(--text-muted);line-height:1.5;}
+.note-item strong{font-family:'Source Code Pro',monospace;color:var(--text);font-size:10px;display:block;margin-bottom:2px;}
+@media(max-width:600px){.controls{padding:6px 10px;}.search-box{width:140px;}.filter-btn{font-size:9px;padding:3px 8px;}}
+</style>
+</head>
+<body>
+<div class="tooltip" id="tooltip"><div class="tt-drug" id="tt-drug"></div><div class="tt-org" id="tt-org"></div><div id="tt-badge"></div></div>
+
+<header class="app-header">
+  <div class="hdr-inner">
+    <div class="hdr-left">
+      <a href="index.html" class="btn-back">&#8592; Infecciones</a>
+      <div><div class="hdr-title">Espectro Antibacteriano</div><div class="hdr-sub">42 antibioticos &middot; 15 microorganismos &middot; 2025</div></div>
+    </div>
+    <label class="sky-toggle" title="Modo oscuro"><input type="checkbox" id="themeToggle" onchange="toggleTheme()"><div class="trk"><div class="th"></div></div></label>
+  </div>
+</header>
+
+<div class="controls">
+  <input class="search-box" type="text" id="si" placeholder="Buscar antibiotico..." oninput="applyF()" aria-label="Buscar antibiotico">
+  <span style="font-family:'Source Code Pro',monospace;font-size:9px;color:var(--text-light);margin:0 2px;">|</span>
+  <input class="search-box" type="text" id="orgSearch" placeholder="Buscar germen..." oninput="searchOrg()" aria-label="Buscar germen" style="width:150px;">
+  <button class="filter-btn" id="bGP" onclick="tF('gp')">GRAM +</button>
+  <button class="filter-btn" id="bGN" onclick="tF('gn')">GRAM -</button>
+  <button class="filter-btn" id="bAN" onclick="tF('an')">Anaerobios</button>
+  <button class="filter-btn" id="bCH" onclick="tF('ch')">De eleccion</button>
+  <button class="filter-btn" onclick="resetF()">&#8634; Reset</button>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:linear-gradient(135deg,#047857,#10b981)"></div>De eleccion (bactericida)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#059669"></div>Activo (bactericida)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Activo (bacteriostatico)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#b45309"></div>Sensibilidad variable</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Especiales</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--surface2);border:1px solid var(--border)"></div>Sin actividad</div>
+</div>
+
+<div class="org-filter-wrap" id="orgFilterWrap">
+  <span class="org-filter-label">Filtrar por germen:</span>
+</div>
+
+<div class="table-wrapper">
+<table>
+<thead>
+<tr>
+  <th class="col-group-header ch-family" rowspan="3">Familia</th>
+  <th class="col-group-header ch-family" rowspan="3">Antibiotico</th>
+  <th class="col-group-header cgh-gram-pos" colspan="4">GRAM + Cocos</th>
+  <th class="col-group-header cgh-gram-neg" colspan="7">GRAM - Bacilos</th>
+  <th class="col-group-header cgh-anaerob" colspan="3">Anaerobios</th>
+  <th class="col-group-header cgh-special">Especiales</th>
+</tr>
+<tr>
+  <th class="col-header ch-gram-pos" colspan="2">Enterococcus</th>
+  <th class="col-header ch-gram-pos" colspan="2">Staphylococcus</th>
+  <th class="col-header ch-gram-neg" colspan="4">Enterobacterias / PSA</th>
+  <th class="col-header ch-gram-pos" colspan="3">Otros</th>
+  <th class="col-header ch-anaerob" colspan="3">Anaerobios</th>
+  <th class="col-header ch-special">Atipicos</th>
+</tr>
+<tr>
+  <th class="col-header ch-gram-pos">E.faecalis</th><th class="col-header ch-gram-pos">E.faecium</th>
+  <th class="col-header ch-gram-pos">SAMR</th><th class="col-header ch-gram-pos">SAMS</th>
+  <th class="col-header ch-gram-neg">E.coli/Kleb</th><th class="col-header ch-gram-neg">Proteus</th>
+  <th class="col-header ch-gram-neg">P.aerug.</th><th class="col-header ch-gram-neg">ESCAPM</th>
+  <th class="col-header ch-gram-pos">Strepto</th><th class="col-header ch-gram-neg">N.gonorr.</th>
+  <th class="col-header ch-gram-neg">H.influen.</th>
+  <th class="col-header ch-anaerob">B.fragilis</th><th class="col-header ch-anaerob">C.diff(NO)</th>
+  <th class="col-header ch-anaerob">C.diff</th><th class="col-header ch-special">Atipicos</th>
+</tr>
+</thead>
+<tbody id="tb"></tbody>
+</table>
+</div>
+
+<div class="notes">
+  <h3>Notas clinicas</h3>
+  <div class="note-grid">
+    <div class="note-item"><strong>ESCAPM</strong>Enterobacter, Serratia, Citrobacter, Aeromonas, Providencia, Morganella. Riesgo induccion AmpC.</div>
+    <div class="note-item"><strong>SAMR</strong>S. aureus meticilin-resistente. Opciones: vancomicina, linezolid, daptomicina, ceftarolina.</div>
+    <div class="note-item"><strong>Resistencias</strong>El perfil varia por zona. Consultar boletin de resistencias del hospital.</div>
+    <div class="note-item"><strong>Nota general</strong>Tabla orientativa. No sustituye el criterio clinico ni el antibiograma local.</div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <span>Antibioticos visibles: <span class="stat-val" id="sv">-</span></span>
+  <span>Familias: <span class="stat-val">10</span></span>
+  <span>Organismos: <span class="stat-val">15</span></span>
+</div>
+
+<script>
+var FC={bl:'rgba(2,132,199,0.85)',mc:'rgba(16,185,129,0.7)',qn:'rgba(245,158,11,0.75)',ag:'rgba(239,68,68,0.65)',tt:'rgba(180,83,9,0.7)',vr:'rgba(71,85,105,0.75)',gl:'rgba(124,58,237,0.75)',ox:'rgba(16,185,129,0.65)',lp:'rgba(180,83,9,0.65)',pl:'rgba(100,116,139,0.7)'};
+var D=[
+  {f:"Betalactamicos\nPenicilinas",fc:FC.bl,n:"PENICILINA G / V",c:null,ch:false,a:[0,0,0,0,0,0,0,0,4,0,0,0,0,0,6]},
+  {f:"",fc:FC.bl,n:"AMOXICILINA",c:null,ch:false,a:[1,0,0,0,1,1,0,0,4,0,1,0,0,0,0]},
+  {f:"",fc:FC.bl,n:"AMPICILINA",c:null,ch:false,a:[1,0,0,0,1,1,0,0,4,0,1,0,0,0,6]},
+  {f:"",fc:FC.bl,n:"AMOXICILINA/AC.CLAVULANICO",c:"Amoxiclav",ch:true,a:[1,0,0,1,1,1,0,3,4,0,1,0,0,1,6]},
+  {f:"",fc:FC.bl,n:"CLOXACILINA",c:null,ch:false,a:[0,0,0,4,0,0,0,0,0,0,0,0,0,0,0]},
+  {f:"",fc:FC.bl,n:"PIPERACILINA/TAZOBACTAM",c:"Pip/Tazo",ch:true,a:[1,0,0,1,4,4,4,3,4,0,1,0,0,1,0]},
+  {f:"Betalactamicos\nCefalosporinas",fc:FC.bl,n:"CEFAZOLINA",c:"1a gen",ch:false,a:[0,0,0,1,1,1,0,0,1,0,0,0,0,0,0]},
+  {f:"",fc:FC.bl,n:"CEFOXITINA",c:"2a gen",ch:false,a:[0,0,0,1,1,1,0,0,1,0,0,3,0,0,0]},
+  {f:"",fc:FC.bl,n:"CEFUROXIMA",c:"2a gen",ch:false,a:[0,0,0,1,1,1,0,0,1,0,1,0,0,0,0]},
+  {f:"",fc:FC.bl,n:"CEFOTAXIMA",c:"3a gen",ch:false,a:[0,0,0,1,1,1,0,0,4,1,1,0,0,0,0]},
+  {f:"",fc:FC.bl,n:"CEFTRIAXONA",c:"3a gen",ch:true,a:[0,0,0,1,4,4,0,0,4,1,1,0,0,0,0]},
+  {f:"",fc:FC.bl,n:"CEFTAZIDIMA",c:"3a anti-PSA",ch:false,a:[0,0,0,0,1,1,4,0,0,0,1,0,0,0,0]},
+  {f:"",fc:FC.bl,n:"CEFEPIMA",c:"4a gen",ch:false,a:[0,0,0,1,1,1,4,3,1,0,1,0,0,0,0]},
+  {f:"",fc:FC.bl,n:"CEFTAROLINA",c:"5a anti-SAMR",ch:true,a:[0,0,4,4,1,1,0,0,4,0,1,0,0,0,0]},
+  {f:"",fc:FC.bl,n:"CEFTOLOZANO/TAZOBACTAM",c:null,ch:false,a:[0,0,0,0,1,1,4,0,0,0,0,0,0,0,0]},
+  {f:"Betalactamicos\nCarbapenems",fc:FC.bl,n:"IMIPENEM/CILASTATINA",c:null,ch:true,a:[4,0,0,4,4,4,4,4,4,0,1,1,0,1,0]},
+  {f:"",fc:FC.bl,n:"MEROPENEM / DORIPENEM",c:null,ch:false,a:[4,0,0,4,4,4,4,4,4,0,1,1,0,1,0]},
+  {f:"",fc:FC.bl,n:"ERTAPENEM",c:null,ch:false,a:[0,0,0,1,4,4,0,0,4,0,1,1,0,1,0]},
+  {f:"Monobactam",fc:FC.bl,n:"AZTREONAM",c:null,ch:false,a:[0,0,0,0,1,1,1,0,0,0,1,0,0,0,0]},
+  {f:"Macrolidos",fc:FC.mc,n:"AZITROMICINA",c:null,ch:false,a:[0,0,0,0,0,0,0,0,2,0,2,0,0,0,6]},
+  {f:"",fc:FC.mc,n:"CLARITROMICINA",c:null,ch:false,a:[0,0,0,0,0,0,0,0,2,0,2,0,0,0,6]},
+  {f:"",fc:FC.mc,n:"ERITROMICINA",c:null,ch:false,a:[0,0,0,0,0,0,0,0,2,0,2,0,0,0,6]},
+  {f:"Quinolonas",fc:FC.qn,n:"CIPROFLOXACINO",c:null,ch:false,a:[0,0,0,0,4,4,4,3,0,0,1,0,0,0,0]},
+  {f:"",fc:FC.qn,n:"LEVOFLOXACINO",c:null,ch:false,a:[1,0,0,1,4,4,4,3,1,0,1,0,0,0,6]},
+  {f:"",fc:FC.qn,n:"MOXIFLOXACINO",c:null,ch:false,a:[1,0,0,1,1,1,0,3,4,0,1,3,0,1,6]},
+  {f:"Aminoglucosidos",fc:FC.ag,n:"AMIKACINA",c:null,ch:false,a:[0,0,0,1,4,4,4,3,0,0,1,0,0,0,0]},
+  {f:"",fc:FC.ag,n:"GENTAMICINA",c:null,ch:false,a:[0,0,0,1,4,4,4,3,0,0,1,0,0,0,6]},
+  {f:"",fc:FC.ag,n:"TOBRAMICINA",c:null,ch:false,a:[0,0,0,1,4,4,4,3,0,0,1,0,0,0,0]},
+  {f:"Tetraciclinas",fc:FC.tt,n:"DOXICICLINA",c:null,ch:false,a:[0,0,0,0,0,0,0,0,2,0,0,0,0,0,6]},
+  {f:"",fc:FC.tt,n:"TIGECICLINA",c:null,ch:false,a:[1,1,0,1,1,1,0,4,1,0,0,1,0,1,0]},
+  {f:"Varios",fc:FC.vr,n:"RIFAMPICINA",c:null,ch:false,a:[0,0,0,2,0,0,0,0,2,0,0,0,0,0,0]},
+  {f:"",fc:FC.vr,n:"CLINDAMICINA",c:null,ch:false,a:[0,0,0,1,0,0,0,0,1,0,0,1,0,1,0]},
+  {f:"",fc:FC.vr,n:"METRONIDAZOL",c:null,ch:false,a:[0,0,0,0,0,0,0,0,0,0,0,4,0,4,0]},
+  {f:"",fc:FC.vr,n:"FIDAXOMICINA",c:null,ch:false,a:[0,0,0,0,0,0,0,0,0,0,0,0,0,4,0]},
+  {f:"",fc:FC.vr,n:"FOSFOMICINA",c:null,ch:false,a:[1,0,0,1,4,0,0,0,0,0,0,0,0,0,0]},
+  {f:"",fc:FC.vr,n:"COTRIMOXAZOL (TMP/SMX)",c:null,ch:false,a:[0,0,0,0,1,1,0,3,0,0,1,0,0,0,6]},
+  {f:"Glucopeptidos",fc:FC.gl,n:"VANCOMICINA",c:null,ch:true,a:[4,4,4,4,0,0,0,0,4,0,0,0,4,0,0]},
+  {f:"",fc:FC.gl,n:"TEICOPLANINA",c:null,ch:false,a:[4,4,4,4,0,0,0,0,4,0,0,0,0,0,0]},
+  {f:"",fc:FC.gl,n:"TELAVANCINA",c:null,ch:false,a:[4,4,4,4,0,0,0,0,4,0,0,0,0,0,0]},
+  {f:"Oxazolidinonas",fc:FC.ox,n:"LINEZOLID",c:null,ch:false,a:[5,5,5,5,0,0,0,0,5,0,0,0,5,0,0]},
+  {f:"",fc:FC.ox,n:"TEDIZOLID",c:null,ch:false,a:[5,5,5,5,0,0,0,0,5,0,0,0,5,0,0]},
+  {f:"Lipopeptido",fc:FC.lp,n:"DAPTOMICINA",c:null,ch:false,a:[4,4,4,4,0,0,0,0,4,0,0,0,0,0,0]},
+  {f:"Polimixina",fc:FC.pl,n:"COLISTINA",c:"Colistimetato",ch:false,a:[0,0,0,0,4,4,4,4,0,0,0,0,0,0,0]}
+];
+var OR=["E.faecalis","E.faecium","SAMR","SAMS","E.coli/Kleb","Proteus","P.aeruginosa","ESCAPM","Streptococcus","N.gonorrhoeae","H.influenzae","B.fragilis","C.diff(NO)","C.diff","Atipicos"];
+var AC={
+  0:{cls:"act-none",i:"",l:"",t:"Sin actividad",b:""},
+  1:{cls:"act-strong",i:"\u25CF",l:"activo",t:"Activo - bactericida",b:"tb-bact"},
+  2:{cls:"act-bacteriostat",i:"\u25CB",l:"estat.",t:"Activo - bacteriostatico",b:"tb-stat"},
+  3:{cls:"act-variable",i:"\u25D1",l:"var.",t:"Sensibilidad variable",b:"tb-var"},
+  4:{cls:"act-choice",i:"\u2605",l:"elecc.",t:"De eleccion - bactericida",b:"tb-choice"},
+  5:{cls:"act-choice-stat",i:"\u2606",l:"elecc.",t:"De eleccion - bacteriostatico",b:"tb-stat"},
+  6:{cls:"act-special",i:"\u25C6",l:"espec.",t:"Organismos especiales",b:"tb-spec"}
+};
+
+function toggleTheme(){var d=document.getElementById('themeToggle').checked;document.documentElement.setAttribute('data-theme',d?'dark':'');localStorage.setItem('theme',d?'dark':'light');localStorage.setItem('theme-date',new Date().toDateString());}
+(function(){var s=localStorage.getItem('theme'),sd=localStorage.getItem('theme-date'),t=new Date().toDateString(),d=false;if(s&&sd===t)d=s==='dark';else{var h=new Date().getHours();d=h>=21||h<7;if(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)d=true;}if(d){document.documentElement.setAttribute('data-theme','dark');document.getElementById('themeToggle').checked=true;}})();
+
+function cfr(si){var c=1;for(var i=si+1;i<D.length;i++){if(D[i].f==="")c++;else break;}return c;}
+function render(){
+  var tb=document.getElementById("tb"),lf="",h="";
+  D.forEach(function(d,di){
+    var isN=d.f!==""&&d.f!==lf;if(isN)lf=d.f;
+    h+='<tr class="drug-row" data-i="'+di+'" data-n="'+d.n.toLowerCase()+'">';
+    if(isN)h+='<td class="family-cell" rowspan="'+cfr(di)+'" style="background:'+d.fc+'">'+d.f.replace('\n','<br>')+'</td>';
+    h+='<td class="drug-cell '+(d.ch?'choice':'')+'"><div class="dn">'+d.n+'</div>'+(d.c?'<div class="dc">'+d.c+'</div>':'')+'</td>';
+    d.a.forEach(function(v,ci){var a=AC[v];h+='<td class="act-cell '+a.cls+'" data-d="'+d.n+'" data-o="'+OR[ci]+'" data-v="'+v+'" onmouseenter="sT(event,this)" onmouseleave="hT()">';if(v!==0)h+='<span class="ai">'+a.i+'</span><span class="al">'+a.l+'</span>';h+='</td>';});
+    h+='</tr>';
+  });
+  tb.innerHTML=h;uS();
+}
+var tt=document.getElementById("tooltip");
+function sT(e,c){var v=parseInt(c.dataset.v);if(!v){hT();return;}var a=AC[v];document.getElementById("tt-drug").textContent=c.dataset.d;document.getElementById("tt-org").textContent="-> "+c.dataset.o;document.getElementById("tt-badge").innerHTML='<span class="tt-badge '+a.b+'">'+a.t+'</span>';tt.style.display="block";pT(e);}
+function hT(){tt.style.display="none";}
+function pT(e){tt.style.left=Math.min(e.clientX+12,window.innerWidth-250)+"px";tt.style.top=Math.min(e.clientY+12,window.innerHeight-90)+"px";}
+document.addEventListener("mousemove",function(e){if(tt.style.display==="block")pT(e);});
+var AF=new Set();
+function tF(f){AF.has(f)?AF.delete(f):AF.add(f);applyF();uB();}
+function resetF(){AF.clear();document.getElementById("si").value="";document.getElementById("orgSearch").value="";tOrg(-1);applyF();uB();}
+function applyF(){var s=document.getElementById("si").value.toLowerCase();document.querySelectorAll(".drug-row").forEach(function(row){var d=D[parseInt(row.dataset.i)],show=true;if(s&&!d.n.toLowerCase().includes(s)&&!(d.c||"").toLowerCase().includes(s))show=false;if(AF.has("ch")&&!d.a.some(function(v){return v===4||v===5;}))show=false;if(AF.has("gp")&&!d.a.slice(0,4).some(function(v){return v>0;}))show=false;if(AF.has("gn")&&!d.a.slice(4,11).some(function(v){return v>0;}))show=false;if(AF.has("an")&&!d.a.slice(11,14).some(function(v){return v>0;}))show=false;row.classList.toggle("hidden",!show);});uS();}
+function uB(){[["gp","bGP"],["gn","bGN"],["an","bAN"],["ch","bCH"]].forEach(function(p){document.getElementById(p[1]).classList.toggle("active",AF.has(p[0]));});}
+function uS(){document.getElementById("sv").textContent=document.querySelectorAll(".drug-row:not(.hidden)").length;}
+
+// ── Organism filter/highlight ──
+var activeOrg=-1;
+function buildOrgBtns(){
+  var w=document.getElementById("orgFilterWrap"),h='<span class="org-filter-label">Filtrar por germen:</span>';
+  OR.forEach(function(name,i){h+='<button class="org-btn" data-oi="'+i+'" onclick="tOrg('+i+')">'+name+'</button>';});
+  h+='<button class="org-btn" onclick="tOrg(-1)" style="opacity:.7;">&#8634;</button>';
+  w.innerHTML=h;
+}
+function tOrg(i){
+  activeOrg=activeOrg===i?-1:i;
+  // Update buttons
+  document.querySelectorAll(".org-btn[data-oi]").forEach(function(b){b.classList.toggle("active",parseInt(b.dataset.oi)===activeOrg);});
+  // Highlight column headers (row 3 = individual org names)
+  var headers=document.querySelectorAll("thead tr:last-child th");
+  headers.forEach(function(th,ci){if(ci>=2)th.classList.toggle("col-hl",activeOrg>=0&&(ci-2)===activeOrg);});
+  // Highlight activity cells
+  document.querySelectorAll(".drug-row").forEach(function(row){
+    var cells=row.querySelectorAll(".act-cell");
+    cells.forEach(function(c,ci){c.classList.toggle("col-hl",activeOrg>=0&&ci===activeOrg);});
+  });
+  // If organism selected, sort/filter: bring rows with activity for that organism to top (optional: just highlight)
+}
+function searchOrg(){
+  var q=document.getElementById("orgSearch").value.toLowerCase().trim();
+  if(!q){tOrg(-1);return;}
+  for(var i=0;i<OR.length;i++){if(OR[i].toLowerCase().indexOf(q)!==-1){tOrg(i);return;}}
+}
+buildOrgBtns();
+render();
+</script>
+</body>
+</html>

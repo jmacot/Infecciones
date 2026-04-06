@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infecciones COT</title>
+<meta name="description" content="Guia de antibioterapia en infecciones musculoesqueleticas">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Infecciones">
+<meta name="theme-color" content="#1a3a5c">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   VARIABLES
+   ═══════════════════════════════════════════ */
+:root{
+  --bg:#e8edf4;--surface:rgba(255,255,255,0.55);--surface-solid:#fff;--surface2:rgba(255,255,255,0.35);
+  --border:rgba(255,255,255,0.5);--border-light:rgba(255,255,255,0.6);
+  --text:#1a1a2e;--text-muted:#555666;--text-light:#8890a4;
+  --sky:#0284c7;--sky-light:rgba(224,242,254,0.6);
+  --violet:#7c3aed;--violet-light:rgba(237,233,254,0.6);
+  --emerald:#10b981;--emerald-light:rgba(209,250,229,0.6);
+  --amber:#f59e0b;--amber-light:rgba(254,243,199,0.6);
+  --red:#ef4444;--red-light:rgba(254,226,226,0.6);
+  --slate:#475569;--slate-light:rgba(71,85,105,0.1);
+  --radius-sm:10px;--radius:16px;--radius-lg:24px;--glass-blur:16px;
+  --shadow:0 8px 32px rgba(0,0,0,0.04);--shadow-hover:0 16px 48px rgba(0,0,0,0.08);
+  --transition:all 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+[data-theme="dark"]{
+  --bg:#111827;--surface:rgba(31,41,55,0.6);--surface-solid:#1f2937;--surface2:rgba(40,50,68,0.5);
+  --border:rgba(255,255,255,0.08);--border-light:rgba(255,255,255,0.1);
+  --text:#f1f5f9;--text-muted:#a8b8cc;--text-light:#64748b;
+  --sky-light:rgba(2,132,199,0.15);--violet-light:rgba(124,58,237,0.15);
+  --emerald-light:rgba(16,185,129,0.15);--amber-light:rgba(245,158,11,0.15);
+  --red-light:rgba(239,68,68,0.15);--slate-light:rgba(71,85,105,0.2);
+  --shadow:0 8px 32px rgba(0,0,0,0.2);--shadow-hover:0 16px 48px rgba(0,0,0,0.3);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15px;line-height:1.6;min-height:100vh;}
+a{color:var(--sky);text-decoration:none;}a:hover{text-decoration:underline;}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+/* ═══════════════════════════════════════════
+   SKIP LINK & MESH
+   ═══════════════════════════════════════════ */
+.skip-link{position:absolute;top:-60px;left:8px;background:var(--sky);color:#fff;padding:8px 16px;border-radius:0 0 8px 8px;z-index:9999;font-size:13px;transition:top 0.2s;}.skip-link:focus{top:0;}
+.mesh-bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;}
+.mesh-orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:0.22;animation:glowPulse 8s ease-in-out infinite alternate;}
+[data-theme="dark"] .mesh-orb{opacity:0.1;}
+.orb1{width:500px;height:500px;background:#0284c7;top:-10%;left:-5%;}
+.orb2{width:400px;height:400px;background:#7c3aed;top:30%;right:-8%;animation-delay:2s;}
+.orb3{width:350px;height:350px;background:#10b981;bottom:-5%;left:20%;animation-delay:4s;}
+@keyframes glowPulse{0%{transform:scale(1);}100%{transform:scale(1.15) translate(20px,-15px);}}
+
+/* ═══════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════ */
+.app-header{background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%);color:#fff;padding:16px 20px;position:sticky;top:0;z-index:100;}
+.app-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#38bdf8,#a78bfa);}
+.hdr-glow{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;}
+.hdr-glow.s{width:200px;height:200px;background:rgba(56,189,248,0.35);top:-80px;left:10%;}
+.hdr-glow.v{width:160px;height:160px;background:rgba(167,139,250,0.25);top:-60px;right:15%;}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:1100px;margin:0 auto;position:relative;}
+.hdr-title{font-family:'Source Serif 4',serif;font-size:clamp(1.4rem,3.5vw,1.8rem);font-weight:700;}
+.hdr-sub{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.6);margin-top:2px;}
+[data-theme="dark"] .app-header{background:linear-gradient(135deg,#111827 0%,#1e293b 50%,#2d3748 100%);}
+
+/* ═══════════════════════════════════════════
+   SKY TOGGLE
+   ═══════════════════════════════════════════ */
+.sky-toggle{--s:20px;position:relative;cursor:pointer;width:calc(var(--s)*2.4);height:calc(var(--s)*1.2);display:block;}
+.sky-toggle input{display:none;}
+.sky-toggle .trk{position:absolute;inset:0;border-radius:999px;background:linear-gradient(135deg,#87CEEB,#60a5fa);transition:var(--transition);overflow:hidden;}
+.sky-toggle input:checked~.trk{background:linear-gradient(135deg,#1e293b,#334155);}
+.sky-toggle .th{position:absolute;top:2px;left:2px;width:calc(var(--s)*1.2 - 4px);height:calc(var(--s)*1.2 - 4px);border-radius:50%;background:#fbbf24;transition:var(--transition);box-shadow:0 0 8px rgba(251,191,36,0.5);}
+.sky-toggle input:checked~.trk .th{left:calc(100% - var(--s)*1.2 + 2px);background:#94a3b8;box-shadow:none;}
+@media(max-width:600px){.sky-toggle{--s:16px;}}
+
+/* ═══════════════════════════════════════════
+   ALLERGY PILL (header)
+   ═══════════════════════════════════════════ */
+.allergy-pill{position:relative;display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:999px;font-size:11px;font-weight:600;cursor:pointer;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.75);transition:var(--transition);user-select:none;white-space:nowrap;}
+.allergy-pill:hover{background:rgba(255,255,255,0.22);}
+.allergy-pill.active{background:rgba(245,158,11,0.25);border-color:rgba(245,158,11,0.45);color:#fde68a;}
+.allergy-pill .pill-icon{font-size:13px;}
+.allergy-drop{position:absolute;top:calc(100% + 10px);right:0;background:var(--surface-solid);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;min-width:240px;box-shadow:var(--shadow-hover);z-index:300;display:none;flex-direction:column;gap:8px;}
+.allergy-drop.open{display:flex;}
+.allergy-drop::before{content:'';position:absolute;top:-6px;right:16px;width:10px;height:10px;background:var(--surface-solid);border-left:1px solid var(--border);border-top:1px solid var(--border);transform:rotate(45deg);}
+.allergy-drop-title{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-light);}
+.al-chip{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;transition:var(--transition);background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);user-select:none;}
+.al-chip input[type="checkbox"]{width:16px;height:16px;margin:0;accent-color:var(--amber);}
+.al-chip.on{background:var(--amber-light);border-color:var(--amber);color:#b45309;}
+[data-theme="dark"] .al-chip.on{color:#fbbf24;}
+.allergy-banner{background:var(--amber-light);border:1px solid rgba(245,158,11,0.3);border-radius:var(--radius-sm);padding:8px 14px;margin-bottom:16px;font-size:12px;font-weight:600;color:#92400e;display:none;align-items:center;gap:6px;}
+.allergy-banner.visible{display:flex;}
+[data-theme="dark"] .allergy-banner{color:#fbbf24;}
+
+/* ═══════════════════════════════════════════
+   MAIN CONTAINER
+   ═══════════════════════════════════════════ */
+.container{max-width:1100px;margin:0 auto;padding:20px;}
+
+/* ═══════════════════════════════════════════
+   LANDING
+   ═══════════════════════════════════════════ */
+.landing{animation:fadeInUp .4s ease-out;}
+.landing-section-label{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-light);margin:0 0 10px 4px;}
+.landing-primary{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
+.landing-secondary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+
+/* Primary cards */
+.landing-card{
+  background:var(--surface);backdrop-filter:blur(var(--glass-blur));
+  border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:28px 24px;cursor:pointer;transition:var(--transition);
+  display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;
+}
+.landing-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-hover);}
+.landing-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:24px 24px 0 0;}
+.landing-card[data-color="sky"]::before{background:var(--sky);}
+.landing-card[data-color="violet"]::before{background:var(--violet);}
+.landing-card[data-color="emerald"]::before{background:var(--emerald);}
+.landing-card[data-color="amber"]::before{background:var(--amber);}
+.landing-card[data-color="red"]::before{background:var(--red);}
+.landing-card[data-color="slate"]::before{background:var(--slate);}
+.lc-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;}
+.landing-card[data-color="sky"] .lc-icon{background:var(--sky-light);color:var(--sky);}
+.landing-card[data-color="violet"] .lc-icon{background:var(--violet-light);color:var(--violet);}
+.landing-card[data-color="emerald"] .lc-icon{background:var(--emerald-light);color:var(--emerald);}
+.landing-card[data-color="amber"] .lc-icon{background:var(--amber-light);color:var(--amber);}
+.landing-card[data-color="red"] .lc-icon{background:var(--red-light);color:var(--red);}
+.landing-card[data-color="slate"] .lc-icon{background:var(--slate-light);color:var(--slate);}
+.lc-title{font-family:'Source Serif 4',serif;font-size:18px;font-weight:600;}
+.lc-desc{font-size:13px;color:var(--text-muted);line-height:1.4;}
+.lc-badge{font-family:'Source Code Pro',monospace;font-size:10px;padding:2px 8px;border-radius:999px;display:inline-block;width:fit-content;}
+.landing-card[data-color="sky"] .lc-badge{background:var(--sky-light);color:var(--sky);}
+.landing-card[data-color="violet"] .lc-badge{background:var(--violet-light);color:var(--violet);}
+.landing-card[data-color="emerald"] .lc-badge{background:var(--emerald-light);color:var(--emerald);}
+.landing-card[data-color="amber"] .lc-badge{background:var(--amber-light);color:var(--amber);}
+.landing-card[data-color="red"] .lc-badge{background:var(--red-light);color:var(--red);}
+.landing-card[data-color="slate"] .lc-badge{background:var(--slate-light);color:var(--slate);}
+/* Arrow indicator on primary cards */
+.lc-arrow{position:absolute;right:20px;bottom:20px;width:32px;height:32px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;transition:var(--transition);color:var(--text-light);}
+.lc-arrow svg{width:14px;height:14px;}
+.landing-card:hover .lc-arrow{transform:translateX(3px);color:var(--text);}
+
+/* Secondary (utility) cards */
+.landing-card.secondary{
+  padding:16px 20px;flex-direction:row;align-items:center;gap:14px;
+  border-radius:var(--radius);opacity:.85;
+}
+.landing-card.secondary:hover{opacity:1;}
+.landing-card.secondary .lc-icon{width:38px;height:38px;border-radius:10px;flex-shrink:0;}
+.landing-card.secondary .lc-title{font-size:14px;}
+.landing-card.secondary .lc-desc{font-size:12px;}
+.landing-card.secondary .lc-badge{font-size:9px;padding:1px 6px;}
+.landing-card.secondary .lc-arrow{display:none;}
+
+/* ═══════════════════════════════════════════
+   SECTION VIEW
+   ═══════════════════════════════════════════ */
+.section-view{display:none;animation:fadeInUp .35s ease-out;}
+.section-view.active{display:block;}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.btn-back{
+  display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:999px;
+  font-family:'Source Code Pro',monospace;font-size:11px;font-weight:500;
+  background:var(--surface);backdrop-filter:blur(var(--glass-blur));
+  border:1px solid var(--border);color:var(--text-muted);cursor:pointer;transition:var(--transition);
+}
+.btn-back:hover{border-color:var(--sky);color:var(--sky);}
+.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.2rem,3vw,1.6rem);font-weight:700;}
+
+/* ═══════════════════════════════════════════
+   EXPANDABLE THEORY CARD
+   ═══════════════════════════════════════════ */
+.theory-card{
+  background:var(--surface);backdrop-filter:blur(var(--glass-blur));
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px 20px;margin-bottom:20px;position:relative;overflow:hidden;
+}
+.theory-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;}
+.theory-card[data-accent="sky"]::before{background:var(--sky);}
+.theory-card[data-accent="violet"]::before{background:var(--violet);}
+.theory-card[data-accent="emerald"]::before{background:var(--emerald);}
+.theory-card[data-accent="amber"]::before{background:var(--amber);}
+.theory-card[data-accent="red"]::before{background:var(--red);}
+.theory-head{display:flex;align-items:start;gap:10px;}
+.theory-icon{font-size:20px;flex-shrink:0;margin-top:2px;}
+.theory-brief{font-size:14px;color:var(--text-muted);}
+.theory-full{max-height:0;overflow:hidden;transition:max-height 0.5s ease-out;font-size:13px;color:var(--text-muted);line-height:1.7;}
+.theory-full.open{max-height:600px;}
+.theory-toggle{
+  display:inline-flex;align-items:center;gap:4px;margin-top:8px;padding:4px 12px;
+  border-radius:999px;font-size:11px;font-weight:600;cursor:pointer;
+  background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);transition:var(--transition);
+}
+.theory-toggle:hover{border-color:var(--sky);color:var(--sky);}
+.theory-toggle .arr{transition:transform 0.3s;display:inline-block;}
+.theory-toggle.open .arr{transform:rotate(180deg);}
+
+/* ═══════════════════════════════════════════
+   SUB-TABS & FORM
+   ═══════════════════════════════════════════ */
+.sub-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.sub-tab{padding:6px 14px;border-radius:999px;font-size:12px;font-weight:600;background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;transition:var(--transition);}
+.sub-tab:hover{border-color:var(--sky);color:var(--sky);}
+.sub-tab.active{background:var(--sky-light);border-color:var(--sky);color:var(--sky);}
+.form-label{font-family:'Source Code Pro',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-light);margin-bottom:4px;display:block;}
+.form-select{padding:10px 14px;font-size:14px;font-family:'Source Sans 3',sans-serif;border:1px solid var(--border);border-radius:var(--radius-sm);background:rgba(255,255,255,0.4);backdrop-filter:blur(8px);color:var(--text);outline:none;transition:var(--transition);width:100%;max-width:420px;}
+[data-theme="dark"] .form-select{background:var(--surface2);}
+.form-select:focus{border-color:rgba(2,132,199,0.5);box-shadow:0 0 0 3px rgba(2,132,199,0.08);}
+.search-input{width:100%;padding:12px 16px 12px 40px;font-size:16px;font-family:'Source Sans 3',sans-serif;border:none;border-radius:var(--radius);background:var(--bg);color:var(--text);box-shadow:inset 3px 3px 6px #cacfd9,inset -3px -3px 6px #eaeff5;outline:none;transition:var(--transition);}
+[data-theme="dark"] .search-input{background:var(--surface2);box-shadow:inset 3px 3px 6px rgba(0,0,0,0.35),inset -3px -3px 6px rgba(55,65,81,0.25);}
+.search-input:focus{box-shadow:0 0 0 3px rgba(2,132,199,0.15),inset 3px 3px 6px #cacfd9,inset -3px -3px 6px #eaeff5;}
+[data-theme="dark"] .search-input:focus{box-shadow:0 0 0 3px rgba(2,132,199,0.15),inset 3px 3px 6px rgba(0,0,0,0.35),inset -3px -3px 6px rgba(55,65,81,0.25);}
+.search-wrap{position:relative;margin-bottom:16px;}
+.search-wrap .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-light);pointer-events:none;}
+
+/* ═══════════════════════════════════════════
+   TREATMENT CASCADE
+   ═══════════════════════════════════════════ */
+.cascade{display:flex;flex-direction:column;align-items:center;gap:0;margin:8px 0 16px;}
+.cascade-card{
+  width:100%;max-width:520px;
+  background:var(--surface);backdrop-filter:blur(var(--glass-blur));
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px 20px;position:relative;overflow:hidden;
+}
+.cascade-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;}
+.cascade-card.iv::before{background:var(--sky);}
+.cascade-card.oral::before{background:var(--emerald);}
+.cascade-card.total::before{background:var(--violet);}
+.cascade-card.criteria{border:1px dashed var(--amber);background:var(--amber-light);max-width:400px;text-align:center;padding:10px 16px;}
+.cc-label{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.cc-label.iv{color:var(--sky);}.cc-label.oral{color:var(--emerald);}.cc-label.total{color:var(--violet);}.cc-label.crit{color:#b45309;}
+[data-theme="dark"] .cc-label.crit{color:var(--amber);}
+.cc-drug{font-size:15px;font-weight:600;color:var(--text);}
+.cc-detail{font-size:13px;color:var(--text-muted);margin-top:2px;}
+.cc-dur{font-family:'Source Serif 4',serif;font-size:17px;font-weight:700;margin-top:4px;}
+.cc-dur.iv{color:var(--sky);}.cc-dur.oral{color:var(--emerald);}.cc-dur.total{color:var(--violet);}
+.cascade-arrow{display:flex;flex-direction:column;align-items:center;padding:4px 0;}
+.cascade-arrow svg{width:24px;height:32px;color:var(--text-light);animation:arrowPulse 2s ease-in-out infinite;}
+@media(prefers-reduced-motion:reduce){.cascade-arrow svg{animation:none;}}
+@keyframes arrowPulse{0%,100%{opacity:0.4;}50%{opacity:1;}}
+
+/* ═══════════════════════════════════════════
+   NOTES & REFS
+   ═══════════════════════════════════════════ */
+.info-card{background:var(--surface);backdrop-filter:blur(var(--glass-blur));border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-top:12px;font-size:13px;color:var(--text-muted);}
+.info-card strong{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:4px;color:var(--text-light);}
+.ref-tag{font-family:'Source Code Pro',monospace;font-size:9px;color:var(--violet);background:var(--violet-light);padding:1px 6px;border-radius:4px;white-space:nowrap;text-decoration:none;transition:var(--transition);}
+a.ref-tag:hover{background:var(--violet);color:#fff;text-decoration:none;}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;font-family:'Source Code Pro',monospace;}
+.badge-sky{background:var(--sky-light);color:var(--sky);}
+.badge-emerald{background:var(--emerald-light);color:var(--emerald);}
+.badge-amber{background:var(--amber-light);color:var(--amber);}
+.badge-violet{background:var(--violet-light);color:var(--violet);}
+.badge-red{background:var(--red-light);color:var(--red);}
+
+.note-box{background:var(--sky-light);border-left:3px solid var(--sky);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 14px;margin:12px 0;font-size:13px;}
+.note-box.warn{background:var(--amber-light);border-left-color:var(--amber);}
+
+.allergy-alt{background:var(--amber-light);border:1px solid rgba(245,158,11,0.3);border-radius:var(--radius-sm);padding:8px 12px;margin-top:6px;font-size:13px;}
+.allergy-alt::before{content:'Alternativa alergia';display:block;font-family:'Source Code Pro',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--amber);margin-bottom:4px;font-weight:700;}
+
+/* ═══════════════════════════════════════════
+   PROFILAXIS — CATEGORY CARDS
+   ═══════════════════════════════════════════ */
+.profi-cats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.profi-cat{
+  background:var(--surface);backdrop-filter:blur(var(--glass-blur));
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;cursor:pointer;transition:var(--transition);
+  display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;
+}
+.profi-cat::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--sky);border-radius:4px 0 0 4px;}
+.profi-cat:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover);}
+.profi-cat.active{border-color:var(--sky);box-shadow:0 0 0 2px rgba(2,132,199,0.15);}
+.profi-cat .pc-ico{width:44px;height:44px;border-radius:12px;background:var(--sky-light);display:flex;align-items:center;justify-content:center;color:var(--sky);flex-shrink:0;}
+.profi-cat .pc-ico svg{width:22px;height:22px;}
+.profi-cat .pc-title{font-family:'Source Serif 4',serif;font-size:15px;font-weight:600;}
+.profi-cat .pc-count{font-family:'Source Code Pro',monospace;font-size:10px;color:var(--text-light);margin-top:2px;}
+
+/* Procedure selector pills */
+.profi-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
+.profi-pill{
+  padding:8px 16px;border-radius:999px;font-size:13px;font-weight:500;
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--text-muted);cursor:pointer;transition:var(--transition);
+}
+.profi-pill:hover{border-color:var(--sky);color:var(--sky);}
+.profi-pill.active{background:var(--sky-light);border-color:var(--sky);color:var(--sky);font-weight:600;}
+.profi-pill-group{font-family:'Source Code Pro',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-light);padding:6px 0 2px;width:100%;}
+
+/* Prescription result card */
+.rx-card{
+  background:var(--surface);backdrop-filter:blur(var(--glass-blur));
+  border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;animation:fadeInUp .3s ease-out;
+}
+.rx-card-head{padding:14px 20px;background:linear-gradient(135deg,#1e293b,#334155);color:#fff;}
+.rx-card-head h3{font-family:'Source Serif 4',serif;font-size:16px;font-weight:600;}
+.rx-card-body{padding:20px;}
+.rx-row{display:flex;align-items:baseline;gap:10px;margin-bottom:10px;}
+.rx-label{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-light);min-width:80px;flex-shrink:0;}
+.rx-value{font-size:14px;font-weight:600;color:var(--text);}
+.rx-value.drug{color:var(--sky);font-family:'Source Serif 4',serif;font-size:16px;}
+.rx-value.alt{color:var(--amber);font-size:13px;font-weight:500;}
+.rx-divider{height:1px;background:var(--border);margin:12px 0;}
+
+/* Empiric treatment card */
+.empiric-card{
+  background:var(--surface);backdrop-filter:blur(var(--glass-blur));
+  border:1px solid var(--border);border-left:4px solid var(--sky);
+  border-radius:0 var(--radius) var(--radius) 0;
+  padding:14px 18px;margin-bottom:16px;
+}
+.empiric-card .ec-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--sky);font-weight:600;}
+.empiric-card .ec-head svg{width:16px;height:16px;}
+.empiric-card .ec-drug{font-family:'Source Serif 4',serif;font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.empiric-card .ec-alt{font-size:13px;color:var(--amber);margin-top:4px;}
+.empiric-card .ec-note{font-size:12px;color:var(--text-muted);margin-top:6px;font-style:italic;}
+.empiric-card .ec-divider{font-family:'Source Code Pro',monospace;font-size:9px;color:var(--text-light);text-transform:uppercase;letter-spacing:.08em;margin:8px 0 4px;padding-top:6px;border-top:1px dashed var(--border);}
+@media(max-width:700px){.profi-cats{grid-template-columns:1fr;}.rx-row{flex-direction:column;gap:2px;}.rx-label{min-width:0;}}
+
+/* ═══════════════════════════════════════════
+   THEORY HTML CONTENT
+   ═══════════════════════════════════════════ */
+.theory-brief strong,.theory-full strong{color:var(--text);font-weight:600;}
+.theory-brief .dose,.theory-full .dose{font-family:'Source Code Pro',monospace;font-weight:600;color:var(--sky);font-size:13px;}
+[data-theme="dark"] .theory-brief .dose,[data-theme="dark"] .theory-full .dose{color:#38bdf8;}
+.theory-full ul{margin:6px 0 6px 18px;list-style:disc;}
+.theory-full li{margin-bottom:4px;}
+.theory-full .hl{background:var(--sky-light);padding:1px 5px;border-radius:4px;font-weight:600;}
+
+/* ═══════════════════════════════════════════
+   LEGACY TABLE (unused but kept for safety)
+   ═══════════════════════════════════════════ */
+.table-wrap{overflow-x:auto;border-radius:var(--radius-sm);border:1px solid var(--border);}
+.data-table{width:100%;border-collapse:collapse;font-size:13px;}
+.data-table th{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-light);padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);background:var(--surface2);}
+.data-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
+.data-table tr:hover td{background:var(--sky-light);}
+
+/* ═══════════════════════════════════════════
+   SVG ICONS
+   ═══════════════════════════════════════════ */
+.lc-icon svg,.sec-ico svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.theory-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ═══════════════════════════════════════════
+   MICRO SIDEBAR LAYOUT
+   ═══════════════════════════════════════════ */
+.micro-layout{display:grid;grid-template-columns:260px 1fr;gap:16px;align-items:start;}
+.micro-sidebar{background:var(--surface);backdrop-filter:blur(var(--glass-blur));border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;position:sticky;top:90px;}
+.micro-search-wrap{padding:10px 12px;border-bottom:1px solid var(--border);position:relative;}
+.micro-search{width:100%;padding:8px 10px 8px 32px;font-size:13px;font-family:'Source Sans 3',sans-serif;border:none;border-radius:var(--radius-sm);background:var(--bg);color:var(--text);box-shadow:inset 2px 2px 5px #cacfd9,inset -2px -2px 5px #eaeff5;outline:none;transition:var(--transition);}
+[data-theme="dark"] .micro-search{background:var(--surface2);box-shadow:inset 2px 2px 5px rgba(0,0,0,.35),inset -2px -2px 5px rgba(55,65,81,.25);}
+.micro-search:focus{box-shadow:0 0 0 2px rgba(2,132,199,.15),inset 2px 2px 5px #cacfd9,inset -2px -2px 5px #eaeff5;}
+.micro-search-wrap .ico{position:absolute;left:20px;top:50%;transform:translateY(-50%);color:var(--text-light);pointer-events:none;}
+.micro-search-wrap .ico svg{width:14px;height:14px;}
+
+.org-group{border-bottom:1px solid var(--border);}
+.org-group:last-child{border-bottom:none;}
+.org-group-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:10px 14px;font-family:'Source Code Pro',monospace;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;background:none;border:none;color:var(--text-muted);cursor:pointer;transition:var(--transition);}
+.org-group-btn:hover{color:var(--text);background:var(--surface2);}
+.org-group-btn .arr{font-size:9px;transition:transform .25s;display:inline-block;}
+.org-group-btn.open .arr{transform:rotate(90deg);}
+.org-group-btn.open{color:var(--text);background:var(--surface2);}
+.org-list{display:none;padding:2px 0;}
+.org-list.open{display:block;}
+.org-item{display:block;width:100%;padding:8px 14px 8px 22px;font-size:13px;background:none;border:none;color:var(--text-muted);cursor:pointer;text-align:left;transition:var(--transition);border-left:3px solid transparent;}
+.org-item:hover{background:var(--surface2);color:var(--text);}
+.org-item.active{border-left-color:var(--sky);color:var(--sky);background:var(--sky-light);font-weight:600;}
+
+.micro-content{min-height:300px;}
+
+.micro-scenario{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.micro-scenario .sub-tab{padding:5px 12px;}
+
+/* ═══════════════════════════════════════════
+   EMPTY STATE
+   ═══════════════════════════════════════════ */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 24px;color:var(--text-muted);}
+.empty-state svg{width:48px;height:48px;stroke:var(--text-light);fill:none;stroke-width:1.2;margin-bottom:12px;opacity:.5;}
+.empty-state .es-title{font-family:'Source Serif 4',serif;font-size:16px;font-weight:600;color:var(--text-light);margin-bottom:4px;}
+.empty-state .es-text{font-size:13px;max-width:280px;}
+
+/* ═══════════════════════════════════════════
+   ORGANISM RESULT CARD (micro tab)
+   ═══════════════════════════════════════════ */
+.org-card{background:var(--surface);backdrop-filter:blur(var(--glass-blur));border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:16px;}
+.org-card-head{padding:12px 20px;background:linear-gradient(135deg,#1e293b,#334155);color:#fff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.org-card-head h3{font-family:'Source Serif 4',serif;font-size:15px;font-weight:600;}
+.org-card-body{padding:16px 20px;}
+
+/* ═══════════════════════════════════════════
+   FOOTER & DISCLAIMER
+   ═══════════════════════════════════════════ */
+.disclaimer{background:var(--surface);backdrop-filter:blur(24px);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:24px 0;font-size:12px;color:var(--text-muted);line-height:1.6;position:relative;overflow:hidden;}
+.disclaimer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#38bdf8,#a78bfa);}
+.app-footer{text-align:center;padding:20px;font-family:'Source Code Pro',monospace;font-size:11px;color:var(--text-light);border-top:1px solid var(--border);}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+@media(max-width:700px){
+  .landing-primary{grid-template-columns:1fr;}.landing-secondary{grid-template-columns:1fr;}
+  .container{padding:12px;}
+  .landing-card{padding:20px 18px;}
+  .cascade-card,.cascade-card.criteria{max-width:100%;}
+  .allergy-drop{right:-20px;min-width:200px;}
+  .micro-layout{grid-template-columns:1fr;}
+  .micro-sidebar{position:static;max-height:none;}
+}
+@media(max-width:480px){
+  .sub-tabs{gap:4px;}.sub-tab{padding:5px 10px;font-size:11px;}
+  .data-table{font-size:11px;}.data-table th,.data-table td{padding:5px 6px;}
+  .sec-header{flex-wrap:wrap;}
+  input[type="date"],input[type="time"],input[type="datetime-local"]{-webkit-appearance:none;appearance:none;min-width:0;width:100%!important;max-width:calc(100vw - 60px);box-sizing:border-box;min-height:44px;}
+}
+@media print{
+  .app-header,.allergy-pill,.allergy-drop,.allergy-banner,.mesh-bg,.skip-link,.btn-back,.search-wrap,.sub-tabs,.theory-toggle{display:none!important;}
+  .section-view{display:block!important;}
+  .landing{display:none!important;}
+  body{background:#fff;color:#000;}
+  .cascade-card,.info-card,.theory-card,.org-card{break-inside:avoid;box-shadow:none;border:1px solid #ccc;}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido</a>
+<div class="mesh-bg"><div class="mesh-orb orb1"></div><div class="mesh-orb orb2"></div><div class="mesh-orb orb3"></div></div>
+
+<header class="app-header">
+  <div class="hdr-glow s"></div><div class="hdr-glow v"></div>
+  <div class="hdr-inner">
+    <div><div class="hdr-title">Infecciones COT</div><div class="hdr-sub">Guia de antibioterapia musculoesqueletica</div></div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="allergy-pill" id="allergyPill" onclick="toggleAllergyDrop(event)">
+        <span class="pill-icon">&#128137;</span>
+        <span id="allergyLabel">Alergias</span>
+        <span style="font-size:9px;opacity:.6;">&#9660;</span>
+        <div class="allergy-drop" id="allergyDrop" onclick="event.stopPropagation()">
+          <div class="allergy-drop-title">Filtrar por alergias del paciente</div>
+          <label class="al-chip" id="chipBL"><input type="checkbox" onchange="toggleAllergy('bl',this.checked)"> Betalactamicos</label>
+          <label class="al-chip" id="chipQN"><input type="checkbox" onchange="toggleAllergy('qn',this.checked)"> Quinolonas</label>
+          <label class="al-chip" id="chipVC"><input type="checkbox" onchange="toggleAllergy('vc',this.checked)"> Vancomicina</label>
+        </div>
+      </div>
+      <label class="sky-toggle" title="Modo oscuro"><input type="checkbox" id="themeToggle" onchange="toggleTheme()"><div class="trk"><div class="th"></div></div></label>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="container">
+
+<!-- ═══ LANDING ═══ -->
+<div id="landing" class="landing"></div>
+
+<!-- ═══ SECTIONS ═══ -->
+<div id="sec-profilaxis" class="section-view"></div>
+<div id="sec-iap" class="section-view"></div>
+<div id="sec-osteoart" class="section-view"></div>
+<div id="sec-blandas" class="section-view"></div>
+<div id="sec-micro" class="section-view"></div>
+
+<div class="disclaimer">
+  <strong style="display:block;margin-bottom:6px;color:var(--text);font-size:13px;">Aviso importante</strong>
+  Herramienta orientativa. No sustituye el criterio clinico, el antibiograma local ni la consulta con Enfermedades Infecciosas. Ajustar dosis segun funcion renal, hepatica y peso.
+  <div style="margin-top:8px;font-size:11px;">
+    <a href="https://www.guiaprioam.com/" target="_blank" rel="noopener">PRIOAM</a> |
+    <a href="https://antibioterapia.hospitalmacarena.es/" target="_blank" rel="noopener">H. Macarena</a> |
+    ICM 2025 (Estambul) | IDSA PJI (Osmon 2013) | OVIVA (Li, NEJM 2019)
+  </div>
+</div>
+</main>
+
+<footer class="app-footer">Infecciones COT &middot; 2025 &middot; jmacot</footer>
+
+<script>
+// ─────────────────────────────────────────────
+//  HELPERS
+// ─────────────────────────────────────────────
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function normalizar(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+// Reference URL map — specific paths by topic where available
+var REF_URLS=[
+  // Macarena — specific sections
+  {match:'Macarena',text:'profilaxis',url:'https://antibioterapia.hospitalmacarena.es/profilaxis-quirurgica/traumatologia-y-cirugia-ortopedica/'},
+  {match:'Macarena',text:'osteo',url:'https://antibioterapia.hospitalmacarena.es/tratamiento-empirico/infecciones-osteoarticulares/'},
+  {match:'Macarena',text:'artritis',url:'https://antibioterapia.hospitalmacarena.es/tratamiento-empirico/infecciones-osteoarticulares/'},
+  {match:'Macarena',text:'espondilo',url:'https://antibioterapia.hospitalmacarena.es/tratamiento-empirico/infecciones-osteoarticulares/'},
+  {match:'Macarena',text:'partes blandas',url:'https://antibioterapia.hospitalmacarena.es/tratamiento-empirico/infecciones-de-piel-y-partes-blandas/'},
+  {match:'Macarena',text:'celulitis',url:'https://antibioterapia.hospitalmacarena.es/tratamiento-empirico/infecciones-de-piel-y-partes-blandas/'},
+  {match:'Macarena',text:'fascitis',url:'https://antibioterapia.hospitalmacarena.es/tratamiento-empirico/infecciones-de-piel-y-partes-blandas/'},
+  {match:'Macarena',text:'mordedura',url:'https://antibioterapia.hospitalmacarena.es/tratamiento-empirico/infecciones-de-piel-y-partes-blandas/'},
+  {match:'Macarena',text:'pie diabetico',url:'https://antibioterapia.hospitalmacarena.es/tratamiento-empirico/infecciones-de-piel-y-partes-blandas/'},
+  {match:'Macarena',text:'protesica',url:'https://antibioterapia.hospitalmacarena.es/tratamiento-empirico/infecciones-osteoarticulares/'},
+  {match:'Macarena',text:'',url:'https://antibioterapia.hospitalmacarena.es/'},
+  // PRIOAM — specific sections (best known paths)
+  {match:'PRIOAM',text:'profilaxis',url:'https://www.guiaprioam.com/indice-702/profilaxis-antibiotica-en-cirugia/'},
+  {match:'PRIOAM',text:'osteo',url:'https://www.guiaprioam.com/indice-702/osteomielitis/'},
+  {match:'PRIOAM',text:'artritis',url:'https://www.guiaprioam.com/indice-702/artritis-septica/'},
+  {match:'PRIOAM',text:'espondilo',url:'https://www.guiaprioam.com/indice-702/espondilodiscitis/'},
+  {match:'PRIOAM',text:'protesica',url:'https://www.guiaprioam.com/indice-702/infeccion-protesica-articular/'},
+  {match:'PRIOAM',text:'celulitis',url:'https://www.guiaprioam.com/indice-702/celulitis-erisipela/'},
+  {match:'PRIOAM',text:'fascitis',url:'https://www.guiaprioam.com/indice-702/fascitis-necrotizante/'},
+  {match:'PRIOAM',text:'mordedura',url:'https://www.guiaprioam.com/indice-702/mordeduras/'},
+  {match:'PRIOAM',text:'pie diabetico',url:'https://www.guiaprioam.com/indice-702/pie-diabetico/'},
+  {match:'PRIOAM',text:'',url:'https://www.guiaprioam.com/'},
+  // Journals & societies
+  {match:'IDSA PJI',text:'',url:'https://doi.org/10.1093/cid/cis803'},
+  {match:'IDSA/IWGDF',text:'',url:'https://doi.org/10.1002/dmrr.3657'},
+  {match:'IDSA',text:'',url:'https://www.idsociety.org/practice-guideline/skin-and-soft-tissue-infections/'},
+  {match:'OVIVA',text:'',url:'https://doi.org/10.1056/NEJMoa1710926'},
+  {match:'OMS',text:'',url:'https://www.who.int/publications/i/item/9789240048126'}
+];
+
+// Context for which section we're in (set by renderSection)
+var _refContext='';
+
+function makeRef(r){
+  var parts=r.split('|');
+  return parts.map(function(p){
+    p=p.trim();
+    var url=null;
+    // Find best matching URL: prefer context-specific, fall back to generic
+    for(var i=0;i<REF_URLS.length;i++){
+      var ru=REF_URLS[i];
+      if(p.indexOf(ru.match)!==-1){
+        if(ru.text&&_refContext.indexOf(ru.text)!==-1){url=ru.url;break;}
+        if(!ru.text&&!url){url=ru.url;}
+      }
+    }
+    if(url) return '<a href="'+url+'" target="_blank" rel="noopener" class="ref-tag" title="Abrir: '+esc(p)+'">'+esc(p)+' &#8599;</a>';
+    return '<span class="ref-tag">'+esc(p)+'</span>';
+  }).join(' ');
+}
+var ARROW_SVG='<svg viewBox="0 0 24 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="26"/><polyline points="6,20 12,28 18,20"/></svg>';
+
+// SVG Icons (Lucide-style, stroke-based)
+var S0=' fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"';
+var ICO={
+  shield:'<svg viewBox="0 0 24 24"'+S0+'><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  prosthesis:'<svg viewBox="0 0 24 24"'+S0+'><circle cx="9" cy="6" r="3.5"/><path d="M9 9.5V14l3 3v4"/><path d="M6 14h6"/><circle cx="12" cy="21" r="1.5"/></svg>',
+  bone:'<svg viewBox="0 0 24 24"'+S0+'><path d="M18.5 3.5a2 2 0 00-3 0L4.5 14.5a2 2 0 003 3L18.5 6.5a2 2 0 000-3z"/><circle cx="17" cy="5" r="2"/><circle cx="7" cy="19" r="2"/></svg>',
+  bandage:'<svg viewBox="0 0 24 24"'+S0+'><rect x="3" y="11" width="18" height="7" rx="3.5"/><path d="M7 11V8a5 5 0 0110 0v3"/><line x1="10" y1="14" x2="14" y2="14"/></svg>',
+  bacteria:'<svg viewBox="0 0 24 24"'+S0+'><circle cx="12" cy="12" r="4"/><path d="M12 3v5m0 8v5m-9-9h5m8 0h5"/><path d="M5.6 5.6l3.6 3.6m5.6 5.6l3.6 3.6M5.6 18.4l3.6-3.6m5.6-5.6l3.6-3.6"/></svg>',
+  grid:'<svg viewBox="0 0 24 24"'+S0+'><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+  book:'<svg viewBox="0 0 24 24"'+S0+'><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>',
+  search:'<svg viewBox="0 0 24 24"'+S0+'><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>',
+  pointer:'<svg viewBox="0 0 24 24"'+S0+'><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+  flask:'<svg viewBox="0 0 24 24"'+S0+'><path d="M9 3h6M10 3v7.4L4.2 19.5A1.5 1.5 0 005.5 22h13a1.5 1.5 0 001.3-2.5L14 10.4V3"/><path d="M8.5 14h7"/></svg>'
+};
+
+// ─────────────────────────────────────────────
+//  CLINICAL DATA
+// ─────────────────────────────────────────────
+var PROPHYLAXIS=[
+  {proc:'Artroplastia primaria (cadera/rodilla)',drug:'Cefazolina',dose:'2 g IV (3 g si >120 kg)',redose:'Cada 3-4 h',alt:'Vancomicina 15 mg/kg IV',ref:'ICM 2025, 3.1'},
+  {proc:'Revision protesica',drug:'Cefazolina',dose:'2 g IV',redose:'Cada 3-4 h',alt:'Vancomicina 15 mg/kg IV',ref:'ICM 2025, 3.1'},
+  {proc:'Fractura cerrada con osteosintesis',drug:'Cefazolina',dose:'2 g IV',redose:'Cada 3-4 h',alt:'Vancomicina 15 mg/kg IV',ref:'PRIOAM'},
+  {proc:'Fractura abierta Gustilo I-II',drug:'Cefazolina',dose:'2 g IV',redose:'Cada 8h x 24h',alt:'Vancomicina 15 mg/kg IV',ref:'ICM 2025, 3.3'},
+  {proc:'Fractura abierta Gustilo IIIA',drug:'Cefazolina + Gentamicina',dose:'2 g IV + 5 mg/kg/dia',redose:'CFZ c/8h x 72h',alt:'Vancomicina + Gentamicina',ref:'ICM 2025, 3.3'},
+  {proc:'Fractura abierta Gustilo IIIB-C',drug:'Cefazolina + Gentamicina',dose:'2 g IV + 5 mg/kg/dia',redose:'CFZ c/8h x 72h',alt:'Vanco + Genta + Metronidazol',ref:'ICM 2025, 3.3'},
+  {proc:'Artroscopia sin implante',drug:'No recomendada',dose:'-',redose:'-',alt:'-',ref:'PRIOAM'},
+  {proc:'Artroscopia con implante (LCA)',drug:'Cefazolina',dose:'2 g IV',redose:'Dosis unica',alt:'Vancomicina 15 mg/kg IV',ref:'PRIOAM'},
+  {proc:'Columna sin instrumentacion',drug:'Cefazolina',dose:'2 g IV',redose:'Cada 3-4 h',alt:'Vancomicina 15 mg/kg IV',ref:'ICM 2025, 3.1'},
+  {proc:'Columna con instrumentacion',drug:'Cefazolina',dose:'2 g IV',redose:'Cada 3-4h x 24h',alt:'Vancomicina 15 mg/kg IV',ref:'ICM 2025, 3.1'},
+  {proc:'Amputacion',drug:'Cefazolina + Metronidazol',dose:'2 g + 500 mg IV',redose:'Cada 8h x 24h',alt:'Vancomicina + Metronidazol',ref:'PRIOAM'}
+];
+
+// ── ICM 2025 DATA: Sample collection & Risk factors ──
+var MUESTRAS_CHECKLIST=[
+  {item:'Minimo 3-4 muestras de tejido periprotesico (ideal 4-6)',ref:'ICM 2025, 18.1'},
+  {item:'Enviar liquido sinovial y sonicacion del implante si disponible',ref:'ICM 2025, 18.2'},
+  {item:'Usar viales de hemocultivo (mejora sensibilidad)',ref:'ICM 2025, 18.1'},
+  {item:'NO usar hisopos superficiales — bajo rendimiento',ref:'ICM 2025, 18.1'},
+  {item:'Incubar medios anaerobios minimo 14 dias (clave para C. acnes)',ref:'ICM 2025, 18.1'},
+  {item:'Usar medios aerobicos Y anaerobicos + CO2 al 5%',ref:'ICM 2025, 18.1'},
+  {item:'Dirigir biopsias a tejido macroscopicamente anormal',ref:'ICM 2025, 18.1'},
+  {item:'Homogeneizar muestras mecanicamente para maximizar extraccion',ref:'ICM 2025, 18.1'}
+];
+
+var FACTORES_RIESGO=[
+  {factor:'Tabaco',riesgo:'Hipoxia tisular, disfuncion endotelial, mala cicatrizacion',mitigacion:'Dejar fumar minimo 4 semanas antes',ref:'ICM 2025, 1.4'},
+  {factor:'Obesidad',riesgo:'Mayor tiempo operatorio, menor vascularizacion',mitigacion:'Optimizar peso: ejercicio, dieta, cirugia bariatrica',ref:'ICM 2025, 1.4'},
+  {factor:'Diabetes (HbA1c)',riesgo:'Deteriora funcion neutrofilos, retrasa cicatrizacion',mitigacion:'Control glucemico preop: HbA1c <7%, fructosamina',ref:'ICM 2025, 1.5'},
+  {factor:'Anemia preop',riesgo:'OR 1.71 para ISQ/IAP (metaanalisis)',mitigacion:'Corregir anemia, eritropoyetina si ERC',ref:'ICM 2025, 2.1'},
+  {factor:'Malnutricion (albumina <1.96)',riesgo:'Deteriora inmunidad, retrasa reparacion tisular',mitigacion:'Optimizar nutricion: proteinas, vitaminas, minerales',ref:'ICM 2025, 1.4'},
+  {factor:'Deficit vitamina D',riesgo:'Puede aumentar susceptibilidad a infecciones',mitigacion:'Optimizar vit D y estado nutricional',ref:'ICM 2025, 1.4'},
+  {factor:'Transfusion alogenica',riesgo:'RR 1.94 para infeccion (metaanalisis)',mitigacion:'Acido tranexamico (OR 0.50 para IAP). Evitar transfusion',ref:'ICM 2025, 2.2-2.3'},
+  {factor:'Inmunosupresion',riesgo:'Corticoides, AR, anti-TNF aumentan riesgo',mitigacion:'Suspension preop de inmunosupresores si posible',ref:'ICM 2025, 1.4'},
+  {factor:'COVID-19 perioperatorio',riesgo:'OR 2.25 para IAP, OR 2.01 para ISQ',mitigacion:'Posponer electiva 6-12 semanas tras COVID',ref:'ICM 2025, 1.6'},
+  {factor:'Uso de opioides',riesgo:'Altera inmunidad y metabolismo del colageno',mitigacion:'Cribado, reducir opioides, manejo multimodal del dolor',ref:'ICM 2025, 1.4'},
+  {factor:'IBP (inhibidores bomba protones)',riesgo:'Disminuyen actividad neutrofilos, malabsorcion',mitigacion:'Suspension temporal o cambio a otra medicacion',ref:'ICM 2025, 1.4'}
+];
+
+var ORGANISMS=[
+  {id:'sams',name:'S. aureus meticilin-sensible (SAMS)',group:'gram_pos',
+    iv:{drug:'Cloxacilina',dose:'2 g IV c/4-6h',alt:'Cefazolina 2 g IV c/8h'},
+    ivAlergia:{drug:'Vancomicina',dose:'15-20 mg/kg IV c/8-12h',alt:'Daptomicina 6-8 mg/kg IV c/24h'},
+    ivDur:{iap_dair:'2-6 sem (OVIVA: 5-7 dias pueden ser suficientes)',iap_rev:'4-6 sem IV',artritis:'2 sem IV',osteo_aguda:'2 sem IV min',osteo_cronica:'2-4 sem IV',espondilo:'2-4 sem IV'},
+    pasoOral:'Afebril 48-72h, mejoria clinica, PCR en descenso, tolerancia oral, herida sin complicaciones',
+    oral:{drug:'Levofloxacino + Rifampicina',dose:'500 mg c/12-24h + 600 mg c/24h',alt:'Clindamicina 300-450 mg c/8h + Rifampicina'},
+    oralAlergia:{drug:'Levofloxacino + Rifampicina',dose:'500 mg c/12-24h + 600 mg c/24h',alt:'TMP-SMX 160/800 c/12h + Rifampicina'},
+    dur:{iap_dair:'3 meses (rodilla) / 6 meses (cadera)',iap_rev:'6 sem IV post-revision',artritis:'3-4 sem total',osteo_aguda:'4-6 sem total',osteo_cronica:'6-8 sem total',espondilo:'6-8 sem total'},
+    notas:'Rifampicina en DAIR estafilococica: evidencia contradictoria (ICM 2025, 21.4). Metaanalisis con resultados dispares. Mejores candidatos: DAIR + rifampicina + fluoroquinolona. NO iniciar con drenaje persistente de herida. NO en monoterapia. Cipro en monoterapia ya NO es base (baja barrera resistencia).',
+    refs:['ICM 2025, 21.4','PRIOAM','IDSA PJI 2013']},
+  {id:'samr',name:'S. aureus meticilin-resistente (SAMR)',group:'gram_pos',
+    iv:{drug:'Vancomicina',dose:'15-20 mg/kg IV c/8-12h (valle 15-20)',alt:'Daptomicina 6-8 mg/kg IV c/24h'},
+    ivAlergia:{drug:'Daptomicina',dose:'6-8 mg/kg IV c/24h',alt:'Linezolid 600 mg IV c/12h (max 4 sem)'},
+    ivDur:{iap_dair:'2-6 sem',iap_rev:'4-6 sem IV',artritis:'2 sem IV',osteo_aguda:'2-4 sem IV',osteo_cronica:'2-4 sem IV',espondilo:'2-4 sem IV'},
+    pasoOral:'Afebril 48-72h, mejoria clinica, PCR en descenso. SAMR: opciones orales limitadas, valorar OPAT',
+    oral:{drug:'Linezolid o TMP-SMX + Rifampicina',dose:'LNZ 600 c/12h o TMP-SMX 160/800 c/12h + RIF 600 c/24h',alt:'Doxiciclina 100 c/12h + Rifampicina'},
+    oralAlergia:{drug:'Linezolid',dose:'600 mg c/12h (max 4 sem)',alt:'TMP-SMX 160/800 c/12h + Rifampicina'},
+    dur:{iap_dair:'3 meses (rodilla) / 6 meses (cadera)',iap_rev:'6 sem IV',artritis:'3-4 sem',osteo_aguda:'4-6 sem',osteo_cronica:'6-8 sem',espondilo:'6-8 sem'},
+    notas:'Linezolid: hemograma semanal. Max 4 sem si posible. Ceftarolina: alternativa IV anti-SAMR. Daptomicina: NO en neumonia.',
+    refs:['ICM 2025, 21.2','PRIOAM','Macarena']},
+  {id:'se_ms',name:'S. epidermidis meticilin-sensible',group:'gram_pos',
+    iv:{drug:'Cloxacilina',dose:'2 g IV c/4-6h',alt:'Cefazolina 2 g IV c/8h'},
+    ivAlergia:{drug:'Vancomicina',dose:'15-20 mg/kg IV c/8-12h',alt:'Daptomicina 6 mg/kg IV c/24h'},
+    ivDur:{iap_dair:'2-6 sem',iap_rev:'4-6 sem IV',artritis:'2 sem IV',osteo_aguda:'2 sem IV',osteo_cronica:'2-4 sem IV',espondilo:'2-4 sem IV'},
+    pasoOral:'Afebril 48-72h, mejoria clinica, PCR descendente, tolerancia oral',
+    oral:{drug:'Levofloxacino + Rifampicina',dose:'500 c/12-24h + 450 c/12h',alt:'TMP-SMX + Rifampicina'},
+    oralAlergia:{drug:'Levofloxacino + Rifampicina',dose:'500 c/12-24h + 450 c/12h',alt:'TMP-SMX + Rifampicina'},
+    dur:{iap_dair:'3 meses (rodilla) / 6 meses (cadera)',iap_rev:'6 sem IV',artritis:'3-4 sem',osteo_aguda:'4-6 sem',osteo_cronica:'6-8 sem',espondilo:'6 sem'},
+    notas:'Frecuente en IAP tardia de bajo grado. Valorar contaminante (1 cultivo) vs patogeno (2+ cultivos).',
+    refs:['ICM 2025, 22.3','PRIOAM']},
+  {id:'se_mr',name:'S. epidermidis meticilin-resistente',group:'gram_pos',
+    iv:{drug:'Vancomicina',dose:'15-20 mg/kg IV c/8-12h',alt:'Daptomicina 6 mg/kg IV c/24h'},
+    ivAlergia:{drug:'Daptomicina',dose:'6 mg/kg IV c/24h',alt:'Linezolid 600 mg IV c/12h'},
+    ivDur:{iap_dair:'2-6 sem',iap_rev:'4-6 sem IV',artritis:'2 sem IV',osteo_aguda:'2 sem IV',osteo_cronica:'2-4 sem IV',espondilo:'2-4 sem IV'},
+    pasoOral:'Afebril 48-72h, mejoria clinica, PCR descendente, tolerancia oral',
+    oral:{drug:'Linezolid o TMP-SMX + Rifampicina',dose:'LNZ 600 c/12h o TMP-SMX 160/800 c/12h + RIF 450 c/12h',alt:'Doxiciclina 100 c/12h + Rifampicina'},
+    oralAlergia:{drug:'Linezolid',dose:'600 c/12h',alt:'TMP-SMX + Rifampicina'},
+    dur:{iap_dair:'3 meses (rodilla) / 6 meses (cadera)',iap_rev:'6 sem IV',artritis:'3-4 sem',osteo_aguda:'4-6 sem',osteo_cronica:'6-8 sem',espondilo:'6 sem'},
+    notas:'Tedizolid (200 mg c/24h VO) alternativa con menos toxicidad hematologica que linezolid.',
+    refs:['ICM 2025, 21.2']},
+  {id:'strep',name:'Streptococcus spp.',group:'gram_pos',
+    iv:{drug:'Penicilina G o Ampicilina',dose:'PEN G 4 MU IV c/4h o AMP 2 g IV c/4-6h',alt:'Ceftriaxona 2 g IV c/24h'},
+    ivAlergia:{drug:'Vancomicina',dose:'15-20 mg/kg IV c/8-12h',alt:'Daptomicina 6 mg/kg IV c/24h'},
+    ivDur:{iap_dair:'2-4 sem',iap_rev:'4-6 sem IV',artritis:'2 sem IV',osteo_aguda:'2 sem IV',osteo_cronica:'2-4 sem IV',espondilo:'2-4 sem IV'},
+    pasoOral:'Amoxicilina oral tiene excelente biodisponibilidad. Paso precoz posible',
+    oral:{drug:'Amoxicilina',dose:'750 mg-1 g c/8h',alt:'Levofloxacino 500 c/24h'},
+    oralAlergia:{drug:'Levofloxacino',dose:'500 c/24h',alt:'Clindamicina 300-450 c/8h'},
+    dur:{iap_dair:'3 meses (rodilla) / 6 meses (cadera)',iap_rev:'6 sem IV',artritis:'3-4 sem',osteo_aguda:'4-6 sem',osteo_cronica:'6-8 sem',espondilo:'6 sem'},
+    notas:'Excelente respuesta a betalactamicos. DAIR con buenos resultados (71-95% exito en IAP estreptococica).',
+    refs:['ICM 2025, 21.4','PRIOAM']},
+  {id:'efaecalis',name:'Enterococcus faecalis',group:'gram_pos',
+    iv:{drug:'Ampicilina',dose:'2 g IV c/4-6h',alt:'Ampicilina + Ceftriaxona (sinergia)'},
+    ivAlergia:{drug:'Vancomicina',dose:'15-20 mg/kg IV c/8-12h',alt:'Daptomicina 8-10 mg/kg IV c/24h'},
+    ivDur:{iap_dair:'4-6 sem',iap_rev:'6 sem IV',artritis:'2-4 sem IV',osteo_aguda:'2-4 sem IV',osteo_cronica:'4 sem IV',espondilo:'4 sem IV'},
+    pasoOral:'Min 2 sem IV. Amoxicilina dosis altas (750 mg c/8h). Opciones orales limitadas',
+    oral:{drug:'Amoxicilina',dose:'750 c/8h',alt:'Linezolid 600 c/12h'},
+    oralAlergia:{drug:'Linezolid',dose:'600 c/12h (max 4 sem)',alt:'Daptomicina IV prolongada'},
+    dur:{iap_dair:'6 sem IV + oral 3-6 meses',iap_rev:'6 sem IV',artritis:'4-6 sem',osteo_aguda:'6 sem',osteo_cronica:'6-8 sem',espondilo:'6-8 sem'},
+    notas:'Resistencia intrinseca a cefalosporinas, aminoglucosidos y TMP-SMX. Sinergia ampicilina+ceftriaxona. Alto fracaso en IAP.',
+    refs:['ICM 2025, 20.3','PRIOAM']},
+  {id:'efaecium',name:'Enterococcus faecium / VRE',group:'gram_pos',
+    iv:{drug:'Vancomicina (si sensible)',dose:'15-20 mg/kg IV c/8-12h',alt:'Daptomicina 8-10 mg/kg IV c/24h'},
+    ivAlergia:{drug:'Daptomicina',dose:'8-10 mg/kg IV c/24h',alt:'Linezolid 600 IV c/12h'},
+    ivDur:{iap_dair:'4-6 sem',iap_rev:'6 sem IV min',artritis:'3-4 sem IV',osteo_aguda:'4 sem IV',osteo_cronica:'4-6 sem IV',espondilo:'4-6 sem IV'},
+    pasoOral:'Linezolid unica opcion oral fiable (max 4 sem). Valorar OPAT',
+    oral:{drug:'Linezolid',dose:'600 c/12h',alt:'Consultar Infecciosas'},
+    oralAlergia:{drug:'Linezolid',dose:'600 c/12h',alt:'Consultar Infecciosas'},
+    dur:{iap_dair:'Individualizar - consultar Infecciosas',iap_rev:'6 sem IV min',artritis:'4-6 sem',osteo_aguda:'6 sem',osteo_cronica:'6-8 sem',espondilo:'6-8 sem'},
+    notas:'VRE: daptomicina o linezolid. Dalbavancina puede ser activa en biopeliculas. SIEMPRE consultar Infecciosas.',
+    refs:['ICM 2025, 20.3']},
+  {id:'cutibact',name:'Cutibacterium acnes',group:'gram_pos',
+    iv:{drug:'Penicilina G o Ampicilina',dose:'PEN G 4 MU IV c/4h o AMP 2 g IV c/6h',alt:'Ceftriaxona 2 g IV c/24h'},
+    ivAlergia:{drug:'Vancomicina',dose:'15-20 mg/kg IV c/8-12h',alt:'Clindamicina 600-900 mg IV c/8h'},
+    ivDur:{iap_dair:'2-4 sem',iap_rev:'4-6 sem IV',artritis:'2 sem IV',osteo_aguda:'2 sem IV',osteo_cronica:'2-4 sem IV',espondilo:'2-4 sem IV'},
+    pasoOral:'Paso precoz posible (buena biodisponibilidad amoxicilina)',
+    oral:{drug:'Amoxicilina',dose:'500 c/8h',alt:'Clindamicina 300 c/8h'},
+    oralAlergia:{drug:'Clindamicina',dose:'300 c/8h',alt:'Doxiciclina 100 c/12h'},
+    dur:{iap_dair:'3 meses',iap_rev:'6 sem',artritis:'3-4 sem',osteo_aguda:'4 sem',osteo_cronica:'6 sem',espondilo:'6 sem'},
+    notas:'Frecuente en IAP de hombro (hasta 50%). Incubar cultivos 14 dias en anaerobio. Rifampicina controvertida en C. acnes.',
+    refs:['ICM 2025, 20.1','PRIOAM']},
+  {id:'ecoli',name:'E. coli / Klebsiella (sensible)',group:'gram_neg',
+    iv:{drug:'Ceftriaxona',dose:'2 g IV c/24h',alt:'Amox-clav 1-2 g IV c/8h (si sensible)'},
+    ivAlergia:{drug:'Ciprofloxacino',dose:'400 mg IV c/8-12h',alt:'Aztreonam 2 g IV c/8h'},
+    ivDur:{iap_dair:'2-4 sem',iap_rev:'4-6 sem IV',artritis:'2 sem IV',osteo_aguda:'2 sem IV',osteo_cronica:'2-4 sem IV',espondilo:'2-4 sem IV'},
+    pasoOral:'Quinolonas con excelente biodisponibilidad. Afebril 48-72h, antibiograma con opcion oral sensible',
+    oral:{drug:'Ciprofloxacino',dose:'500-750 c/12h',alt:'Levofloxacino 500 c/24h'},
+    oralAlergia:{drug:'Ciprofloxacino',dose:'500-750 c/12h',alt:'TMP-SMX 160/800 c/12h'},
+    dur:{iap_dair:'3 meses (rodilla) / 6 meses (cadera)',iap_rev:'6 sem IV',artritis:'3-4 sem',osteo_aguda:'4-6 sem',osteo_cronica:'6-8 sem',espondilo:'6 sem'},
+    notas:'SIEMPRE antibiograma: alta resistencia a quinolonas y BLEE. Si BLEE: ver ficha aparte.',
+    refs:['PRIOAM','Macarena']},
+  {id:'blee',name:'Enterobacterias BLEE',group:'gram_neg',
+    iv:{drug:'Ertapenem',dose:'1 g IV c/24h',alt:'Meropenem 1-2 g IV c/8h'},
+    ivAlergia:{drug:'Meropenem',dose:'1-2 g IV c/8h',alt:'Aztreonam 2 g IV c/8h (si sensible)'},
+    ivDur:{iap_dair:'2-4 sem',iap_rev:'4-6 sem IV',artritis:'2-3 sem IV',osteo_aguda:'2-4 sem IV',osteo_cronica:'4 sem IV',espondilo:'4 sem IV'},
+    pasoOral:'Opciones orales MUY limitadas. Solo si antibiograma con TMP-SMX o cipro sensible. Valorar OPAT con ertapenem',
+    oral:{drug:'TMP-SMX (si sensible)',dose:'160/800 c/12h',alt:'Ciprofloxacino 750 c/12h (si sensible)'},
+    oralAlergia:{drug:'TMP-SMX',dose:'160/800 c/12h',alt:'Fosfomicina oral (menor evidencia)'},
+    dur:{iap_dair:'3-6 meses',iap_rev:'6 sem IV',artritis:'4 sem',osteo_aguda:'6 sem',osteo_cronica:'6-8 sem',espondilo:'6-8 sem'},
+    notas:'Consultar Infecciosas. Ertapenem: menor presion selectiva (sin anti-Pseudomonas). Opciones orales limitadas.',
+    refs:['ICM 2025, 21.2','PRIOAM']},
+  {id:'pseudo',name:'Pseudomonas aeruginosa',group:'gram_neg',
+    iv:{drug:'Ceftazidima o Cefepima',dose:'2 g IV c/8h',alt:'Pip-tazo 4/0.5 g IV c/6-8h o Meropenem 1-2 g IV c/8h'},
+    ivAlergia:{drug:'Ciprofloxacino IV + Aminoglucosido',dose:'CIP 400 c/8h + AMK 15 mg/kg c/24h',alt:'Aztreonam 2 g IV c/8h'},
+    ivDur:{iap_dair:'2-4 sem',iap_rev:'4-6 sem IV',artritis:'2-3 sem IV',osteo_aguda:'2-4 sem IV',osteo_cronica:'4 sem IV',espondilo:'4 sem IV'},
+    pasoOral:'Solo si sensible a ciprofloxacino. Si no: OPAT obligatorio',
+    oral:{drug:'Ciprofloxacino',dose:'750 mg c/12h',alt:'Levofloxacino 750 c/24h (menor actividad)'},
+    oralAlergia:{drug:'Ciprofloxacino',dose:'750 c/12h',alt:'Sin alternativas orales - OPAT'},
+    dur:{iap_dair:'3 meses (rodilla) / 6 meses (cadera)',iap_rev:'6 sem IV',artritis:'4-6 sem',osteo_aguda:'6 sem',osteo_cronica:'6-8 sem',espondilo:'6-8 sem'},
+    notas:'Opciones orales muy limitadas. MDR: ceftolozano-tazobactam o ceftazidima-avibactam.',
+    refs:['ICM 2025, 21.2','PRIOAM','Macarena']},
+  {id:'escapm',name:'Enterobacter / ESCAPM',group:'gram_neg',
+    iv:{drug:'Cefepima',dose:'2 g IV c/8h',alt:'Meropenem 1-2 g IV c/8h'},
+    ivAlergia:{drug:'Ciprofloxacino',dose:'400 IV c/8-12h',alt:'Aztreonam 2 g IV c/8h'},
+    ivDur:{iap_dair:'2-4 sem',iap_rev:'4-6 sem IV',artritis:'2 sem IV',osteo_aguda:'2-4 sem IV',osteo_cronica:'2-4 sem IV',espondilo:'2-4 sem IV'},
+    pasoOral:'Quinolonas si sensible. Afebril 48-72h, mejoria clinica',
+    oral:{drug:'Ciprofloxacino',dose:'500-750 c/12h',alt:'TMP-SMX 160/800 c/12h'},
+    oralAlergia:{drug:'Ciprofloxacino',dose:'500-750 c/12h',alt:'TMP-SMX'},
+    dur:{iap_dair:'3-6 meses',iap_rev:'6 sem IV',artritis:'3-4 sem',osteo_aguda:'4-6 sem',osteo_cronica:'6-8 sem',espondilo:'6 sem'},
+    notas:'ESCAPM: Enterobacter, Serratia, Citrobacter, Aeromonas, Providencia, Morganella. NO usar ceftriaxona (AmpC inducible). Cefepima estable.',
+    refs:['ICM 2025','PRIOAM']},
+  {id:'proteus',name:'Proteus mirabilis',group:'gram_neg',
+    iv:{drug:'Ceftriaxona',dose:'2 g IV c/24h',alt:'Ampicilina 2 g IV c/4-6h (si sensible)'},
+    ivAlergia:{drug:'Ciprofloxacino',dose:'400 IV c/8-12h',alt:'Aztreonam 2 g IV c/8h'},
+    ivDur:{iap_dair:'2-4 sem',iap_rev:'4-6 sem IV',artritis:'2 sem IV',osteo_aguda:'2 sem IV',osteo_cronica:'2-4 sem IV',espondilo:'2-4 sem IV'},
+    pasoOral:'Afebril 48-72h, mejoria clinica, antibiograma con opcion oral',
+    oral:{drug:'Ciprofloxacino',dose:'500 c/12h',alt:'Amox-clav 875/125 c/8h'},
+    oralAlergia:{drug:'Ciprofloxacino',dose:'500 c/12h',alt:'TMP-SMX 160/800 c/12h'},
+    dur:{iap_dair:'3 meses (rodilla) / 6 meses (cadera)',iap_rev:'6 sem IV',artritis:'3-4 sem',osteo_aguda:'4-6 sem',osteo_cronica:'6-8 sem',espondilo:'6 sem'},
+    notas:'Frecuente en osteomielitis cronica y fracturas abiertas. Resistencia intrinseca a colistina.',
+    refs:['PRIOAM']},
+  {id:'acineto',name:'Acinetobacter baumannii',group:'gram_neg',
+    iv:{drug:'Meropenem (si sensible)',dose:'2 g IV c/8h (infusion 3h)',alt:'Ampicilina-sulbactam 3 g IV c/6h'},
+    ivAlergia:{drug:'Colistina',dose:'Colistimetato 9 MU carga, 4.5 MU IV c/12h',alt:'Tigeciclina 100 carga, 50 IV c/12h'},
+    ivDur:{iap_dair:'Todo IV (sin opcion oral)',iap_rev:'6 sem IV completas',artritis:'4-6 sem IV',osteo_aguda:'4-6 sem IV',osteo_cronica:'6-8 sem IV',espondilo:'6-8 sem IV'},
+    pasoOral:'NO hay opciones orales. OPAT (terapia parenteral ambulatoria) obligatorio',
+    oral:{drug:'Sin opciones orales',dose:'Valorar OPAT',alt:'Consultar Infecciosas'},
+    oralAlergia:{drug:'Sin opciones orales',dose:'OPAT',alt:'Consultar Infecciosas'},
+    dur:{iap_dair:'Individualizar',iap_rev:'6 sem IV min',artritis:'4-6 sem',osteo_aguda:'6-8 sem',osteo_cronica:'8-12 sem',espondilo:'6-8 sem'},
+    notas:'Frecuentemente MDR/XDR. SIEMPRE consultar Infecciosas. Considerar OPAT.',
+    refs:['ICM 2025, 21.2']},
+  {id:'bacteroides',name:'Bacteroides fragilis',group:'anaerob',
+    iv:{drug:'Metronidazol',dose:'500 mg IV c/8h',alt:'Pip-tazo 4/0.5 g IV c/6-8h'},
+    ivAlergia:{drug:'Metronidazol',dose:'500 mg IV c/8h',alt:'Meropenem 1 g IV c/8h'},
+    ivDur:{iap_dair:'2 sem IV',iap_rev:'4-6 sem IV',artritis:'1-2 sem IV',osteo_aguda:'2 sem IV',osteo_cronica:'2-4 sem IV',espondilo:'2 sem IV'},
+    pasoOral:'Metronidazol oral: biodisponibilidad casi 100%. Paso precoz posible',
+    oral:{drug:'Metronidazol',dose:'500 c/8h',alt:'Amox-clav 875/125 c/8h'},
+    oralAlergia:{drug:'Metronidazol',dose:'500 c/8h',alt:'Moxifloxacino 400 c/24h'},
+    dur:{iap_dair:'Segun cuadro',iap_rev:'6 sem IV',artritis:'3-4 sem',osteo_aguda:'4-6 sem',osteo_cronica:'6-8 sem',espondilo:'6 sem'},
+    notas:'Frecuente en polimicrobianas. Resistencia intrinseca a aminoglucosidos y cefalosporinas.',
+    refs:['PRIOAM']},
+  {id:'tb',name:'Mycobacterium tuberculosis',group:'especial',
+    iv:{drug:'HRZE (fase intensiva)',dose:'Isoniazida+Rifampicina+Pirazinamida+Etambutol x 2 meses',alt:'Ajustar por resistencia'},
+    ivAlergia:{drug:'Segun antibiograma',dose:'Consultar Infecciosas',alt:'Levofloxacino puede sustituir'},
+    ivDur:{iap_dair:'2 meses fase intensiva (puede ser oral)',iap_rev:'2 meses',artritis:'2 meses',osteo_aguda:'2 meses',osteo_cronica:'2 meses',espondilo:'2 meses'},
+    pasoOral:'TB: el tratamiento suele ser oral desde el inicio. IV solo si no tolera via oral',
+    oral:{drug:'HR (fase continuacion)',dose:'Isoniazida+Rifampicina x 4-7 meses',alt:'Total 6-9 meses (hasta 12-18 en IAP)'},
+    oralAlergia:{drug:'Segun antibiograma',dose:'Consultar Infecciosas',alt:''},
+    dur:{iap_dair:'12-18 meses',iap_rev:'12-18 meses',artritis:'6-9 meses',osteo_aguda:'6-9 meses',osteo_cronica:'9-18 meses',espondilo:'6-9 meses (OMS min 6)'},
+    notas:'HRZE 2 meses + HR 4-7 meses. Monitorizar hepatotoxicidad. IAP: revision en 2 tiempos preferible.',
+    refs:['ICM 2025, 19.2','OMS 2022']},
+  {id:'candida',name:'Candida spp.',group:'especial',
+    iv:{drug:'Fluconazol (si sensible)',dose:'400 mg IV c/24h',alt:'Caspofungina 70 carga, 50 c/24h'},
+    ivAlergia:{drug:'Equinocandina',dose:'Caspofungina o Anidulafungina',alt:'Anfotericina B lipidica 3-5 mg/kg c/24h'},
+    ivDur:{iap_dair:'2-4 sem IV min',iap_rev:'6 sem IV entre tiempos',artritis:'2-4 sem IV',osteo_aguda:'2-4 sem IV',osteo_cronica:'4-6 sem IV',espondilo:'4-6 sem IV'},
+    pasoOral:'Fluconazol oral si sensible. Equinocandinas NO tienen forma oral',
+    oral:{drug:'Fluconazol',dose:'400 c/24h VO',alt:'Voriconazol 200 c/12h (Aspergillus)'},
+    oralAlergia:{drug:'Fluconazol',dose:'400 c/24h VO',alt:'Voriconazol'},
+    dur:{iap_dair:'6 sem min (alto fracaso)',iap_rev:'6 sem + 6 sem-12 meses oral',artritis:'6 sem',osteo_aguda:'6-8 sem',osteo_cronica:'6-12 meses',espondilo:'6-12 meses'},
+    notas:'IAP fungica: revision en 2 tiempos preferible. C. glabrata/krusei: equinocandina. No suspender antifungicos entre tiempos.',
+    refs:['ICM 2025, 20.4']},
+  {id:'polimicro',name:'Infeccion polimicrobiana',group:'especial',
+    iv:{drug:'Pip-tazo o Meropenem',dose:'PIP-TAZ 4/0.5 IV c/6-8h o MERO 1 g IV c/8h',alt:'Ajustar por antibiograma'},
+    ivAlergia:{drug:'Ajustar segun germenes',dose:'Consultar Infecciosas',alt:''},
+    ivDur:{iap_dair:'2-4 sem',iap_rev:'6 sem IV',artritis:'2-4 sem IV',osteo_aguda:'2-4 sem IV',osteo_cronica:'4 sem IV',espondilo:'4 sem IV'},
+    pasoOral:'Solo si TODOS los germenes tienen opcion oral sensible. Consultar Infecciosas',
+    oral:{drug:'Combinar segun germenes',dose:'Por antibiograma',alt:''},
+    oralAlergia:{drug:'Combinar segun germenes',dose:'Por antibiograma',alt:''},
+    dur:{iap_dair:'3-6 meses',iap_rev:'6 sem IV min',artritis:'4-6 sem',osteo_aguda:'6 sem',osteo_cronica:'6-8 sem',espondilo:'6-8 sem'},
+    notas:'Peor pronostico (OR 2.74). Tratar TODOS los patogenos. Consultar Infecciosas.',
+    refs:['ICM 2025, 21.1']}
+];
+
+var OA_INFO={
+  artritis:{title:'Artritis Septica Nativa',
+    brief:'<strong>Urgencia quirurgica.</strong> <em>S. aureus</em> causa &gt;50%. Drenaje articular precoz + antibioterapia <span class="dose">3-4 semanas</span>.',
+    full:'<ul><li><strong>Drenaje urgente</strong> — artroscopia o artrotomia</li><li><strong>Diagnostico:</strong> liquido sinovial &gt;50.000 leucocitos/mm<sup>3</sup>, &gt;90% PMN. Hemocultivos (+) en 40-50%</li><li><strong>Duracion total:</strong> <span class="dose">3-4 semanas</span></li><li><strong>Fase IV:</strong> <span class="dose">minimo 2 semanas</span></li><li><strong>Paso a oral:</strong> afebril 48-72h, mejoria clinica, PCR en descenso, tolerancia oral</li><li><strong>OVIVA:</strong> paso precoz a oral no inferior a IV prolongada</li></ul>',
+    ref:'PRIOAM | Macarena | ICM 2025'},
+  osteo_aguda:{title:'Osteomielitis Aguda',
+    brief:'<em>S. aureus</em> en &gt;50%. Desbridamiento si absceso + antibioterapia <span class="dose">4-6 semanas</span>. IV <span class="dose">min 2 sem</span>.',
+    full:'<ul><li><strong>Hematogena:</strong> mas frecuente en ninos. En adultos: postraumatica/postquirurgica</li><li><strong>Diagnostico:</strong> <span class="hl">RM</span> — prueba mas sensible</li><li><strong>Cirugia:</strong> esencial si absceso, secuestro oseo o material infectado</li><li><strong>Duracion total:</strong> <span class="dose">4-6 semanas</span></li><li><strong>OVIVA:</strong> paso precoz a oral (dia 5-7) no inferior a IV prolongada</li></ul>',
+    ref:'PRIOAM | Macarena | OVIVA'},
+  osteo_cronica:{title:'Osteomielitis Cronica',
+    brief:'Biofilm y secuestro oseo. <strong>Desbridamiento agresivo</strong> + antibioterapia prolongada <span class="dose">6-8+ semanas</span>.',
+    full:'<ul><li><strong>Clave:</strong> biofilm + secuestro oseo. AB sin cirugia rara vez curan</li><li><strong>Cirugia:</strong> desbridamiento agresivo (retirada secuestros, fresado, Papineau)</li><li><strong>Estafilococos:</strong> anadir <span class="dose">rifampicina</span> (actividad antibiofilm)</li><li><strong>Duracion:</strong> <span class="dose">6-8 sem minimo</span>, hasta 3-6 meses si desbridamiento incompleto</li><li>Considerar cobertura de <strong>anaerobios</strong> en fracturas abiertas</li></ul>',
+    ref:'PRIOAM | Macarena'},
+  espondilo:{title:'Espondilodiscitis Piogena',
+    brief:'<em>S. aureus</em> (&gt;50%) y enterobacterias. Tratamiento conservador en la mayoria. IV <span class="dose">2-4 sem</span>, total <span class="dose">6-8 sem</span>.',
+    full:'<ul><li><strong>Origen:</strong> hematogeno en la mayoria. Diagnostico: <span class="hl">RM</span> (sens. &gt;90%), hemocultivos (+) en 40-60%</li><li><strong>Tratamiento conservador:</strong> antibioterapia + inmovilizacion</li><li><strong>Indicaciones Qx:</strong> inestabilidad vertebral, absceso epidural con deficit neurologico, fracaso conservador (persistencia dolor/fiebre/PCR tras 4-6 sem AB)</li><li><strong>Duracion:</strong> total <span class="dose">6-8 semanas</span> (OMS: min 6). Fase IV <span class="dose">2-4 semanas</span></li></ul>',
+    ref:'ICM 2025, Parte V | PRIOAM'}
+};
+
+var PB_DATA={
+  celulitis:{title:'Celulitis / Erisipela',
+    brief:'<em>S. aureus</em> y <em>Streptococcus</em> grupo A. <strong>Ambulatorio si leve</strong>. Empirico: <span class="dose">Amox-clav 875/125 c/8h</span>.',
+    full:'<ul><li><strong>Celulitis:</strong> dermis y TCS. <strong>Erisipela:</strong> dermis superior, bordes definidos, "piel de naranja"</li><li><strong>Etiologia:</strong> <em>Streptococcus</em> grupo A (erisipela), <em>S. aureus</em> (celulitis)</li><li><strong>Si purulenta/absceso:</strong> drenar y cubrir SAMR</li><li><strong>Criterios de ingreso:</strong> fiebre alta, celulitis extensa, MEG, comorbilidades (DM, inmunodepresion), fracaso oral</li></ul>',
+    empirico_iv:'Amoxicilina-clavulanico 1-2 g IV c/8h',empirico_oral:'Amox-clav 875/125 c/8h o Cloxacilina 500 c/6h',alt_alergia:'Clindamicina 300-450 c/8h o Levofloxacino 500 c/24h',duracion:'7-10 dias',ref:'PRIOAM | Macarena'},
+  fascitis:{title:'Fascitis Necrotizante',
+    brief:'<span class="hl" style="background:var(--red-light);color:var(--red);">EMERGENCIA QUIRURGICA</span> Mortalidad 20-40%. Desbridamiento + <span class="dose">Meropenem + Linezolid + Clindamicina</span>.',
+    full:'<ul><li><strong>Tipo I:</strong> polimicrobiana. <strong>Tipo II:</strong> <em>Streptococcus</em> grupo A. <strong>Tipo III:</strong> <em>Clostridium/Vibrio</em></li><li><strong>Signos de alarma:</strong> dolor desproporcionado, crepitacion, ampollas hemorragicas, necrosis cutanea, shock</li><li><strong>Cirugia urgente:</strong> desbridamiento hasta tejido viable. Reevaluar 24-48h</li><li><strong>Clindamicina:</strong> inhibe produccion de toxinas (anadirla siempre)</li></ul>',
+    empirico_iv:'Meropenem 1-2 g IV c/8h + Linezolid 600 IV c/12h + Clindamicina 600-900 IV c/8h',empirico_oral:'No aplicable - siempre IV + cirugia',alt_alergia:'Vancomicina + Aztreonam + Clindamicina',duracion:'2-4 semanas minimo',ref:'PRIOAM | Macarena | IDSA'},
+  herida:{title:'Infeccion de Herida Quirurgica',
+    brief:'<strong>Abrir, drenar y cultivar ANTES de antibiotico.</strong> Si implante: valorar osteomielitis.',
+    full:'<ul><li><strong>Superficial:</strong> eritema, supuracion, dolor (&lt;30 dias). Suele responder a curas + AB oral</li><li><strong>Profunda:</strong> afecta fascia/musculo. Si implante: valorar estabilidad del material</li><li><strong>Cultivos:</strong> profundos (NO superficiales)</li><li><strong>Implante infectado:</strong> tratar como osteomielitis si afecta hueso. Retirada segun estabilidad y tiempo</li></ul>',
+    empirico_iv:'Amox-clav 1-2 g IV c/8h (profunda)',empirico_oral:'Amox-clav 875/125 c/8h',alt_alergia:'Levofloxacino 500 c/24h + Metronidazol 500 c/8h',duracion:'Superficial: 7-10 dias. Profunda: 2-4 sem',ref:'PRIOAM | Macarena'},
+  mordedura:{title:'Mordeduras',
+    brief:'<span class="dose">Amox-clav</span> cubre <em>Pasteurella</em> (gato) y polimicrobianos. <strong>Profilaxis antitetanica siempre.</strong>',
+    full:'<ul><li><strong>Gato:</strong> alto riesgo infeccion profunda (colmillos finos). <em>Pasteurella multocida</em> en 50-80%</li><li><strong>Perro:</strong> polimicrobiana, menor riesgo que gato</li><li><strong>Humana:</strong> <em>Eikenella corrodens</em>, riesgo VHB/VHC/VIH</li><li><strong>Profilaxis:</strong> <span class="dose">Amox-clav 3-5 dias</span> en riesgo (mano, articulacion, cara)</li><li>Siempre profilaxis antitetanica. Valorar rabia</li></ul>',
+    empirico_iv:'Amox-clav 1-2 g IV c/8h',empirico_oral:'Amox-clav 875/125 c/8h',alt_alergia:'Doxiciclina 100 c/12h + Metronidazol 500 c/8h',duracion:'Profilaxis: 3-5 dias. Infeccion: 10-14 dias',ref:'PRIOAM | Macarena'},
+  piediabetico:{title:'Pie Diabetico Infectado',
+    brief:'Polimicrobiana &gt;80%. Clasificar gravedad (<strong>IDSA</strong>). Valorar osteomielitis: <span class="hl">probe-to-bone</span>, RM.',
+    full:'<ul><li><strong>Leve (IDSA):</strong> superficial, &lt;2cm eritema → <span class="dose">Amox-clav 875/125 VO</span></li><li><strong>Moderada:</strong> &gt;2cm, estructuras profundas → <span class="dose">Pip-tazo 4/0.5 IV c/6-8h</span></li><li><strong>Grave:</strong> SRIS, sepsis → Pip-tazo +/- <span class="dose">Vancomicina</span></li><li><strong>Osteomielitis:</strong> probe-to-bone (especificidad 89%), RM (sens. 90%). Reseccion osea mejora curacion</li><li><strong>Equipo multidisciplinar:</strong> vascular, endocrino, podologia</li></ul>',
+    empirico_iv:'Leve: Amox-clav 875/125 VO. Mod-grave: Pip-tazo 4/0.5 IV c/6-8h +/- Vancomicina',empirico_oral:'Amox-clav 875/125 c/8h',alt_alergia:'Levofloxacino 500 c/12-24h + Metronidazol 500 c/8h. SAMR: Linezolid/TMP-SMX',duracion:'Partes blandas: 1-2 sem. Osteomielitis: 4-6 sem',ref:'PRIOAM | Macarena | IDSA/IWGDF'}
+};
+
+// ── EMPIRIC TREATMENT DATA ──
+var EMPIRIC={
+  iap_dair:{
+    iv:'Vancomicina 15-20 mg/kg c/8-12h + Ceftazidima 2 g c/8h',
+    alt:'Daptomicina 8 mg/kg + Aztreonam 2 g c/8h',
+    note:'Cobertura Gram+ (incluido SAMR) + Gram-. Obtener cultivos intraoperatorios (min 5 muestras). Ajustar con antibiograma.',
+    ref:'ICM 2025, Parte III | PRIOAM'},
+  iap_rev:{
+    iv:'Vancomicina 15-20 mg/kg c/8-12h + Ceftazidima 2 g c/8h',
+    alt:'Daptomicina + Meropenem 1 g c/8h',
+    note:'Cobertura amplia hasta cultivos de tejido periprotesico. En revision 2T: mantener hasta resultado de cultivos del espaciador.',
+    ref:'ICM 2025, Parte III'},
+  artritis:{
+    iv:'Cloxacilina 2 g c/4-6h o Cefazolina 2 g c/8h',
+    alt:'Si sospecha SAMR: anadir Vancomicina. Alergia BL: Vancomicina 15-20 mg/kg c/8-12h',
+    note:'S. aureus causa >50%. Obtener hemocultivos + liquido sinovial ANTES de iniciar antibiotico.',
+    ref:'PRIOAM | Macarena'},
+  osteo_aguda:{
+    iv:'Cloxacilina 2 g c/4-6h o Cefazolina 2 g c/8h',
+    alt:'Sospecha SAMR: Vancomicina. Alergia BL: Vancomicina + valorar cobertura Gram-',
+    note:'S. aureus predomina. Obtener cultivos profundos (biopsia osea) antes de iniciar. Si postraumatica: ampliar a Gram-.',
+    ref:'PRIOAM | Macarena'},
+  osteo_cronica:{
+    iv:'Vancomicina + Ceftazidima 2 g c/8h o Piperacilina-tazobactam 4/0.5 g c/6-8h',
+    alt:'Vancomicina + Meropenem 1 g c/8h',
+    note:'Frecuentemente polimicrobiana. Cobertura amplia hasta cultivos de desbridamiento (min 5 muestras de tejido).',
+    ref:'PRIOAM'},
+  espondilo:{
+    iv:'Cloxacilina 2 g c/4-6h + Ceftriaxona 2 g c/24h',
+    alt:'Vancomicina + Ceftriaxona. Alergia BL: Vancomicina + Ciprofloxacino',
+    note:'S. aureus >50%, enterobacterias frecuentes. 2 sets de hemocultivos ANTES de AB. Si estable: diferir AB hasta biopsia disco-vertebral.',
+    ref:'ICM 2025, Parte V | PRIOAM'}
+};
+
+function renderEmpiric(key){
+  var e=EMPIRIC[key];
+  if(!e)return '';
+  var showAlt=allergies.bl;
+  var h='<div class="empiric-card">';
+  h+='<div class="ec-head">'+ICO.flask+' Tratamiento empirico (antes de cultivo)</div>';
+  h+='<div class="ec-drug">'+esc(showAlt?e.alt:e.iv)+'</div>';
+  if(!showAlt)h+='<div class="ec-divider">Alternativa / alergia</div><div class="ec-alt">'+esc(e.alt)+'</div>';
+  else h+='<div class="ec-divider">1a eleccion</div><div style="font-size:12px;color:var(--text-muted);text-decoration:line-through;">'+esc(e.iv)+'</div>';
+  h+='<div class="ec-note">'+esc(e.note)+'</div>';
+  h+='<div style="margin-top:6px;">'+makeRef(e.ref)+'</div>';
+  h+='</div>';
+  return h;
+}
+
+var SECTIONS_PRIMARY=[
+  {id:'iap',color:'violet',icon:ICO.prosthesis,title:'Infeccion Protesica Articular',desc:'Lavado (DAIR), revision en 1 y 2 tiempos',badge:'18 microorganismos'},
+  {id:'osteoart',color:'emerald',icon:ICO.bone,title:'Infecciones Osteoarticulares',desc:'Artritis septica, osteomielitis, espondilodiscitis',badge:'4 patologias'},
+  {id:'blandas',color:'amber',icon:ICO.bandage,title:'Partes Blandas',desc:'Celulitis, fascitis, herida Qx, mordeduras',badge:'5 escenarios'}
+];
+var SECTIONS_SECONDARY=[
+  {id:'profilaxis',color:'sky',icon:ICO.shield,title:'Profilaxis Preoperatoria',desc:'Antibiotico antes de operar',badge:'11 procedimientos'},
+  {id:'micro',color:'red',icon:ICO.bacteria,title:'Consulta por Microorganismo',desc:'Buscar por germen del cultivo',badge:'18 fichas'},
+  {id:'espectro',color:'slate',icon:ICO.grid,title:'Espectro Antibacteriano',desc:'Tabla de actividad por antibiotico',badge:'42 antibioticos'}
+];
+var SECTIONS=SECTIONS_PRIMARY.concat(SECTIONS_SECONDARY);
+
+// ─────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────
+var allergies={bl:false,qn:false,vc:false};
+var currentView='landing';
+var currentIAPSub='dair',currentOASub='artritis',currentPBSub='celulitis';
+var microSelectedOrg='',microScenario='iap_dair',microOpenGroup='';
+var profiCat='',profiProc=-1;
+
+// ─────────────────────────────────────────────
+//  THEME
+// ─────────────────────────────────────────────
+function toggleTheme(){var d=document.getElementById('themeToggle').checked;document.documentElement.setAttribute('data-theme',d?'dark':'');localStorage.setItem('theme',d?'dark':'light');localStorage.setItem('theme-date',new Date().toDateString());}
+(function(){var s=localStorage.getItem('theme'),sd=localStorage.getItem('theme-date'),t=new Date().toDateString(),d=false;if(s&&sd===t)d=s==='dark';else{var h=new Date().getHours();d=h>=21||h<7;if(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)d=true;}if(d){document.documentElement.setAttribute('data-theme','dark');document.getElementById('themeToggle').checked=true;}})();
+
+// ─────────────────────────────────────────────
+//  ALLERGIES
+// ─────────────────────────────────────────────
+function toggleAllergy(t,c){
+  allergies[t]=c;
+  var m={bl:'BL',qn:'QN',vc:'VC'};
+  document.getElementById('chip'+m[t]).classList.toggle('on',c);
+  var any=allergies.bl||allergies.qn||allergies.vc;
+  var pill=document.getElementById('allergyPill');
+  pill.classList.toggle('active',any);
+  var names=[];
+  if(allergies.bl)names.push('BL');if(allergies.qn)names.push('QN');if(allergies.vc)names.push('VC');
+  document.getElementById('allergyLabel').textContent=any?('⚠ '+names.join(', ')):'Alergias';
+  // Update banner in sections
+  document.querySelectorAll('.allergy-banner').forEach(function(b){b.classList.toggle('visible',any);b.innerHTML=any?'&#9888;&#65039; Alergias activas: '+esc(names.join(', '))+' — las recomendaciones muestran alternativas':'';});
+  refreshCurrentView();
+}
+function toggleAllergyDrop(e){e.stopPropagation();document.getElementById('allergyDrop').classList.toggle('open');}
+document.addEventListener('click',function(){document.getElementById('allergyDrop').classList.remove('open');});
+
+// ─────────────────────────────────────────────
+//  NAVIGATION
+// ─────────────────────────────────────────────
+function goLanding(){currentView='landing';document.getElementById('landing').style.display='';document.querySelectorAll('.section-view').forEach(function(s){s.classList.remove('active');});window.scrollTo({top:0});}
+
+function goSection(id){
+  if(id==='espectro'){window.open('espectro-antibac.html','_blank');return;}
+  currentView=id;
+  document.getElementById('landing').style.display='none';
+  document.querySelectorAll('.section-view').forEach(function(s){s.classList.remove('active');});
+  var el=document.getElementById('sec-'+id);
+  renderSection(id);
+  el.classList.add('active');
+  window.scrollTo({top:0});
+}
+
+function refreshCurrentView(){if(currentView==='landing')return;renderSection(currentView);}
+
+// ─────────────────────────────────────────────
+//  LANDING
+// ─────────────────────────────────────────────
+var ARROW_RIGHT='<svg viewBox="0 0 24 24"'+S0+'><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>';
+function buildLanding(){
+  var h='<div class="landing-section-label">Tratamiento por patologia</div>';
+  h+='<div class="landing-primary">';
+  SECTIONS_PRIMARY.forEach(function(s){
+    h+='<div class="landing-card" data-color="'+s.color+'" onclick="goSection(\''+s.id+'\')">';
+    h+='<div class="lc-icon">'+s.icon+'</div>';
+    h+='<div class="lc-title">'+esc(s.title)+'</div>';
+    h+='<div class="lc-desc">'+esc(s.desc)+'</div>';
+    h+='<div class="lc-badge">'+esc(s.badge)+'</div>';
+    h+='<div class="lc-arrow">'+ARROW_RIGHT+'</div>';
+    h+='</div>';
+  });
+  h+='</div>';
+  h+='<div class="landing-section-label">Herramientas de consulta</div>';
+  h+='<div class="landing-secondary">';
+  SECTIONS_SECONDARY.forEach(function(s){
+    h+='<div class="landing-card secondary" data-color="'+s.color+'" onclick="goSection(\''+s.id+'\')">';
+    h+='<div class="lc-icon">'+s.icon+'</div>';
+    h+='<div><div class="lc-title">'+esc(s.title)+'</div><div class="lc-desc">'+esc(s.desc)+'</div>';
+    h+='<div class="lc-badge">'+esc(s.badge)+'</div></div>';
+    h+='</div>';
+  });
+  h+='</div>';
+  document.getElementById('landing').innerHTML=h;
+}
+
+// ─────────────────────────────────────────────
+//  SECTION RENDERER
+// ─────────────────────────────────────────────
+function renderSection(id){
+  var sec=SECTIONS.filter(function(s){return s.id===id;})[0];
+  var el=document.getElementById('sec-'+id);
+  // Set context for reference URL matching
+  var ctxMap={profilaxis:'profilaxis',iap:'protesica',osteoart:'osteo artritis espondilo',blandas:'celulitis fascitis mordedura pie diabetico partes blandas',micro:''};
+  _refContext=ctxMap[id]||'';
+  var anyAllergy=allergies.bl||allergies.qn||allergies.vc;
+  var alNames=[];if(allergies.bl)alNames.push('Betalactamicos');if(allergies.qn)alNames.push('Quinolonas');if(allergies.vc)alNames.push('Vancomicina');
+  var h='<div class="sec-header"><button class="btn-back" onclick="goLanding()">&#8592; Volver</button><div class="sec-title" style="color:var(--'+sec.color+');"><span class="sec-ico" style="vertical-align:middle;margin-right:6px;">'+sec.icon+'</span>'+esc(sec.title)+'</div></div>';
+  if(anyAllergy)h+='<div class="allergy-banner visible">&#9888;&#65039; Alergias activas: '+esc(alNames.join(', '))+' — mostrando alternativas</div>';
+
+  if(id==='profilaxis') h+=renderProfilaxis();
+  else if(id==='iap') h+=renderIAP();
+  else if(id==='osteoart') h+=renderOsteoart();
+  else if(id==='blandas') h+=renderBlandas();
+  else if(id==='micro') h+=renderMicro();
+
+  el.innerHTML=h;
+
+  // Re-bind events after innerHTML
+  if(id==='micro'){
+    var si=document.getElementById('microSearch');
+    if(si)si.addEventListener('input',function(){filterMicroSearch();});
+  }
+}
+
+// ─────────────────────────────────────────────
+//  THEORY CARD
+// ─────────────────────────────────────────────
+function theoryCard(accent,brief,full,ref){
+  var uid='th'+Math.random().toString(36).substr(2,6);
+  return '<div class="theory-card" data-accent="'+accent+'"><div class="theory-head"><div class="theory-icon">'+ICO.book+'</div><div><div class="theory-brief">'+brief+'</div><div class="theory-full" id="'+uid+'">'+full+'<div style="margin-top:8px;">'+makeRef(ref)+'</div></div><button class="theory-toggle" onclick="toggleTheory(\''+uid+'\',this)"><span class="arr">&#9660;</span> Leer mas</button></div></div></div>';
+}
+function toggleTheory(uid,btn){var el=document.getElementById(uid);el.classList.toggle('open');btn.classList.toggle('open');btn.querySelector('.arr').innerHTML=el.classList.contains('open')?'&#9650;':'&#9660;';var txt=el.classList.contains('open')?'Leer menos':'Leer mas';btn.lastChild.textContent=' '+txt;}
+
+function renderCollapsible(id,title,accent,content){
+  var uid='cl'+Math.random().toString(36).substr(2,6);
+  return '<div class="theory-card" data-accent="'+accent+'" style="margin-top:16px;"><div class="theory-head"><div class="theory-icon">'+ICO.book+'</div><div><div class="theory-brief" style="font-weight:600;">'+esc(title)+'</div><div class="theory-full" id="'+uid+'">'+content+'</div><button class="theory-toggle" onclick="toggleTheory(\''+uid+'\',this)"><span class="arr">&#9660;</span> Ver detalle</button></div></div></div>';
+}
+
+function renderMuestrasChecklist(){
+  var h='<div style="display:grid;gap:6px;">';
+  MUESTRAS_CHECKLIST.forEach(function(m){
+    h+='<div style="display:flex;align-items:baseline;gap:8px;font-size:13px;"><span style="color:var(--sky);flex-shrink:0;">&#9745;</span><span>'+esc(m.item)+'</span><span style="margin-left:auto;">'+makeRef(m.ref)+'</span></div>';
+  });
+  return h+'</div>';
+}
+
+// ─────────────────────────────────────────────
+//  CASCADE RENDERER
+// ─────────────────────────────────────────────
+function renderCascade(org,durKey){
+  var hasBL=allergies.bl,hasQN=allergies.qn,hasVC=allergies.vc;
+  var ivD=org.iv.drug,ivDo=org.iv.dose,ivA=org.iv.alt;
+  var orD=org.oral.drug,orDo=org.oral.dose,orA=org.oral.alt;
+  var alerts='';
+  if(hasBL&&org.ivAlergia){ivD=org.ivAlergia.drug;ivDo=org.ivAlergia.dose;ivA=org.ivAlergia.alt;alerts+='<div class="allergy-alt">Alternativa por alergia a betalactamicos</div>';}
+  if(hasBL&&org.oralAlergia){orD=org.oralAlergia.drug;orDo=org.oralAlergia.dose;orA=org.oralAlergia.alt;}
+  if(hasVC&&ivD.toLowerCase().indexOf('vancomicina')!==-1){ivD=ivA||'Daptomicina 6-8 mg/kg IV c/24h';alerts+='<div class="allergy-alt">Vancomicina contraindicada</div>';}
+  if(hasQN&&(orD.toLowerCase().indexOf('floxacino')!==-1)){orD=orA||'Consultar alternativa';alerts+='<div class="allergy-alt">Quinolonas contraindicadas</div>';}
+
+  var ivDurText=(org.ivDur&&org.ivDur[durKey])||'Segun evolucion';
+  var durTotal=org.dur[durKey]||'Segun evolucion';
+  var paso=org.pasoOral||'Afebril 48-72h, mejoria clinica, PCR descendente';
+
+  var h=alerts;
+  h+='<div class="cascade">';
+  // IV Card
+  h+='<div class="cascade-card iv"><div class="cc-label iv">&#127973; FASE INTRAVENOSA</div>';
+  h+='<div class="cc-drug">'+esc(ivD)+'</div>';
+  h+='<div class="cc-detail">'+esc(ivDo)+'</div>';
+  h+='<div class="cc-detail">Alt: '+esc(ivA)+'</div>';
+  h+='<div class="cc-dur iv">'+esc(ivDurText)+'</div></div>';
+  // Arrow
+  h+='<div class="cascade-arrow">'+ARROW_SVG+'</div>';
+  // Criteria
+  h+='<div class="cascade-card criteria"><div class="cc-label crit">&#9888;&#65039; CRITERIOS DE PASO A ORAL</div>';
+  h+='<div class="cc-detail" style="color:var(--text);">'+esc(paso)+'</div></div>';
+  // Arrow
+  h+='<div class="cascade-arrow">'+ARROW_SVG+'</div>';
+  // Oral Card
+  h+='<div class="cascade-card oral"><div class="cc-label oral">&#128138; FASE ORAL</div>';
+  h+='<div class="cc-drug">'+esc(orD)+'</div>';
+  h+='<div class="cc-detail">'+esc(orDo)+'</div>';
+  h+='<div class="cc-detail">Alt: '+esc(orA)+'</div></div>';
+  // Arrow
+  h+='<div class="cascade-arrow">'+ARROW_SVG+'</div>';
+  // Total
+  h+='<div class="cascade-card total"><div class="cc-label total">&#128197; DURACION TOTAL</div>';
+  h+='<div class="cc-dur total">'+esc(durTotal)+'</div></div>';
+  h+='</div>';
+
+  // Notes & refs
+  h+='<div class="info-card"><strong>Notas clinicas</strong>'+esc(org.notas)+'</div>';
+  h+='<div class="info-card" style="margin-top:8px;"><strong>Referencias</strong>'+org.refs.map(function(r){return makeRef(r);}).join(' ')+'</div>';
+  return h;
+}
+
+// ─────────────────────────────────────────────
+//  ORGANISM SELECT HTML
+// ─────────────────────────────────────────────
+function orgSelectHTML(selectId){
+  var groups={gram_pos:'Gram +',gram_neg:'Gram -',anaerob:'Anaerobios',especial:'Especiales'};
+  var h='<div class="form-label">Seleccionar microorganismo</div><select class="form-select" id="'+selectId+'" onchange="onOrgSelect(\''+selectId+'\')">';
+  h+='<option value="">-- Seleccionar microorganismo --</option>';
+  Object.keys(groups).forEach(function(gk){
+    h+='<optgroup label="'+groups[gk]+'">';
+    ORGANISMS.filter(function(o){return o.group===gk;}).forEach(function(o){h+='<option value="'+o.id+'">'+esc(o.name)+'</option>';});
+    h+='</optgroup>';
+  });
+  h+='</select>';
+  return h;
+}
+
+function onOrgSelect(selectId){refreshCurrentView();}
+
+// ─────────────────────────────────────────────
+//  PROFILAXIS
+// ─────────────────────────────────────────────
+var PROFI_CATS=[
+  {id:'programada',title:'Cirugia Programada',count:'7 procedimientos',icon:ICO.shield,
+   items:[
+    {idx:0,label:'Artroplastia primaria'},
+    {idx:1,label:'Revision protesica'},
+    {idx:6,label:'Artroscopia sin implante',group:'Artroscopia'},
+    {idx:7,label:'Artroscopia con implante (LCA)'},
+    {idx:8,label:'Columna sin instrumentacion',group:'Columna'},
+    {idx:9,label:'Columna con instrumentacion'},
+    {idx:10,label:'Amputacion'}
+  ]},
+  {id:'trauma',title:'Traumatologia',count:'4 procedimientos',icon:ICO.bone,
+   items:[
+    {idx:2,label:'Fractura cerrada'},
+    {idx:3,label:'Gustilo I-II',group:'Fractura abierta'},
+    {idx:4,label:'Gustilo IIIA'},
+    {idx:5,label:'Gustilo IIIB-C'}
+  ]}
+];
+
+function renderProfilaxis(){
+  var h=theoryCard('sky',
+    'La profilaxis antibiotica reduce la ISQ/IAP. Farmaco estandar: <span class="dose">Cefazolina 2 g IV</span>. Timing: <strong>30-60 min antes de incision</strong>.',
+    '<ul><li><strong>Cefazolina</strong> — eleccion por espectro (Gram+ y algunos Gram-), vida media adecuada y bajo coste</li><li><strong>Dosis:</strong> <span class="dose">2 g IV</span> (usar <span class="dose">3 g si &gt;120 kg</span>)</li><li><strong>Alergia BL:</strong> <span class="dose">Vancomicina 15 mg/kg IV</span> (iniciar 60-120 min antes, infusion lenta)</li><li><strong>Redosificar</strong> si cirugia &gt;2× vida media del AB o perdida sanguinea &gt;1500 mL</li><li><strong>Fractura abierta Gustilo III:</strong> anadir <span class="dose">Gentamicina 5 mg/kg/dia</span> para Gram-</li><li><strong>SARM:</strong> <span class="hl">ANADIR</span> vancomicina a cefazolina, <strong>NO sustituir</strong>. Descolonizacion: mupirocina nasal 2% (2x/dia x 5 dias) + clorhexidina corporal</li></ul>',
+    'ICM 2025, Cap. 3 | PRIOAM');
+
+  // Step 1: Category cards
+  h+='<div class="profi-cats">';
+  PROFI_CATS.forEach(function(c){
+    h+='<div class="profi-cat'+(profiCat===c.id?' active':'')+'" onclick="selectProfiCat(\''+c.id+'\')">';
+    h+='<div class="pc-ico">'+c.icon+'</div>';
+    h+='<div><div class="pc-title">'+esc(c.title)+'</div><div class="pc-count">'+esc(c.count)+'</div></div>';
+    h+='</div>';
+  });
+  h+='</div>';
+
+  // Step 2: Procedure pills (if category selected)
+  var cat=PROFI_CATS.filter(function(c){return c.id===profiCat;})[0];
+  if(cat){
+    h+='<div class="profi-pills">';
+    var lastGroup='';
+    cat.items.forEach(function(it){
+      if(it.group&&it.group!==lastGroup){lastGroup=it.group;h+='<div class="profi-pill-group">'+esc(it.group)+'</div>';}
+      h+='<button class="profi-pill'+(profiProc===it.idx?' active':'')+'" onclick="selectProfiProc('+it.idx+')">'+esc(it.label)+'</button>';
+    });
+    h+='</div>';
+  } else {
+    h+='<div class="empty-state" style="padding:28px 16px;">'+ICO.shield+'<div class="es-title">Elige el tipo de cirugia</div><div class="es-text">Selecciona una categoria para ver los procedimientos disponibles.</div></div>';
+  }
+
+  // Step 3: Prescription card (if procedure selected)
+  if(profiProc>=0){
+    var p=PROPHYLAXIS[profiProc];
+    var showAlt=allergies.bl;
+    var drug=showAlt?p.alt:p.drug;
+    var dose=showAlt?'':p.dose;
+
+    h+='<div class="rx-card">';
+    h+='<div class="rx-card-head"><h3>'+esc(p.proc)+'</h3></div>';
+    h+='<div class="rx-card-body">';
+    h+='<div class="rx-row"><span class="rx-label">Farmaco</span><span class="rx-value drug">'+esc(drug)+'</span></div>';
+    if(dose)h+='<div class="rx-row"><span class="rx-label">Dosis</span><span class="rx-value">'+esc(dose)+'</span></div>';
+    h+='<div class="rx-row"><span class="rx-label">Redosis</span><span class="rx-value">'+esc(p.redose)+'</span></div>';
+    h+='<div class="rx-divider"></div>';
+    if(showAlt){
+      h+='<div class="rx-row"><span class="rx-label">1a eleccion</span><span class="rx-value" style="color:var(--text-muted);font-weight:400;text-decoration:line-through;">'+esc(p.drug)+' '+esc(p.dose)+'</span></div>';
+    } else {
+      h+='<div class="rx-row"><span class="rx-label">Alt. alergia</span><span class="rx-value alt">'+esc(p.alt)+'</span></div>';
+    }
+    h+='<div style="margin-top:8px;">'+makeRef(p.ref)+'</div>';
+    h+='</div></div>';
+  }
+
+  // Risk factors (always visible in profilaxis)
+  h+=renderCollapsible('riesgo','Factores de riesgo modificables para infeccion','sky',function(){
+    var c='<div style="display:grid;gap:8px;">';
+    FACTORES_RIESGO.forEach(function(f){
+      c+='<div class="info-card" style="margin:0;"><strong>'+esc(f.factor)+'</strong>';
+      c+='<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:4px;">';
+      c+='<span style="flex:1;min-width:150px;">'+esc(f.riesgo)+'</span>';
+      c+='<span style="flex:1;min-width:150px;color:var(--emerald);font-weight:500;">'+esc(f.mitigacion)+'</span>';
+      c+='</div><div style="margin-top:4px;">'+makeRef(f.ref)+'</div></div>';
+    });
+    return c+'</div>';
+  }());
+
+  return h;
+}
+
+function selectProfiCat(id){profiCat=profiCat===id?'':id;profiProc=-1;refreshCurrentView();}
+function selectProfiProc(idx){profiProc=profiProc===idx?-1:idx;refreshCurrentView();}
+
+// ─────────────────────────────────────────────
+//  IAP
+// ─────────────────────────────────────────────
+function renderIAP(){
+  var h=theoryCard('violet',
+    'La infeccion protesica articular afecta al <strong>1-2% de artroplastias</strong>. Germenes: <em>S. aureus</em> y <em>S. epidermidis</em>. El tratamiento depende de <strong>aguda vs cronica</strong>.',
+    '<ul><li><strong>Aguda postoperatoria</strong> (&lt;4 semanas) o <strong>hematogena</strong> (&lt;3 sem sintomas) → valorar lavado (DAIR)</li><li><strong>Cronica</strong> (&gt;4 semanas) → revision en 1 o 2 tiempos</li><li><strong>Lavado (DAIR):</strong> lavado + retencion de implante. Implante estable, partes blandas OK</li><li><strong>Revision 1 tiempo:</strong> germen conocido y sensible, sin fistula</li><li><strong>Revision 2 tiempos:</strong> gold standard en cronica. Retirada + espaciador con antibiotico → <span class="dose">6 sem AB IV</span> → reimplantacion (PCR normalizada)</li><li><strong>Rifampicina:</strong> clave en estafilococos + biofilm (lavado). NO en monoterapia</li><li><strong>OVIVA:</strong> paso precoz a oral no inferior a IV prolongada</li></ul>',
+    'ICM 2025, Partes I y III | PRIOAM | IDSA PJI 2013');
+  var iapSubs=[{id:'dair',label:'Lavado (DAIR)'},{id:'rev1t',label:'Revision 1 tiempo'},{id:'rev2t',label:'Revision 2 tiempos'}];
+  h+='<div class="sub-tabs">';
+  iapSubs.forEach(function(s){h+='<button class="sub-tab'+(s.id===currentIAPSub?' active':'')+'" onclick="currentIAPSub=\''+s.id+'\';refreshCurrentView();">'+s.label+'</button>';});
+  h+='</div>';
+  var iapNotes={dair:'Lavado quirurgico + retencion del implante (DAIR). Indicado en infeccion aguda (<4 sem postoperatoria o <3 sem hematogena), implante estable, partes blandas aceptables.',rev1t:'Revision en 1 tiempo: retirada y reimplantacion en un acto. Germen conocido y sensible, partes blandas aceptables, sin fistula.',rev2t:'Revision en 2 tiempos: retirada + espaciador con antibiotico. 6 semanas de antibioterapia IV. Reimplantacion cuando PCR normalizada y clinica resuelta.'};
+  h+='<div class="note-box">'+esc(iapNotes[currentIAPSub])+' '+makeRef('ICM 2025, Parte III')+'</div>';
+
+  // Empiric treatment
+  var empKey=currentIAPSub==='dair'?'iap_dair':'iap_rev';
+  h+=renderEmpiric(empKey);
+
+  // Sample collection checklist
+  h+=renderCollapsible('muestras','Checklist toma de muestras intraoperatorias','violet',renderMuestrasChecklist());
+
+  h+='<div class="form-label" style="margin-top:12px;">Si dispones del cultivo, selecciona el microorganismo</div>';
+  h+=orgSelectHTML('iapSel');
+  var sel=document.getElementById('iapSel');
+  var selVal=sel?sel.value:'';
+  if(selVal){
+    var org=ORGANISMS.filter(function(o){return o.id===selVal;})[0];
+    if(org)h+='<div style="margin-top:16px;">'+renderCascade(org,empKey)+'</div>';
+  }
+  return h;
+}
+
+// ─────────────────────────────────────────────
+//  OSTEOARTICULAR
+// ─────────────────────────────────────────────
+function renderOsteoart(){
+  var oaCtx={artritis:'artritis',osteo_aguda:'osteo',osteo_cronica:'osteo',espondilo:'espondilo'};
+  _refContext=oaCtx[currentOASub]||'osteo';
+  var info=OA_INFO[currentOASub];
+  var h=theoryCard('emerald',info.brief,info.full,info.ref);
+  var oaSubs=[{id:'artritis',label:'Artritis Septica'},{id:'osteo_aguda',label:'Osteomielitis Aguda'},{id:'osteo_cronica',label:'Osteomielitis Cronica'},{id:'espondilo',label:'Espondilodiscitis'}];
+  h+='<div class="sub-tabs">';
+  oaSubs.forEach(function(s){h+='<button class="sub-tab'+(s.id===currentOASub?' active':'')+'" onclick="currentOASub=\''+s.id+'\';refreshCurrentView();">'+s.label+'</button>';});
+  h+='</div>';
+
+  // Empiric treatment
+  h+=renderEmpiric(currentOASub);
+
+  h+='<div class="form-label" style="margin-top:12px;">Si dispones del cultivo, selecciona el microorganismo</div>';
+  h+=orgSelectHTML('oaSel');
+  var sel=document.getElementById('oaSel');
+  var selVal=sel?sel.value:'';
+  if(selVal){
+    var org=ORGANISMS.filter(function(o){return o.id===selVal;})[0];
+    if(org)h+='<div style="margin-top:16px;">'+renderCascade(org,currentOASub)+'</div>';
+  }
+  return h;
+}
+
+// ─────────────────────────────────────────────
+//  PARTES BLANDAS
+// ─────────────────────────────────────────────
+function renderBlandas(){
+  var pbCtx={celulitis:'celulitis',fascitis:'fascitis',herida:'partes blandas',mordedura:'mordedura',piediabetico:'pie diabetico'};
+  _refContext=pbCtx[currentPBSub]||'partes blandas';
+  var d=PB_DATA[currentPBSub];
+  var h=theoryCard('amber',d.brief,d.full,d.ref);
+  var pbSubs=[{id:'celulitis',label:'Celulitis'},{id:'fascitis',label:'Fascitis'},{id:'herida',label:'Herida Qx'},{id:'mordedura',label:'Mordeduras'},{id:'piediabetico',label:'Pie Diabetico'}];
+  h+='<div class="sub-tabs">';
+  pbSubs.forEach(function(s){h+='<button class="sub-tab'+(s.id===currentPBSub?' active':'')+'" onclick="currentPBSub=\''+s.id+'\';refreshCurrentView();">'+s.label+'</button>';});
+  h+='</div>';
+  var showAlt=allergies.bl;
+  h+='<div class="cascade">';
+  h+='<div class="cascade-card iv"><div class="cc-label iv">&#127973; TRATAMIENTO IV</div>';
+  h+='<div class="cc-drug">'+esc(showAlt?d.alt_alergia:d.empirico_iv)+'</div>';
+  if(showAlt)h+='<div class="cc-detail" style="font-style:italic;">1a eleccion: '+esc(d.empirico_iv)+'</div>';
+  h+='</div>';
+  h+='<div class="cascade-arrow">'+ARROW_SVG+'</div>';
+  h+='<div class="cascade-card oral"><div class="cc-label oral">&#128138; TRATAMIENTO ORAL</div>';
+  h+='<div class="cc-drug">'+esc(showAlt?d.alt_alergia:d.empirico_oral)+'</div>';
+  h+='</div>';
+  h+='<div class="cascade-arrow">'+ARROW_SVG+'</div>';
+  h+='<div class="cascade-card total"><div class="cc-label total">&#128197; DURACION</div>';
+  h+='<div class="cc-dur total">'+esc(d.duracion)+'</div></div>';
+  h+='</div>';
+  h+='<div class="info-card"><strong>Alt. alergia betalactamicos</strong>'+esc(d.alt_alergia)+'</div>';
+  return h;
+}
+
+// ─────────────────────────────────────────────
+//  MICROORGANISMO
+// ─────────────────────────────────────────────
+var MICRO_GROUPS=[
+  {key:'gram_pos',label:'Gram Positivos',color:'sky'},
+  {key:'gram_neg',label:'Gram Negativos',color:'emerald'},
+  {key:'anaerob',label:'Anaerobios',color:'violet'},
+  {key:'especial',label:'Especiales',color:'amber'}
+];
+var MICRO_SCENARIOS=[
+  {key:'iap_dair',label:'Protesica — Lavado'},
+  {key:'iap_rev',label:'Protesica — Revision'},
+  {key:'artritis',label:'Artritis septica'},
+  {key:'osteo_aguda',label:'Osteomielitis aguda'},
+  {key:'osteo_cronica',label:'Osteomielitis cronica'},
+  {key:'espondilo',label:'Espondilodiscitis'}
+];
+
+function renderMicro(){
+  var h=theoryCard('red',
+    'Busca por <strong>microorganismo del cultivo</strong> → recomendacion completa: <span class="dose">IV</span> → criterios de paso → <span class="dose">oral</span> → duracion total.',
+    '<ul><li><strong>18 fichas:</strong> 8 Gram+, 6 Gram-, 1 anaerobio, 3 especiales (TB, Candida, polimicrobiana)</li><li>Cada ficha: secuencia completa <span class="hl">IV → paso oral → duracion total</span></li><li>Alternativas para <strong>alergicos</strong> (activar filtro en header)</li><li>Duraciones adaptadas al escenario clinico (IAP, artritis, osteomielitis, espondilodiscitis)</li></ul>',
+    'ICM 2025, Caps. 20-24');
+
+  h+='<div class="micro-layout">';
+
+  // ── SIDEBAR ──
+  h+='<div class="micro-sidebar">';
+  h+='<div class="micro-search-wrap"><span class="ico">'+ICO.search+'</span><input type="text" class="micro-search" id="microSearch" placeholder="Buscar germen..." aria-label="Buscar microorganismo"></div>';
+  MICRO_GROUPS.forEach(function(g){
+    var orgs=ORGANISMS.filter(function(o){return o.group===g.key;});
+    var isOpen=microOpenGroup===g.key;
+    h+='<div class="org-group" id="og-'+g.key+'">';
+    h+='<button class="org-group-btn'+(isOpen?' open':'')+'" onclick="toggleMicroGroup(\''+g.key+'\')" style="color:var(--'+g.color+');">'+esc(g.label)+' <span style="font-size:10px;opacity:.5;">('+orgs.length+')</span><span class="arr">&#9654;</span></button>';
+    h+='<div class="org-list'+(isOpen?' open':'')+'" id="ol-'+g.key+'">';
+    orgs.forEach(function(o){
+      h+='<button class="org-item'+(microSelectedOrg===o.id?' active':'')+'" data-oid="'+o.id+'" onclick="selectMicroOrg(\''+o.id+'\')">'+esc(o.name)+'</button>';
+    });
+    h+='</div></div>';
+  });
+  h+='</div>';
+
+  // ── CONTENT ──
+  h+='<div class="micro-content" id="microContent">';
+  if(microSelectedOrg){
+    var org=ORGANISMS.filter(function(o){return o.id===microSelectedOrg;})[0];
+    if(org) h+=renderMicroDetail(org);
+  } else {
+    h+=microEmptyState();
+  }
+  h+='</div>';
+
+  h+='</div>'; // close micro-layout
+  return h;
+}
+
+function microEmptyState(){
+  return '<div class="empty-state">'+ICO.bacteria+'<div class="es-title">Selecciona un microorganismo</div><div class="es-text">Elige un germen del indice de la izquierda para ver las recomendaciones de antibioterapia completas.</div></div>';
+}
+
+function renderMicroDetail(org){
+  var gb=org.group==='gram_pos'?'badge-sky':org.group==='gram_neg'?'badge-emerald':org.group==='anaerob'?'badge-violet':'badge-amber';
+  var h='<div class="org-card"><div class="org-card-head"><h3>'+esc(org.name)+'</h3><span class="badge '+gb+'">'+esc(org.group.replace('_',' '))+'</span></div><div class="org-card-body">';
+
+  // Scenario selector
+  h+='<div style="margin-bottom:12px;"><div class="form-label">Escenario clinico (afecta duraciones)</div>';
+  h+='<div class="micro-scenario">';
+  MICRO_SCENARIOS.forEach(function(s){
+    h+='<button class="sub-tab'+(microScenario===s.key?' active':'')+'" onclick="changeMicroScenario(\''+s.key+'\')">'+esc(s.label)+'</button>';
+  });
+  h+='</div></div>';
+
+  h+=renderCascade(org,microScenario);
+  h+='</div></div>';
+  return h;
+}
+
+function toggleMicroGroup(gk){
+  microOpenGroup=microOpenGroup===gk?'':gk;
+  // Toggle DOM directly for speed (no full re-render)
+  MICRO_GROUPS.forEach(function(g){
+    var btn=document.querySelector('#og-'+g.key+' .org-group-btn');
+    var list=document.getElementById('ol-'+g.key);
+    if(btn&&list){
+      var open=g.key===microOpenGroup;
+      btn.classList.toggle('open',open);
+      list.classList.toggle('open',open);
+    }
+  });
+}
+
+function selectMicroOrg(id){
+  microSelectedOrg=id;
+  // Open the group this organism belongs to
+  var org=ORGANISMS.filter(function(o){return o.id===id;})[0];
+  if(org)microOpenGroup=org.group;
+  // Update sidebar active state directly
+  document.querySelectorAll('.org-item').forEach(function(el){el.classList.toggle('active',el.dataset.oid===id);});
+  // Re-render content only
+  var c=document.getElementById('microContent');
+  if(c&&org) c.innerHTML=renderMicroDetail(org);
+}
+
+function changeMicroScenario(key){
+  microScenario=key;
+  if(microSelectedOrg){
+    var org=ORGANISMS.filter(function(o){return o.id===microSelectedOrg;})[0];
+    var c=document.getElementById('microContent');
+    if(c&&org)c.innerHTML=renderMicroDetail(org);
+  }
+}
+
+function filterMicroSearch(){
+  var si=document.getElementById('microSearch');
+  if(!si)return;
+  var q=normalizar(si.value);
+  document.querySelectorAll('.org-item').forEach(function(el){
+    var name=el.textContent;
+    var match=!q||normalizar(name).indexOf(q)!==-1||normalizar(el.dataset.oid).indexOf(q)!==-1;
+    el.style.display=match?'':'none';
+  });
+  // Auto-open groups that have matching items
+  if(q){
+    MICRO_GROUPS.forEach(function(g){
+      var list=document.getElementById('ol-'+g.key);
+      var btn=document.querySelector('#og-'+g.key+' .org-group-btn');
+      if(!list||!btn)return;
+      var hasVisible=list.querySelector('.org-item[style=""],.org-item:not([style])');
+      // Count visible items
+      var vis=0;list.querySelectorAll('.org-item').forEach(function(i){if(i.style.display!=='none')vis++;});
+      if(vis>0){list.classList.add('open');btn.classList.add('open');}
+      else{list.classList.remove('open');btn.classList.remove('open');}
+    });
+  }
+}
+
+// ─────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────
+buildLanding();
+</script>
+</body>
+</html>
