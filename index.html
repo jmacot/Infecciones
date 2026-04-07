@@ -963,7 +963,7 @@ var OA_INFO={
     ref:'PRIOAM | Macarena | OVIVA'},
   osteo_cronica:{title:'Osteomielitis Cronica',
     brief:'Biofilm y secuestro oseo. <strong>Desbridamiento agresivo</strong> + antibioterapia prolongada <span class="dose">6-8+ semanas</span>.',
-    full:'<ul><li><strong>Clave:</strong> biofilm + secuestro oseo. AB sin cirugia rara vez curan</li><li><strong>Cirugia:</strong> desbridamiento agresivo (retirada secuestros, fresado, Papineau)</li><li><strong>Estafilococos:</strong> anadir <span class="dose">rifampicina</span> (actividad antibiofilm)</li><li><strong>Duracion:</strong> <span class="dose">6-8 sem minimo</span>, hasta 3-6 meses si desbridamiento incompleto</li><li>Considerar cobertura de <strong>anaerobios</strong> en fracturas abiertas</li></ul>',
+    full:'<ul><li><strong>Clave:</strong> biofilm + secuestro oseo. AB sin cirugia rara vez curan</li><li><strong>Cirugia:</strong> desbridamiento agresivo (retirada secuestros, fresado, Papineau)</li><li><strong>Estafilococos:</strong> añadir <span class="dose">rifampicina</span> (actividad antibiofilm)</li><li><strong>Duracion:</strong> <span class="dose">6-8 sem minimo</span>, hasta 3-6 meses si desbridamiento incompleto</li><li>Considerar cobertura de <strong>anaerobios</strong> en fracturas abiertas</li></ul>',
     ref:'PRIOAM | Macarena'},
   espondilo:{title:'Espondilodiscitis Piogena',
     brief:'<em>S. aureus</em> (&gt;50%) y enterobacterias. Tratamiento conservador en la mayoria. IV <span class="dose">2-4 sem</span>, total <span class="dose">6-8 sem</span>.',
@@ -978,7 +978,7 @@ var PB_DATA={
     empirico_iv:'Amoxicilina-clavulanico 1-2 g IV c/8h',empirico_oral:'Amox-clav 875/125 c/8h o Cloxacilina 500 c/6h',alt_alergia:'Clindamicina 300-450 c/8h o Levofloxacino 500 c/24h',duracion_iv:'Si ingreso: 48-72h IV hasta afebril y mejoria, luego paso a oral',duracion:'7-10 dias total',paso_oral:'Afebril 48-72h, mejoria local, tolerancia oral',ref:'PRIOAM | Macarena'},
   fascitis:{title:'Fascitis Necrotizante',
     brief:'<span class="hl" style="background:var(--red-light);color:var(--red);">EMERGENCIA QUIRURGICA</span> Mortalidad 20-40%. Desbridamiento + <span class="dose">Meropenem + Linezolid + Clindamicina</span>.',
-    full:'<ul><li><strong>Tipo I:</strong> polimicrobiana. <strong>Tipo II:</strong> <em>Streptococcus</em> grupo A. <strong>Tipo III:</strong> <em>Clostridium/Vibrio</em></li><li><strong>Signos de alarma:</strong> dolor desproporcionado, crepitacion, ampollas hemorragicas, necrosis cutanea, shock</li><li><strong>Cirugia urgente:</strong> desbridamiento hasta tejido viable. Reevaluar 24-48h</li><li><strong>Clindamicina:</strong> inhibe produccion de toxinas (anadirla siempre)</li></ul>',
+    full:'<ul><li><strong>Tipo I:</strong> polimicrobiana. <strong>Tipo II:</strong> <em>Streptococcus</em> grupo A. <strong>Tipo III:</strong> <em>Clostridium/Vibrio</em></li><li><strong>Signos de alarma:</strong> dolor desproporcionado, crepitacion, ampollas hemorragicas, necrosis cutanea, shock</li><li><strong>Cirugia urgente:</strong> desbridamiento hasta tejido viable. Reevaluar 24-48h</li><li><strong>Clindamicina:</strong> inhibe produccion de toxinas (añadirla siempre)</li></ul>',
     empirico_iv:'Meropenem 1-2 g IV c/8h + Linezolid 600 IV c/12h + Clindamicina 600-900 IV c/8h',empirico_oral:'No aplicable - siempre IV + cirugia',alt_alergia:'Vancomicina + Aztreonam + Clindamicina',duracion_iv:'Todo el tratamiento IV. Minimo 2-4 semanas',duracion:'2-4 semanas minimo (siempre IV)',paso_oral:'No aplicable — tratamiento IV completo + cirugia',ref:'PRIOAM | Macarena | IDSA'},
   herida:{title:'Infeccion de Herida Quirurgica',
     brief:'<strong>Abrir, drenar y cultivar ANTES de antibiotico.</strong> Si implante: valorar osteomielitis.',
@@ -1008,7 +1008,7 @@ var EMPIRIC={
     ref:'ICM 2025, Parte III'},
   artritis:{
     iv:'Cloxacilina 2 g c/4-6h o Cefazolina 2 g c/8h',
-    alt:'Si sospecha SAMR: anadir Vancomicina. Alergia BL: Vancomicina 15-20 mg/kg c/8-12h',
+    alt:'Si sospecha SAMR: añadir Vancomicina. Alergia BL: Vancomicina 15-20 mg/kg c/8-12h',
     note:'S. aureus causa >50%. Obtener hemocultivos + liquido sinovial ANTES de iniciar antibiotico.',
     ref:'PRIOAM | Macarena'},
   osteo_aguda:{
@@ -1304,7 +1304,7 @@ var PROFI_CATS=[
 function renderProfilaxis(){
   var h=theoryCard('sky',
     'La profilaxis antibiotica reduce la ISQ/IAP. Farmaco estandar: <span class="dose">Cefazolina 2 g IV</span>. Timing: <strong>30-60 min antes de incision</strong>.',
-    '<ul><li><strong>Cefazolina</strong> — eleccion por espectro (Gram+ y algunos Gram-), vida media adecuada y bajo coste</li><li><strong>Dosis:</strong> <span class="dose">2 g IV</span> (usar <span class="dose">3 g si &gt;120 kg</span>)</li><li><strong>Alergia BL:</strong> <span class="dose">Vancomicina 15 mg/kg IV</span> (iniciar 60-120 min antes, infusion lenta)</li><li><strong>Redosificar</strong> si cirugia &gt;2× vida media del AB o perdida sanguinea &gt;1500 mL</li><li><strong>Fractura abierta Gustilo III:</strong> anadir <span class="dose">Gentamicina 5 mg/kg/dia</span> para Gram-</li><li><strong>SARM:</strong> <span class="hl">ANADIR</span> vancomicina a cefazolina, <strong>NO sustituir</strong>. Descolonizacion: mupirocina nasal 2% (2x/dia x 5 dias) + clorhexidina corporal</li></ul>',
+    '<ul><li><strong>Cefazolina</strong> — eleccion por espectro (Gram+ y algunos Gram-), vida media adecuada y bajo coste</li><li><strong>Dosis:</strong> <span class="dose">2 g IV</span> (usar <span class="dose">3 g si &gt;120 kg</span>)</li><li><strong>Alergia BL:</strong> <span class="dose">Vancomicina 15 mg/kg IV</span> (iniciar 60-120 min antes, infusion lenta)</li><li><strong>Redosificar</strong> si cirugia &gt;2× vida media del AB o perdida sanguinea &gt;1500 mL</li><li><strong>Fractura abierta Gustilo III:</strong> añadir <span class="dose">Gentamicina 5 mg/kg/dia</span> para Gram-</li><li><strong>SARM:</strong> <span class="hl">ANADIR</span> vancomicina a cefazolina, <strong>NO sustituir</strong>. Descolonizacion: mupirocina nasal 2% (2x/dia x 5 dias) + clorhexidina corporal</li></ul>',
     'ICM 2025, Cap. 3 | PRIOAM');
 
   // Step 1: Category cards
