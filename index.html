@@ -235,8 +235,8 @@ a{color:var(--sky);text-decoration:none;}a:hover{text-decoration:underline;}
    SUB-TABS & FORM
    ═══════════════════════════════════════════ */
 .sub-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
-.sub-tab{padding:6px 14px;border-radius:999px;font-size:12px;font-weight:600;background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;transition:var(--transition);}
-.sub-tab:hover{border-color:var(--sky);color:var(--sky);}
+.sub-tab{padding:8px 18px;border-radius:999px;font-size:13px;font-weight:700;background:var(--surface2);border:2px solid var(--border);color:var(--text);cursor:pointer;transition:var(--transition);}
+.sub-tab:hover{border-color:var(--sky);color:var(--sky);background:var(--sky-light);}
 .sub-tab.active{background:var(--sky-light);border-color:var(--sky);color:var(--sky);}
 .form-label{font-family:'Source Code Pro',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-light);margin-bottom:4px;display:block;}
 .form-select{padding:10px 14px;font-size:14px;font-family:'Source Sans 3',sans-serif;border:1px solid var(--border);border-radius:var(--radius-sm);background:rgba(255,255,255,0.4);backdrop-filter:blur(8px);color:var(--text);outline:none;transition:var(--transition);width:100%;max-width:420px;}
@@ -368,7 +368,7 @@ a.ref-tag:hover{background:var(--violet);color:#fff;text-decoration:none;}
 .ls-input-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;max-width:500px;}
 @media(max-width:500px){.ls-input-grid{grid-template-columns:1fr;}}
 .ls-input-group{display:flex;flex-direction:column;gap:4px;}
-.ls-input-label{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-light);font-weight:600;}
+.ls-input-label{font-family:'Source Code Pro',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);font-weight:600;}
 .ls-input{padding:10px 12px;font-size:14px;font-family:'Source Sans 3',sans-serif;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);backdrop-filter:blur(var(--glass-blur));outline:none;transition:var(--transition);width:100%;}
 .ls-input:focus{border-color:var(--sky);box-shadow:0 0 0 2px rgba(2,132,199,.15);}
 [data-theme="dark"] .ls-input{background:var(--surface2);}
@@ -566,7 +566,7 @@ svg{max-width:100%;height:auto;}
   .allergy-pill{padding:4px 8px;font-size:10px;}
   .allergy-pill .pill-icon{display:none;}
   .sky-toggle{--toggle-size:14px;}
-  .sub-tabs{gap:4px;}.sub-tab{padding:5px 10px;font-size:11px;}
+  .sub-tabs{gap:4px;}.sub-tab{padding:6px 12px;font-size:12px;}
   .data-table{font-size:11px;}.data-table th,.data-table td{padding:5px 6px;}
   .sec-header{flex-wrap:wrap;gap:8px;}
   .btn-back{padding:5px 10px;font-size:10px;}
@@ -1416,7 +1416,7 @@ function renderIAP(){
   // Visual indication cards per sub-tab
   var iapCards={
     dair:{
-      title:'Lavado quirurgico + retencion del implante',
+      title:'Lavado quirurgico + retencion del implante (DAIR: Debridement, Antibiotics and Implant Retention)',
       si:['Infeccion aguda postoperatoria (&lt;4 semanas)','Infeccion hematogena aguda (&lt;3 semanas de sintomas)','Implante estable y bien fijado','Partes blandas aceptables (sin fistula ni necrosis)'],
       no:['Infeccion cronica (&gt;4 semanas)','Implante aflojado','Fistula activa o necrosis de partes blandas','Germen dificil (hongos, micobacterias, enterococo resistente)'],
       clave:'Rifampicina en estafilococos con biofilm (NO iniciar si drenaje persistente de herida). NO en monoterapia.'
