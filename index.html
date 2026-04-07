@@ -238,7 +238,7 @@ a{color:var(--sky);text-decoration:none;}a:hover{text-decoration:underline;}
 .sub-tab{padding:8px 18px;border-radius:999px;font-size:13px;font-weight:700;background:var(--surface2);border:2px solid var(--border);color:var(--text);cursor:pointer;transition:var(--transition);}
 .sub-tab:hover{border-color:var(--sky);color:var(--sky);background:var(--sky-light);}
 .sub-tab.active{background:var(--sky-light);border-color:var(--sky);color:var(--sky);}
-.form-label{font-family:'Source Code Pro',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-light);margin-bottom:4px;display:block;}
+.form-label{font-family:'Source Code Pro',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:4px;display:block;}
 .form-select{padding:10px 14px;font-size:14px;font-family:'Source Sans 3',sans-serif;border:1px solid var(--border);border-radius:var(--radius-sm);background:rgba(255,255,255,0.4);backdrop-filter:blur(8px);color:var(--text);outline:none;transition:var(--transition);width:100%;max-width:420px;}
 [data-theme="dark"] .form-select{background:var(--surface2);}
 .form-select:focus{border-color:rgba(2,132,199,0.5);box-shadow:0 0 0 3px rgba(2,132,199,0.08);}
@@ -559,6 +559,7 @@ svg{max-width:100%;height:auto;}
   .micro-layout{grid-template-columns:1fr;}
   .micro-sidebar{position:static;max-height:none;}
   .pkpd-grid{grid-template-columns:1fr;}
+  .fascitis-grid{grid-template-columns:1fr!important;}
 }
 @media(max-width:480px){
   .btn-home{padding:3px 6px;font-size:8px;top:10px;left:6px;}
@@ -1654,10 +1655,13 @@ function renderBlandas(){
   pbSubs.forEach(function(s){h+='<button class="sub-tab'+(s.id===currentPBSub?' active':'')+'" onclick="currentPBSub=\''+s.id+'\';refreshCurrentView();">'+s.label+'</button>';});
   h+='</div>';
 
-  // LRINEC calculator for fascitis
-  if(currentPBSub==='fascitis') h+=renderLRINEC();
-
   var showAlt=allergies.bl;
+  var isFascitis=currentPBSub==='fascitis';
+
+  if(isFascitis) h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;" class="fascitis-grid">';
+
+  // Left column: cascade
+  if(isFascitis) h+='<div>';
   h+='<div class="cascade">';
   // IV
   h+='<div class="cascade-card iv"><div class="cc-label iv">&#127973; FASE INTRAVENOSA</div>';
@@ -1682,13 +1686,20 @@ function renderBlandas(){
   h+='<div class="cc-dur total">'+esc(d.duracion)+'</div></div>';
   h+='</div>';
   if(!showAlt)h+='<div class="info-card"><strong>Alternativa alergia betalactamicos</strong>'+esc(d.alt_alergia)+'</div>';
+  if(isFascitis) h+='</div>';
+
+  // Right column: LRINEC
+  if(isFascitis){
+    h+=renderLRINEC();
+    h+='</div>'; // close grid
+  }
   return h;
 }
 
 // ─────────────────────────────────────────────
 //  LRINEC Score Calculator
 // ─────────────────────────────────────────────
-var _lrinec={step:0,vals:[-1,-1,-1,-1,-1,-1]};
+var _lrinec=[-1,-1,-1,-1,-1,-1];
 var LRINEC_PARAMS=[
   {name:'PCR (mg/L)',opts:[{label:'< 150',pts:0},{label:'≥ 150',pts:4}]},
   {name:'Leucocitos (×10³/\u00b5L)',opts:[{label:'< 15',pts:0},{label:'15 - 25',pts:1},{label:'> 25',pts:2}]},
@@ -1697,46 +1708,45 @@ var LRINEC_PARAMS=[
   {name:'Creatinina (mg/dL)',opts:[{label:'≤ 1,6',pts:0},{label:'> 1,6',pts:2}]},
   {name:'Glucosa (mg/dL)',opts:[{label:'≤ 180',pts:0},{label:'> 180',pts:1}]}
 ];
-function lrinecSelect(step,optIdx){
-  _lrinec.vals[step]=LRINEC_PARAMS[step].opts[optIdx].pts;
-  _lrinec.step=step+1;
+function lrinecPick(pIdx,oIdx){
+  _lrinec[pIdx]=(_lrinec[pIdx]===LRINEC_PARAMS[pIdx].opts[oIdx].pts)?-1:LRINEC_PARAMS[pIdx].opts[oIdx].pts;
   refreshCurrentView();
 }
 function lrinecReset(){
-  _lrinec={step:0,vals:[-1,-1,-1,-1,-1,-1]};
+  _lrinec=[-1,-1,-1,-1,-1,-1];
   refreshCurrentView();
 }
 function renderLRINEC(){
   var h='<div class="rx-card" style="margin-bottom:16px;"><div class="rx-card-head" style="background:var(--red);"><h3>LRINEC Score — Riesgo de fascitis necrotizante</h3></div><div class="rx-card-body">';
-  var allDone=_lrinec.step>=6;
-  // Steps
+  // All params visible
   for(var i=0;i<6;i++){
     var p=LRINEC_PARAMS[i];
-    var answered=_lrinec.vals[i]>=0;
-    var isCurrent=i===_lrinec.step;
-    if(i>_lrinec.step && !answered) break;
-    h+='<div style="margin-bottom:12px;'+(isCurrent?'':'opacity:0.7;')+'">';
-    h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:'+(isCurrent?'var(--red)':'var(--text-muted)')+';font-weight:600;margin-bottom:6px;">';
-    h+='Paso '+(i+1)+' de 6 — '+p.name+'</div>';
+    var answered=_lrinec[i]>=0;
+    h+='<div style="margin-bottom:14px;">';
+    h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);font-weight:600;margin-bottom:6px;">'+p.name+'</div>';
     h+='<div style="display:flex;gap:8px;flex-wrap:wrap;">';
     for(var j=0;j<p.opts.length;j++){
       var o=p.opts[j];
-      var sel=answered && _lrinec.vals[i]===o.pts;
-      var canClick=isCurrent||answered;
-      h+='<button style="padding:8px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;border:2px solid '+(sel?'var(--red)':'var(--border)')+';background:'+(sel?'var(--red-light)':'var(--surface2)')+';color:'+(sel?'var(--red)':'var(--text)')+';cursor:'+(canClick?'pointer':'default')+';transition:var(--transition);"';
-      if(canClick) h+=' onclick="lrinecSelect('+i+','+j+')"';
-      h+='>'+o.label;
-      if(sel) h+=' <span style="font-size:11px;opacity:.7;">('+o.pts+' pt'+(o.pts!==1?'s':'')+')</span>';
+      var sel=answered&&_lrinec[i]===o.pts;
+      h+='<button onclick="lrinecPick('+i+','+j+')" style="padding:8px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;transition:var(--transition);border:2px solid '+(sel?'var(--red)':'var(--border)')+';background:'+(sel?'var(--red-light)':'var(--surface2)')+';color:'+(sel?'var(--red)':'var(--text)')+';">';
+      h+=o.label;
+      if(sel) h+=' <span style="font-size:11px;opacity:.7;">('+o.pts+'pt)</span>';
       h+='</button>';
     }
     h+='</div></div>';
   }
-  // Result
-  if(allDone){
-    var total=0;
-    for(var k=0;k<6;k++) total+=_lrinec.vals[k];
+  // Calculate
+  var answered=0,total=0;
+  for(var k=0;k<6;k++){if(_lrinec[k]>=0){answered++;total+=_lrinec[k];}}
+  // Result + buttons row
+  h+='<div style="display:flex;align-items:center;gap:12px;margin-top:4px;flex-wrap:wrap;">';
+  if(answered>0){
     var rColor,rBg,rText,rPlan;
-    if(total<=5){
+    if(answered<6){
+      rColor='var(--text-muted)';rBg='var(--surface2)';
+      rText='Parcial ('+answered+'/6 parametros)';
+      rPlan='Completa todos los parametros para obtener la interpretacion. Si no dispones de algun valor, dejalo sin seleccionar.';
+    }else if(total<=5){
       rColor='var(--emerald)';rBg='var(--emerald-light)';
       rText='Riesgo bajo';
       rPlan='Baja probabilidad de fascitis necrotizante. Reevaluar si empeoramiento clinico, dolor desproporcionado o signos de alarma. No descarta fascitis (sensibilidad limitada).';
@@ -1749,15 +1759,17 @@ function renderLRINEC(){
       rText='Riesgo alto — alta probabilidad de fascitis necrotizante';
       rPlan='Exploracion quirurgica urgente. NO retrasar cirugia para pruebas de imagen. Iniciar antibioterapia empirica de amplio espectro + Clindamicina (antitoxina).';
     }
-    h+='<div style="background:'+rBg+';border:2px solid '+rColor+';border-radius:var(--radius-sm);padding:16px;margin-top:8px;">';
-    h+='<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">';
-    h+='<div style="font-size:28px;font-weight:700;color:'+rColor+';font-family:\'Source Serif 4\',serif;">'+total+'/13</div>';
-    h+='<div><div style="font-size:14px;font-weight:700;color:'+rColor+';">'+rText+'</div>';
-    h+='<div style="font-size:11px;color:var(--text-muted);">Wong et al. Crit Care Med 2004</div></div></div>';
-    h+='<div style="font-size:13px;color:var(--text);">'+rPlan+'</div>';
+    h+='<div style="background:'+rBg+';border:2px solid '+rColor+';border-radius:var(--radius-sm);padding:12px 16px;flex:1;min-width:200px;">';
+    h+='<div style="display:flex;align-items:center;gap:10px;">';
+    h+='<div style="font-size:26px;font-weight:700;color:'+rColor+';font-family:\'Source Serif 4\',serif;">'+total+'/13</div>';
+    h+='<div><div style="font-size:13px;font-weight:700;color:'+rColor+';">'+rText+'</div>';
+    if(answered===6) h+='<div style="font-size:10px;color:var(--text-muted);">Wong et al. Crit Care Med 2004</div>';
+    h+='</div></div>';
+    if(answered===6) h+='<div style="font-size:12px;color:var(--text);margin-top:6px;">'+rPlan+'</div>';
     h+='</div>';
-    h+='<div style="margin-top:10px;text-align:center;"><button onclick="lrinecReset()" style="padding:6px 16px;border-radius:var(--radius-sm);font-size:12px;font-weight:600;border:1px solid var(--border);background:var(--surface2);color:var(--text-muted);cursor:pointer;">Reiniciar calculadora</button></div>';
   }
+  h+='<button onclick="lrinecReset()" style="padding:8px 16px;border-radius:var(--radius-sm);font-size:12px;font-weight:600;border:1px solid var(--border);background:var(--surface2);color:var(--text-muted);cursor:pointer;white-space:nowrap;">Limpiar</button>';
+  h+='</div>';
   h+='<div class="note-box" style="margin-top:12px;border-left:3px solid var(--amber);background:var(--amber-light);font-size:12px;">';
   h+='<strong style="color:var(--amber);">Limitacion:</strong> una puntuacion baja NO descarta fascitis necrotizante. La sospecha clinica (dolor desproporcionado, crepitacion, necrosis) prevalece sobre el score. Si hay duda, explorar quirurgicamente.';
   h+='</div></div></div>';
