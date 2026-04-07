@@ -328,22 +328,24 @@ a.ref-tag:hover{background:var(--violet);color:#fff;text-decoration:none;}
 .di-label{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#92400e;font-weight:600;}
 [data-theme="dark"] .di-label{color:var(--amber);}
 
-/* Algorithm — horizontal tree (Knee Align style) */
+/* Algorithm — horizontal tree (progressive reveal) */
 .abg-chart{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;}
-.abg-tree{display:flex;flex-direction:column;align-items:center;min-width:600px;padding:8px 0;}
+.abg-tree{display:flex;flex-direction:column;align-items:center;min-width:560px;padding:8px 0;}
 .abg-top{padding:10px 24px;border-radius:20px;font-weight:600;font-size:14px;color:#fff;background:var(--sky);font-family:'Source Sans 3',sans-serif;}
 .abg-connector{display:flex;flex-direction:column;align-items:center;}
 .abg-vline{width:2px;height:16px;background:var(--border);}
 .abg-hline{height:2px;background:var(--border);}
+.abg-level{display:none;width:100%;flex-direction:column;align-items:center;animation:fadeSlide .35s ease;}
+.abg-level.visible{display:flex;}
 .abg-branches{display:grid;gap:12px;max-width:700px;width:100%;}
 .abg-branches.cols-2{grid-template-columns:1fr 1fr;}
 .abg-branches.cols-3{grid-template-columns:1fr 1fr 1fr;}
-.abg-branch{display:flex;flex-direction:column;align-items:center;text-align:center;transition:all .4s cubic-bezier(.16,1,.3,1);}
-.abg-branch.dimmed{opacity:.15;filter:grayscale(1);pointer-events:none;}
-.abg-branch.highlighted .abg-result{box-shadow:0 0 0 3px rgba(2,132,199,.3);}
+.abg-branch{display:flex;flex-direction:column;align-items:center;text-align:center;transition:all .4s cubic-bezier(.16,1,.3,1);cursor:pointer;}
+.abg-branch.dimmed{opacity:.12;filter:grayscale(1);pointer-events:none;}
+.abg-branch.highlighted .abg-result{box-shadow:0 0 0 3px rgba(2,132,199,.3);transform:translateY(-2px);}
 .abg-cond{padding:6px 12px;border-radius:8px;font-size:11px;font-weight:600;border:1.5px solid var(--sky);background:var(--sky-light);color:#1e40af;max-width:200px;}
 [data-theme="dark"] .abg-cond{color:#38bdf8;background:rgba(2,132,199,.15);}
-.abg-result{padding:10px 14px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;transition:var(--transition);max-width:220px;width:100%;}
+.abg-result{padding:10px 14px;border-radius:12px;font-size:14px;font-weight:700;transition:var(--transition);max-width:220px;width:100%;}
 .abg-result:hover{transform:translateY(-2px);}
 .abg-result.r-red{background:var(--red-light);color:var(--red);border:2px solid var(--red);}
 .abg-result.r-amber{background:var(--amber-light);color:#92400e;border:2px solid var(--amber);}
@@ -352,15 +354,13 @@ a.ref-tag:hover{background:var(--violet);color:#fff;text-decoration:none;}
 .abg-result.r-violet{background:var(--violet-light);color:var(--violet);border:2px solid var(--violet);}
 .abg-result.r-sky{background:#dbeafe;color:#1d4ed8;border:2px solid #3b82f6;}
 [data-theme="dark"] .abg-result.r-sky{background:rgba(59,130,246,.15);color:#60a5fa;}
-.abg-result.r-grey{background:var(--surface2);color:var(--text-muted);border:2px dashed var(--text-light);}
 .abg-desc{font-size:11px;color:var(--text-muted);max-width:200px;line-height:1.4;margin-top:6px;}
 .abg-detail{display:none;margin-top:12px;padding:14px 16px;border-radius:var(--radius);background:var(--surface);backdrop-filter:blur(var(--glass-blur));border:1px solid var(--border);font-size:13px;text-align:left;max-width:600px;width:100%;animation:fadeSlide .3s ease;}
 .abg-detail.visible{display:block;}
 .abg-detail-grid{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px;}
 .abg-detail-grid .dl{color:var(--text-light);font-weight:600;}
-.abg-reset{display:none;margin-top:8px;font-size:12px;color:var(--sky);cursor:pointer;font-family:'Source Code Pro',monospace;background:none;border:none;}
+.abg-reset{margin-top:12px;font-size:12px;color:var(--sky);cursor:pointer;font-family:'Source Code Pro',monospace;background:none;border:none;}
 .abg-reset:hover{text-decoration:underline;}
-.abg-reset.visible{display:inline-block;}
 @keyframes fadeSlide{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
 
 /* FAQ accordion */
@@ -1637,8 +1637,25 @@ function renderAbgSIR(){
   h+='<div class="sir-action">Cambiar de antibiotico</div></div>';
   h+='</div>';
 
-  h+='<div class="note-box warn" style="margin:16px 0;font-size:14px;"><strong style="display:block;margin-bottom:4px;">Concepto clave</strong>';
-  h+='"I" = Sensibilidad Intermedia = <strong>sensible con dosis incrementadas</strong>. La clave es <strong>dosificar mas</strong>, no cambiar de antibiotico.</div>';
+  // Antes vs Ahora
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;">';
+  h+='<div style="background:var(--red-light);border-radius:var(--radius-sm);padding:14px;border-top:3px solid var(--red);">';
+  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--red);font-weight:600;margin-bottom:8px;">Antes (pre-2022)</div>';
+  h+='<div style="font-size:13px;margin-bottom:6px;"><strong>"I" = dudoso, incierto</strong></div>';
+  h+='<div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">Recomendacion: cambiar de antibiotico</div>';
+  h+='<div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">Exito esperado: 40-60% (impredecible)</div>';
+  h+='<div style="font-size:12px;color:var(--text-muted);">Se consideraba un fracaso terapeutico</div>';
+  h+='</div>';
+  h+='<div style="background:var(--emerald-light);border-radius:var(--radius-sm);padding:14px;border-top:3px solid var(--emerald);">';
+  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--emerald);font-weight:600;margin-bottom:8px;">Ahora (EUCAST 2024)</div>';
+  h+='<div style="font-size:13px;margin-bottom:6px;"><strong>"I" = sensible con exposicion aumentada</strong></div>';
+  h+='<div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">Recomendacion: dosis incrementada o perfusion extendida</div>';
+  h+='<div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">Exito esperado: &gt;90% con dosificacion correcta</div>';
+  h+='<div style="font-size:12px;color:var(--text-muted);">La misma CMI, pero sabemos como dosificar</div>';
+  h+='</div></div>';
+
+  h+='<div class="note-box warn" style="margin:0 0 16px;font-size:14px;"><strong style="display:block;margin-bottom:4px;">Concepto clave</strong>';
+  h+='La CMI no ha cambiado. Lo que ha cambiado es nuestro conocimiento: con dosis altas o mayor tiempo de exposicion, estos microorganismos responden igual que los sensibles clasicos. <strong>Dosificar mas, no cambiar de antibiotico.</strong></div>';
 
   // Quick reference — collapsible
   h+=renderCollapsible('sir-ref','Que hacer ante una sensibilidad intermedia (I)','amber',
@@ -1753,185 +1770,99 @@ function renderAbgConceptos(){
   return h;
 }
 
-function abgAlgoSelect(branchId){
-  // Dim all branches at same level, highlight selected
+function abgAlgoSelect(levelId,branchId){
   var el=document.getElementById(branchId);
   if(!el)return;
   var parent=el.parentElement;
-  parent.querySelectorAll(':scope>.abg-branch').forEach(function(b){
-    b.classList.add('dimmed');b.classList.remove('highlighted');
-  });
-  el.classList.remove('dimmed');
-  el.classList.add('highlighted');
-  // Show detail panel
+  var wasHighlighted=el.classList.contains('highlighted');
+
+  // Toggle: if already selected, deselect
+  if(wasHighlighted){
+    parent.querySelectorAll(':scope>.abg-branch').forEach(function(b){b.classList.remove('dimmed','highlighted');});
+    document.querySelectorAll('.abg-detail').forEach(function(d){d.classList.remove('visible');});
+    // Hide subsequent levels
+    var lvl=parseInt(levelId.replace('L',''),10);
+    for(var i=lvl+1;i<=5;i++){var nxt=document.getElementById('abgL'+i);if(nxt)nxt.classList.remove('visible');}
+    return;
+  }
+
+  // Select: dim siblings, highlight this
+  parent.querySelectorAll(':scope>.abg-branch').forEach(function(b){b.classList.add('dimmed');b.classList.remove('highlighted');});
+  el.classList.remove('dimmed');el.classList.add('highlighted');
+
+  // Show detail
+  document.querySelectorAll('.abg-detail').forEach(function(d){d.classList.remove('visible');});
   var detail=document.getElementById(branchId+'-detail');
-  parent.querySelectorAll(':scope>.abg-branch .abg-detail').forEach(function(d){d.classList.remove('visible');});
   if(detail)detail.classList.add('visible');
-  // Show reset
-  var reset=document.getElementById('abgAlgoReset');
-  if(reset)reset.classList.add('visible');
-  // Auto-scroll on mobile
-  var chart=document.getElementById('abgChart');
-  if(chart&&chart.scrollWidth>chart.clientWidth){
-    var cr=chart.getBoundingClientRect(),br=el.getBoundingClientRect();
-    chart.scrollTo({left:Math.max(0,chart.scrollLeft+br.left-cr.left-(cr.width/2)+(br.width/2)),behavior:'smooth'});
+
+  // Reveal next level
+  var lvl=parseInt(levelId.replace('L',''),10);
+  var nxt=document.getElementById('abgL'+(lvl+1));
+  if(nxt)nxt.classList.add('visible');
+  // Hide levels beyond next (in case user goes back)
+  for(var i=lvl+2;i<=5;i++){
+    var fut=document.getElementById('abgL'+i);
+    if(fut){fut.classList.remove('visible');fut.querySelectorAll('.dimmed,.highlighted').forEach(function(e){e.classList.remove('dimmed','highlighted');});}
   }
 }
 function abgAlgoReset(){
   document.querySelectorAll('#abgChart .dimmed,#abgChart .highlighted').forEach(function(e){e.classList.remove('dimmed','highlighted');});
   document.querySelectorAll('#abgChart .abg-detail').forEach(function(d){d.classList.remove('visible');});
-  var reset=document.getElementById('abgAlgoReset');
-  if(reset)reset.classList.remove('visible');
+  for(var i=2;i<=5;i++){var lv=document.getElementById('abgL'+i);if(lv)lv.classList.remove('visible');}
 }
 
 function renderAbgAlgoritmo(){
   var h='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin-bottom:4px;">Algoritmo: interpretacion de antibiograma en infeccion osea</div>';
-  h+='<div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Pulsa en cada resultado para ver el detalle. El arbol se despliega en ramas horizontales.</div>';
+  h+='<div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Selecciona en cada nivel para desplegar la siguiente rama. Pulsa de nuevo para deseleccionar.</div>';
 
   h+='<div class="abg-chart" id="abgChart">';
   h+='<div class="abg-tree">';
 
-  // ── LEVEL 1: Root node ──
+  // ═══ LEVEL 1: Root (always visible) ═══
   h+='<div class="abg-top">Recibo el antibiograma</div>';
   h+='<div class="abg-connector"><div class="abg-vline"></div><div class="abg-hline" style="width:80%;max-width:520px;"></div></div>';
 
-  // ── LEVEL 2: 3 branches — Resistente / Intermedia / Sensible ──
   h+='<div class="abg-branches cols-3">';
-
-  // Branch: RESISTENTE
-  h+='<div class="abg-branch" id="ab-r" onclick="abgAlgoSelect(\'ab-r\')">';
-  h+='<div class="abg-vline"></div>';
-  h+='<div class="abg-cond">Resultado: R</div>';
-  h+='<div class="abg-vline"></div>';
-  h+='<div class="abg-result r-red">Resistente</div>';
-  h+='<div class="abg-desc">Cambiar de antibiotico</div>';
+  h+='<div class="abg-branch" id="ab-r" onclick="abgAlgoSelect(\'L1\',\'ab-r\')"><div class="abg-vline"></div><div class="abg-cond">Resultado: R</div><div class="abg-vline"></div><div class="abg-result r-red">Resistente</div><div class="abg-desc">Cambiar de antibiotico</div></div>';
+  h+='<div class="abg-branch" id="ab-i" onclick="abgAlgoSelect(\'L1\',\'ab-i\')"><div class="abg-vline"></div><div class="abg-cond">Resultado: I</div><div class="abg-vline"></div><div class="abg-result r-amber">Sensibilidad intermedia</div><div class="abg-desc">Dosis incrementada</div></div>';
+  h+='<div class="abg-branch" id="ab-s" onclick="abgAlgoSelect(\'L1\',\'ab-s\')"><div class="abg-vline"></div><div class="abg-cond">Resultado: S</div><div class="abg-vline"></div><div class="abg-result r-green">Sensible</div><div class="abg-desc">Dosis estandar</div></div>';
   h+='</div>';
 
-  // Branch: INTERMEDIA
-  h+='<div class="abg-branch" id="ab-i" onclick="abgAlgoSelect(\'ab-i\')">';
-  h+='<div class="abg-vline"></div>';
-  h+='<div class="abg-cond">Resultado: I</div>';
-  h+='<div class="abg-vline"></div>';
-  h+='<div class="abg-result r-amber">Sensibilidad intermedia</div>';
-  h+='<div class="abg-desc">Dosis incrementada + perfusion extendida</div>';
-  h+='</div>';
+  // Details L1
+  h+='<div class="abg-detail" id="ab-r-detail" style="border-left:3px solid var(--red);"><div style="font-weight:700;color:var(--red);margin-bottom:8px;">Resistente: cambiar de antibiotico</div><ul style="margin:0 0 0 16px;list-style:disc;font-size:13px;"><li>Buscar alternativa sensible o intermedia en el antibiograma</li><li>Elegir el de <strong>menor espectro eficaz</strong></li><li>Si S. aureus meticilin-resistente: resistente a todos los betalactamicos → vancomicina o daptomicina</li></ul></div>';
+  h+='<div class="abg-detail" id="ab-i-detail" style="border-left:3px solid var(--amber);"><div style="font-weight:700;color:#92400e;margin-bottom:8px;">Sensibilidad intermedia: dosis incrementada</div><ul style="margin:0 0 0 16px;list-style:disc;font-size:13px;"><li>Consultar la <strong>tabla de dosis incrementadas</strong> → <a href="javascript:void(0)" onclick="event.stopPropagation();abgSub=\'dosis\';refreshCurrentView();">ver tabla</a></li><li>Si es betalactamico: <strong>perfusion extendida 3-4 horas</strong></li><li>Documentar "dosis incrementada por sensibilidad intermedia"</li></ul></div>';
+  h+='<div class="abg-detail" id="ab-s-detail" style="border-left:3px solid var(--emerald);"><div style="font-weight:700;color:var(--emerald);margin-bottom:8px;">Sensible: dosis estandar</div><ul style="margin:0 0 0 16px;list-style:disc;font-size:13px;"><li>Usar <strong>dosis habitual</strong> recomendada</li><li>En infeccion osea, considerar dosis altas (penetracion 10-30% del plasma)</li></ul></div>';
 
-  // Branch: SENSIBLE
-  h+='<div class="abg-branch" id="ab-s" onclick="abgAlgoSelect(\'ab-s\')">';
-  h+='<div class="abg-vline"></div>';
-  h+='<div class="abg-cond">Resultado: S</div>';
-  h+='<div class="abg-vline"></div>';
-  h+='<div class="abg-result r-green">Sensible</div>';
-  h+='<div class="abg-desc">Dosis estandar</div>';
-  h+='</div>';
-
-  h+='</div>';// close branches cols-3
-
-  // ── DETAIL PANELS (shown on click) ──
-
-  // Detail: Resistente
-  h+='<div class="abg-detail" id="ab-r-detail" style="border-left:3px solid var(--red);">';
-  h+='<div style="font-weight:700;color:var(--red);margin-bottom:8px;">Resistente: cambiar de antibiotico</div>';
-  h+='<ul style="margin:0 0 8px 16px;list-style:disc;font-size:13px;"><li>Buscar alternativa sensible o intermedia en el antibiograma</li><li>Elegir el de <strong>menor espectro eficaz</strong></li><li>Si S. aureus meticilin-resistente (oxacilina resistente): resistente a todos los betalactamicos → vancomicina o daptomicina</li><li>Si no hay alternativas sensibles: consultar Enfermedades Infecciosas</li></ul>';
-  h+='</div>';
-
-  // Detail: Intermedia
-  h+='<div class="abg-detail" id="ab-i-detail" style="border-left:3px solid var(--amber);">';
-  h+='<div style="font-weight:700;color:#92400e;margin-bottom:8px;">Sensibilidad intermedia: dosis incrementada</div>';
-  h+='<ul style="margin:0 0 8px 16px;list-style:disc;font-size:13px;"><li>Consultar la <strong>tabla de dosis incrementadas</strong> (EUCAST) → <a href="javascript:void(0)" onclick="event.stopPropagation();abgSub=\'dosis\';refreshCurrentView();">ver tabla</a></li><li>Si es betalactamico: <strong>perfusion extendida 3-4 horas</strong></li><li>Documentar en historia clinica "dosis incrementada por sensibilidad intermedia"</li><li>Monitorizar respuesta clinica a los 7-10 dias</li></ul>';
-  h+='</div>';
-
-  // Detail: Sensible
-  h+='<div class="abg-detail" id="ab-s-detail" style="border-left:3px solid var(--emerald);">';
-  h+='<div style="font-weight:700;color:var(--emerald);margin-bottom:8px;">Sensible: dosis estandar</div>';
-  h+='<ul style="margin:0 0 8px 16px;list-style:disc;font-size:13px;"><li>Usar <strong>dosis habitual</strong> recomendada</li><li>En infeccion osea, considerar dosis altas igualmente (penetracion osea es solo 10-30% del plasma)</li><li>Perfusion minimo 30 minutos para betalactamicos</li></ul>';
-  h+='</div>';
-
-  // ── LEVEL 3: Connector to "Es protesica?" ──
-  h+='<div class="abg-connector" style="margin-top:16px;"><div class="abg-vline"></div></div>';
+  // ═══ LEVEL 2: Protesica? (hidden until L1 selected) ═══
+  h+='<div class="abg-level" id="abgL2">';
+  h+='<div class="abg-connector"><div class="abg-vline"></div></div>';
   h+='<div class="abg-top" style="background:var(--violet);">Es infeccion protesica articular?</div>';
-  h+='<div class="abg-connector"><div class="abg-vline"></div><div class="abg-hline" style="width:60%;max-width:400px;"></div></div>';
-
-  // ── LEVEL 4: 2 branches — Si / No protesica ──
-  h+='<div class="abg-branches cols-2" style="max-width:500px;">';
-
-  // Branch: SI protesica
-  h+='<div class="abg-branch" id="ab-psi" onclick="abgAlgoSelect(\'ab-psi\')">';
-  h+='<div class="abg-vline"></div>';
-  h+='<div class="abg-result r-amber">SI</div>';
-  h+='<div class="abg-desc">Consultar Enfermedades Infecciosas (obligatorio)</div>';
+  h+='<div class="abg-connector"><div class="abg-vline"></div><div class="abg-hline" style="width:50%;max-width:360px;"></div></div>';
+  h+='<div class="abg-branches cols-2" style="max-width:420px;">';
+  h+='<div class="abg-branch" id="ab-psi" onclick="abgAlgoSelect(\'L2\',\'ab-psi\')"><div class="abg-vline"></div><div class="abg-result r-amber">SI</div><div class="abg-desc">Consultar Enfermedades Infecciosas</div></div>';
+  h+='<div class="abg-branch" id="ab-pno" onclick="abgAlgoSelect(\'L2\',\'ab-pno\')"><div class="abg-vline"></div><div class="abg-result r-green">NO</div><div class="abg-desc">Prescripcion directa</div></div>';
   h+='</div>';
+  h+='<div class="abg-detail" id="ab-psi-detail" style="border-left:3px solid var(--amber);"><div style="font-weight:700;color:#92400e;margin-bottom:8px;">Infeccion protesica: consulta obligatoria</div><ul style="margin:0 0 0 16px;list-style:disc;font-size:13px;"><li>Consensuar antibiotico, duracion y estrategia quirurgica</li><li>Duracion tipica: 3-6 meses</li><li>Rifampicina en estafilococos con biofilm (no en monoterapia)</li></ul></div>';
+  h+='<div class="abg-detail" id="ab-pno-detail" style="border-left:3px solid var(--emerald);"><div style="font-weight:700;color:var(--emerald);margin-bottom:8px;">No protesica: prescripcion directa</div><ul style="margin:0 0 0 16px;list-style:disc;font-size:13px;"><li>Osteomielitis: 4-6 semanas</li><li>Artritis septica: 3-4 semanas</li><li>Espondilodiscitis: 6-8 semanas</li></ul></div>';
+  h+='</div>';// close L2
 
-  // Branch: NO protesica
-  h+='<div class="abg-branch" id="ab-pno" onclick="abgAlgoSelect(\'ab-pno\')">';
-  h+='<div class="abg-vline"></div>';
-  h+='<div class="abg-result r-green">NO</div>';
-  h+='<div class="abg-desc">Proceder con la prescripcion</div>';
-  h+='</div>';
-
-  h+='</div>';// close branches cols-2
-
-  // Detail: SI protesica
-  h+='<div class="abg-detail" id="ab-psi-detail" style="border-left:3px solid var(--amber);">';
-  h+='<div style="font-weight:700;color:#92400e;margin-bottom:8px;">Infeccion protesica: consulta obligatoria</div>';
-  h+='<ul style="margin:0 0 8px 16px;list-style:disc;font-size:13px;"><li>Consensuar antibiotico, duracion y estrategia quirurgica (lavado vs revision)</li><li>Duracion tipica: 3-6 meses segun escenario</li><li>Rifampicina en estafilococos con biofilm (no en monoterapia)</li></ul>';
-  h+='</div>';
-
-  // Detail: NO protesica
-  h+='<div class="abg-detail" id="ab-pno-detail" style="border-left:3px solid var(--emerald);">';
-  h+='<div style="font-weight:700;color:var(--emerald);margin-bottom:8px;">No protesica: prescripcion directa</div>';
-  h+='<ul style="margin:0 0 8px 16px;list-style:disc;font-size:13px;"><li>Osteomielitis: 4-6 semanas</li><li>Artritis septica: 3-4 semanas</li><li>Espondilodiscitis: 6-8 semanas</li><li>Partes blandas: segun gravedad</li></ul>';
-  h+='</div>';
-
-  // ── LEVEL 5: Prescripcion + Monitorizacion ──
-  h+='<div class="abg-connector" style="margin-top:16px;"><div class="abg-vline"></div></div>';
+  // ═══ LEVEL 3: Prescripcion + Monitorizacion (hidden until L2 selected) ═══
+  h+='<div class="abg-level" id="abgL3">';
+  h+='<div class="abg-connector"><div class="abg-vline"></div></div>';
   h+='<div class="abg-top" style="background:var(--slate);">Prescripcion y monitorizacion</div>';
-  h+='<div class="abg-connector"><div class="abg-vline"></div><div class="abg-hline" style="width:60%;max-width:400px;"></div></div>';
-
-  h+='<div class="abg-branches cols-2" style="max-width:500px;">';
-
-  // Branch: Prescripcion
-  h+='<div class="abg-branch" id="ab-rx" onclick="abgAlgoSelect(\'ab-rx\')">';
-  h+='<div class="abg-vline"></div>';
-  h+='<div class="abg-result r-violet">Prescripcion</div>';
-  h+='<div class="abg-desc">Farmaco, dosis, perfusion, duracion</div>';
+  h+='<div class="abg-connector"><div class="abg-vline"></div><div class="abg-hline" style="width:50%;max-width:360px;"></div></div>';
+  h+='<div class="abg-branches cols-2" style="max-width:420px;">';
+  h+='<div class="abg-branch" id="ab-rx" onclick="abgAlgoSelect(\'L3\',\'ab-rx\')"><div class="abg-vline"></div><div class="abg-result r-violet">Prescripcion</div><div class="abg-desc">Farmaco, dosis, perfusion, duracion</div></div>';
+  h+='<div class="abg-branch" id="ab-mon" onclick="abgAlgoSelect(\'L3\',\'ab-mon\')"><div class="abg-vline"></div><div class="abg-result r-sky">Monitorizacion</div><div class="abg-desc">Seguimiento clinico y analitico</div></div>';
   h+='</div>';
-
-  // Branch: Monitorizacion
-  h+='<div class="abg-branch" id="ab-mon" onclick="abgAlgoSelect(\'ab-mon\')">';
-  h+='<div class="abg-vline"></div>';
-  h+='<div class="abg-result r-sky">Monitorizacion</div>';
-  h+='<div class="abg-desc">Seguimiento clinico y analitico</div>';
-  h+='</div>';
-
-  h+='</div>';// close branches cols-2
-
-  // Detail: Prescripcion
-  h+='<div class="abg-detail" id="ab-rx-detail" style="border-left:3px solid var(--violet);">';
-  h+='<div style="font-weight:700;color:var(--violet);margin-bottom:8px;">Prescripcion final</div>';
-  h+='<div class="abg-detail-grid">';
-  h+='<span class="dl">Farmaco</span><span>Especifico segun antibiograma</span>';
-  h+='<span class="dl">Dosis</span><span>Estandar (sensible) o incrementada (intermedia)</span>';
-  h+='<span class="dl">Perfusion</span><span>Minimo 30 minutos; ideal 3-4 horas si betalactamico</span>';
-  h+='<span class="dl">Duracion</span><span>Segun tipo de infeccion y escenario clinico</span>';
-  h+='<span class="dl">Documentar</span><span>"Dosis incrementada por sensibilidad intermedia (EUCAST)" si aplica</span>';
-  h+='</div></div>';
-
-  // Detail: Monitorizacion
-  h+='<div class="abg-detail" id="ab-mon-detail" style="border-left:3px solid #3b82f6;">';
-  h+='<div style="font-weight:700;color:#1d4ed8;margin-bottom:8px;">Monitorizacion</div>';
-  h+='<div class="abg-detail-grid">';
-  h+='<span class="dl">Dia 7-10</span><span>Evaluar respuesta clinica (fiebre, PCR, herida)</span>';
-  h+='<span class="dl">Semanal</span><span>Proteina C reactiva / velocidad de sedimentacion; hemograma si linezolid</span>';
-  h+='<span class="dl">Si bacteriemia</span><span>Hemocultivos de control</span>';
-  h+='<span class="dl">Semana 6-8</span><span>Resonancia magnetica de control</span>';
-  h+='<span class="dl">Sin mejoria</span><span>Repetir cultivos, escalar cobertura, valorar cirugia</span>';
-  h+='</div></div>';
+  h+='<div class="abg-detail" id="ab-rx-detail" style="border-left:3px solid var(--violet);"><div style="font-weight:700;color:var(--violet);margin-bottom:8px;">Prescripcion final</div><div class="abg-detail-grid"><span class="dl">Farmaco</span><span>Especifico segun antibiograma</span><span class="dl">Dosis</span><span>Estandar (sensible) o incrementada (intermedia)</span><span class="dl">Perfusion</span><span>Minimo 30 min; ideal 3-4h si betalactamico</span><span class="dl">Duracion</span><span>Segun tipo de infeccion y escenario</span><span class="dl">Documentar</span><span>"Dosis incrementada por sensibilidad intermedia" si aplica</span></div></div>';
+  h+='<div class="abg-detail" id="ab-mon-detail" style="border-left:3px solid #3b82f6;"><div style="font-weight:700;color:#1d4ed8;margin-bottom:8px;">Monitorizacion</div><div class="abg-detail-grid"><span class="dl">Dia 7-10</span><span>Respuesta clinica (fiebre, PCR, herida)</span><span class="dl">Semanal</span><span>PCR / VSG; hemograma si linezolid</span><span class="dl">Si bacteriemia</span><span>Hemocultivos de control</span><span class="dl">Semana 6-8</span><span>Resonancia magnetica de control</span><span class="dl">Sin mejoria</span><span>Repetir cultivos, escalar cobertura, valorar cirugia</span></div></div>';
+  h+='</div>';// close L3
 
   h+='</div>';// close abg-tree
   h+='</div>';// close abg-chart
 
-  h+='<div style="text-align:center;margin-top:8px;"><button class="abg-reset" id="abgAlgoReset" onclick="abgAlgoReset()">Restablecer algoritmo</button></div>';
+  h+='<div style="text-align:center;margin-top:8px;"><button class="abg-reset" onclick="abgAlgoReset()">Restablecer algoritmo</button></div>';
 
   h+='<div class="info-card" style="margin-top:16px;"><strong>Referencias</strong> '+makeRef('EUCAST 2024')+' '+makeRef('PRIOAM')+' '+makeRef('Macarena')+'</div>';
   return h;
