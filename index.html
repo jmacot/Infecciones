@@ -680,7 +680,8 @@ var REF_URLS=[
   {match:'IDSA',text:'',url:'https://www.idsociety.org/practice-guideline/skin-and-soft-tissue-infections/'},
   {match:'OVIVA',text:'',url:'https://doi.org/10.1056/NEJMoa1710926'},
   {match:'OMS',text:'',url:'https://www.who.int/publications/i/item/9789240048126'},
-  {match:'EUCAST',text:'',url:'https://www.eucast.org/clinical_breakpoints'}
+  {match:'EUCAST',text:'',url:'https://www.eucast.org/clinical_breakpoints'},
+  {match:'JBJS OA',text:'',url:'https://journals.lww.com/jbjsoa/fulltext/2025/03000/periprosthetic_joint_infection_surrounding.15.aspx'}
 ];
 
 // Context for which section we're in (set by renderSection)
@@ -1077,7 +1078,7 @@ function renderEmpiric(key){
 }
 
 var SECTIONS_PRIMARY=[
-  {id:'iap',color:'violet',icon:'<span class="lc-emoji">🦿</span>',title:'Infeccion Protesica Articular',desc:'Lavado (DAIR), revision en 1 y 2 tiempos, megaprotesis tumoral',badge:'18 microorganismos'},
+  {id:'iap',color:'violet',icon:'<span class="lc-emoji">🦿</span>',title:'Infeccion Protesica',desc:'Lavado (DAIR), revision en 1 y 2 tiempos, megaprotesis tumoral',badge:'18 microorganismos'},
   {id:'osteoart',color:'emerald',icon:'<span class="lc-emoji">🦴</span>',title:'Infecciones Osteoarticulares',desc:'Artritis septica, osteomielitis, espondilodiscitis',badge:'4 patologias'},
   {id:'blandas',color:'amber',icon:'<span class="lc-emoji">🩹</span>',title:'Partes Blandas',desc:'Celulitis, fascitis, herida Qx, mordeduras',badge:'5 escenarios'}
 ];
@@ -1408,12 +1409,88 @@ function selectProfiCat(id){profiCat=profiCat===id?'':id;profiProc=-1;refreshCur
 function selectProfiProc(idx){profiProc=profiProc===idx?-1:idx;refreshCurrentView();}
 
 // ─────────────────────────────────────────────
+//  MEGA — visual card for megaprosthesis
+// ─────────────────────────────────────────────
+function renderMegaCard(ic){
+  var h='<div class="rx-card" style="margin-bottom:16px;"><div class="rx-card-head"><h3>'+ic.title+'</h3></div><div class="rx-card-body">';
+  // Stat highlights
+  h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">';
+  var stats=[
+    {val:'15-43%',label:'Tasa de infeccion',sub:'vs 1-2% en protesis convencional',color:'red'},
+    {val:'42%',label:'Estafilococos coagulasa-negativos',sub:'Germen mas frecuente',color:'violet'},
+    {val:'34%',label:'S. aureus',sub:'Segundo mas frecuente',color:'amber'}
+  ];
+  stats.forEach(function(s){
+    h+='<div style="background:var(--'+s.color+'-light);border-radius:var(--radius-sm);padding:12px;text-align:center;">';
+    h+='<div style="font-size:22px;font-weight:700;color:var(--'+s.color+');font-family:\'Source Serif 4\',serif;">'+s.val+'</div>';
+    h+='<div style="font-size:11px;font-weight:600;color:var(--text);margin-top:2px;">'+s.label+'</div>';
+    h+='<div style="font-size:10px;color:var(--text-muted);">'+s.sub+'</div>';
+    h+='</div>';
+  });
+  h+='</div>';
+  // Why different — risk factors
+  h+='<div style="background:var(--surface2);border-radius:var(--radius-sm);padding:12px;margin-bottom:14px;border-left:3px solid var(--violet);">';
+  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--violet);font-weight:600;margin-bottom:6px;">Por que es diferente de una protesis convencional</div>';
+  var risks=['Quimio/radioterapia → inmunosupresion del paciente','Gran espacio muerto tras la reseccion tumoral','Mala cobertura de partes blandas sobre el implante','Tiempos quirurgicos prolongados','Implantes masivos con mayor superficie para biofilm'];
+  risks.forEach(function(r){h+='<div style="font-size:13px;margin-bottom:3px;display:flex;gap:6px;align-items:baseline;"><span style="color:var(--violet);">&#8226;</span><span>'+r+'</span></div>';});
+  h+='</div>';
+  // Comparison table: conventional vs mega
+  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);font-weight:600;margin-bottom:6px;">Comparativa: protesis convencional vs megaprotesis</div>';
+  h+='<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;">';
+  h+='<thead><tr style="border-bottom:2px solid var(--border);">';
+  h+='<th style="text-align:left;padding:8px;font-size:11px;color:var(--text-muted);"></th>';
+  h+='<th style="text-align:center;padding:8px;font-size:11px;color:var(--sky);background:var(--sky-light);border-radius:6px 0 0 0;">Convencional</th>';
+  h+='<th style="text-align:center;padding:8px;font-size:11px;color:var(--violet);background:var(--violet-light);border-radius:0 6px 0 0;">Megaprotesis</th>';
+  h+='</tr></thead><tbody>';
+  var rows=[
+    ['Tasa infeccion','1-2%','15-43%'],
+    ['DAIR clasico','Estandar si aguda','Bajo exito (&lt;40%)'],
+    ['DAIR plus (cambio modulares)','No aplica','Opcion preferida si aguda (&lt;4 sem)'],
+    ['Revision 1 tiempo','Opcion si germen sensible','Contraindicada (0% exito en series)'],
+    ['Revision 2 tiempos','Gold standard en cronica','Gold standard, pero mayor morbilidad'],
+    ['Supresion antibiotica cronica','Ultimo recurso','Frecuente (implante no retirado)'],
+    ['Duracion antibioterapia','3-6 meses','6 sem IV + supresion prolongada o cronica']
+  ];
+  rows.forEach(function(r,i){
+    var bg=i%2===0?'background:var(--surface2);':'';
+    h+='<tr style="border-bottom:1px solid var(--border);'+bg+'">';
+    h+='<td style="padding:8px;font-weight:600;color:var(--text);">'+r[0]+'</td>';
+    h+='<td style="padding:8px;text-align:center;color:var(--text-muted);">'+r[1]+'</td>';
+    h+='<td style="padding:8px;text-align:center;font-weight:600;color:var(--violet);">'+r[2]+'</td>';
+    h+='</tr>';
+  });
+  h+='</tbody></table></div>';
+  // Treatment algorithm
+  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);font-weight:600;margin-bottom:6px;">Algoritmo de tratamiento</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">';
+  // Aguda
+  h+='<div style="background:var(--emerald-light);border-radius:var(--radius-sm);padding:12px;border-top:3px solid var(--emerald);">';
+  h+='<div style="font-weight:700;color:var(--emerald);margin-bottom:6px;">Aguda (&lt;4 semanas)</div>';
+  h+='<div style="font-size:13px;color:var(--text);"><strong>DAIR plus</strong> — cambio de todos los componentes modulares reteniendo vastagos estables</div>';
+  h+='<div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Exito ~55-81% si aguda</div>';
+  h+='</div>';
+  // Cronica
+  h+='<div style="background:var(--amber-light);border-radius:var(--radius-sm);padding:12px;border-top:3px solid var(--amber);">';
+  h+='<div style="font-weight:700;color:var(--amber);margin-bottom:6px;">Cronica (&gt;4 semanas)</div>';
+  h+='<div style="font-size:13px;color:var(--text);"><strong>Revision 2 tiempos</strong> con espaciador ajustable</div>';
+  h+='<div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Exito ~71%. No apto → supresion cronica o amputacion</div>';
+  h+='</div></div>';
+  // Warning
+  h+='<div class="note-box" style="margin-top:4px;border-left:3px solid var(--red);background:var(--red-light);">';
+  h+='<strong style="color:var(--red);">SIEMPRE consultar Infecciosas.</strong> Mayor tasa de multirresistencia. Gram-negativos en el 16% de casos.';
+  h+='</div>';
+  h+='<div style="margin-top:6px;">'+makeRef('JBJS OA 2025')+' '+makeRef('PRIOAM')+'</div>';
+  h+='</div></div>';
+  return h;
+}
+
+// ─────────────────────────────────────────────
 //  IAP
 // ─────────────────────────────────────────────
 function renderIAP(){
   var h=theoryCard('violet',
     'La infeccion protesica articular afecta al <strong>1-2% de artroplastias</strong>. Germenes: <em>S. aureus</em> y <em>S. epidermidis</em>. El tratamiento depende de <strong>aguda vs cronica</strong>.',
-    '<ul><li><strong>Aguda postoperatoria</strong> (&lt;4 semanas) o <strong>hematogena</strong> (&lt;3 sem sintomas) → valorar lavado (DAIR)</li><li><strong>Cronica</strong> (&gt;4 semanas) → revision en 1 o 2 tiempos</li><li><strong>Lavado (DAIR):</strong> lavado + retencion de implante. Implante estable, partes blandas OK</li><li><strong>Revision 1 tiempo:</strong> germen conocido y sensible, sin fistula</li><li><strong>Revision 2 tiempos:</strong> gold standard en cronica. Retirada + espaciador con antibiotico → <span class="dose">6 sem AB IV</span> → reimplantacion (PCR normalizada)</li><li><strong>Megaprotesis tumoral:</strong> tasa de infeccion <span class="hl">15-43%</span>. DAIR plus (cambio de modulares) si aguda. Revision 2 tiempos si cronica. Supresion cronica frecuente</li><li><strong>Rifampicina:</strong> clave en estafilococos + biofilm (lavado). NO en monoterapia</li><li><strong>OVIVA:</strong> paso precoz a oral no inferior a IV prolongada</li></ul>',
+    '<ul><li><strong>Aguda postoperatoria</strong> (&lt;4 semanas) o <strong>hematogena</strong> (&lt;3 sem sintomas) → valorar lavado (DAIR)</li><li><strong>Cronica</strong> (&gt;4 semanas) → revision en 1 o 2 tiempos</li><li><strong>Lavado (DAIR):</strong> lavado + retencion de implante. Implante estable, partes blandas OK</li><li><strong>Revision 1 tiempo:</strong> germen conocido y sensible, sin fistula</li><li><strong>Revision 2 tiempos:</strong> gold standard en cronica. Retirada + espaciador con antibiotico → <span class="dose">6 sem AB IV</span> → reimplantacion (PCR normalizada)</li><li><strong>Megaprotesis tumoral:</strong> tasa de infeccion <span class="hl">15-43%</span>. DAIR plus (cambio de modulares) si aguda. Revision 2 tiempos si cronica. Supresion cronica frecuente</li><li><strong>OVIVA:</strong> paso precoz a oral no inferior a IV prolongada</li></ul>',
     'ICM 2025, Partes I y III | PRIOAM | IDSA PJI 2013');
   var iapSubs=[{id:'dair',label:'Lavado (DAIR)'},{id:'rev1t',label:'Revision 1 tiempo'},{id:'rev2t',label:'Revision 2 tiempos'},{id:'mega',label:'Megaprotesis tumoral'}];
   h+='<div class="sub-tabs">';
@@ -1441,13 +1518,16 @@ function renderIAP(){
       clave:'6 semanas de antibioterapia IV entre tiempos. Reimplantar cuando PCR normalizada y clinica resuelta. No suspender AB entre tiempos en infeccion fungica.'
     },
     mega:{
-      title:'Infeccion de megaprotesis tumoral / endoprotesis oncologica',
+      title:'Infeccion de megaprotesis tumoral',
       si:['Infeccion aguda (&lt;4 semanas): DAIR plus (cambio de todos los componentes modulares)','Infeccion cronica: revision en 2 tiempos con espaciador ajustable','Paciente no candidato a revision: supresion antibiotica cronica','Amputacion: ultimo recurso si infeccion incontrolable o riesgo vital'],
       no:['Revision en 1 tiempo (0% exito en series publicadas)','DAIR clasico sin cambio de modulares (exito &lt;40%)','Retirada sin plan reconstructivo en paciente con expectativa vital'],
       clave:'Tasa de infeccion 15-43% (vs 1-2% en artroplastia convencional). Factores: quimio/radioterapia, espacio muerto tras reseccion, mala cobertura de partes blandas, tiempos quirurgicos prolongados. Estafilococos coagulasa-negativos (42%) y S. aureus (34%) son los mas frecuentes. SIEMPRE consultar Infecciosas.'
     }
   };
   var ic=iapCards[currentIAPSub];
+  if(currentIAPSub==='mega'){
+    h+=renderMegaCard(ic);
+  }else{
   h+='<div class="rx-card" style="margin-bottom:16px;"><div class="rx-card-head"><h3>'+ic.title+'</h3></div><div class="rx-card-body">';
   h+='<div class="ind-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">';
   // SI
@@ -1462,6 +1542,7 @@ function renderIAP(){
   h+='<div class="note-box" style="margin-top:10px;"><strong style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;display:block;margin-bottom:4px;">Punto clave</strong>'+esc(ic.clave)+'</div>';
   h+='<div style="margin-top:6px;">'+makeRef('ICM 2025, Parte III')+'</div>';
   h+='</div></div>';
+  }
 
   // Empiric treatment
   var empKey=currentIAPSub==='dair'?'iap_dair':currentIAPSub==='mega'?'iap_mega':'iap_rev';
@@ -1494,6 +1575,9 @@ function renderOsteoart(){
   oaSubs.forEach(function(s){h+='<button class="sub-tab'+(s.id===currentOASub?' active':'')+'" onclick="currentOASub=\''+s.id+'\';refreshCurrentView();">'+s.label+'</button>';});
   h+='</div>';
 
+  // Arthritis: sample collection before empiric treatment
+  if(currentOASub==='artritis') h+=renderArtritisMuestras();
+
   // Empiric treatment
   h+=renderEmpiric(currentOASub);
 
@@ -1505,6 +1589,55 @@ function renderOsteoart(){
     var org=ORGANISMS.filter(function(o){return o.id===selVal;})[0];
     if(org)h+='<div style="margin-top:16px;">'+renderCascade(org,currentOASub)+'</div>';
   }
+  return h;
+}
+
+function renderArtritisMuestras(){
+  var h='<div class="rx-card" style="margin-bottom:16px;"><div class="rx-card-head" style="background:var(--emerald);"><h3>Toma de muestras en artritis septica</h3></div><div class="rx-card-body">';
+  // Tubes table
+  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);font-weight:600;margin-bottom:6px;">Tubos de artrocentesis</div>';
+  h+='<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;">';
+  h+='<thead><tr style="border-bottom:2px solid var(--border);">';
+  h+='<th style="text-align:left;padding:8px;font-size:11px;color:var(--text-muted);">Tubo</th>';
+  h+='<th style="text-align:center;padding:8px;font-size:11px;color:var(--text-muted);">Tapon</th>';
+  h+='<th style="text-align:left;padding:8px;font-size:11px;color:var(--text-muted);">Determinacion</th>';
+  h+='</tr></thead><tbody>';
+  var tubes=[
+    {tubo:'Sin anticoagulante',color:'#dc2626',colorName:'Rojo',det:'Bioquimica (glucosa) + cristales'},
+    {tubo:'EDTA',color:'#7c3aed',colorName:'Lila',det:'Recuento celular + diferencial PMN'},
+    {tubo:'Esteril (heparina sodica)',color:'#16a34a',colorName:'Verde',det:'Microbiologia: Gram + cultivo aerobio/anaerobio'},
+    {tubo:'Frascos de hemocultivo',color:'#475569',colorName:'Aerobio + anaerobio',det:'Inocular 1-10 ml de liquido sinovial'}
+  ];
+  tubes.forEach(function(t,i){
+    var bg=i%2===0?'background:var(--surface2);':'';
+    h+='<tr style="border-bottom:1px solid var(--border);'+bg+'">';
+    h+='<td style="padding:8px;font-weight:600;color:var(--text);">'+t.tubo+'</td>';
+    h+='<td style="padding:8px;text-align:center;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:'+t.color+';vertical-align:middle;margin-right:4px;"></span><span style="font-size:11px;color:var(--text-muted);">'+t.colorName+'</span></td>';
+    h+='<td style="padding:8px;color:var(--text);">'+t.det+'</td>';
+    h+='</tr>';
+  });
+  h+='</tbody></table></div>';
+  // Hemocultivos
+  h+='<div style="background:var(--emerald-light);border-radius:var(--radius-sm);padding:12px;margin-bottom:12px;border-left:3px solid var(--emerald);">';
+  h+='<strong style="color:var(--emerald);">Hemocultivos perifericos (2 sets, de venas distintas) ANTES de iniciar antibiotico</strong>';
+  h+='<div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Positivos en 40-50% de artritis septicas. Si volumen escaso: priorizar cultivo > recuento celular > cristales</div>';
+  h+='</div>';
+  // Contaminants & false negatives
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">';
+  // Contaminants
+  h+='<div style="background:var(--amber-light);border-radius:var(--radius-sm);padding:12px;">';
+  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--amber);font-weight:600;margin-bottom:6px;">Posibles contaminantes</div>';
+  var contam=['<strong>Estafilococos coagulasa-negativos:</strong> contaminante cutaneo frecuente. En articulacion nativa, 1 cultivo positivo aislado es probable contaminacion. Confirmar con segundo cultivo','<strong>Cutibacterium acnes:</strong> contaminante habitual, especialmente en hombro','<strong>Streptococcus grupo viridans</strong> y <strong>difteroides:</strong> contaminantes de piel'];
+  contam.forEach(function(c){h+='<div style="font-size:12px;margin-bottom:4px;display:flex;gap:6px;align-items:baseline;"><span style="color:var(--amber);">&#8226;</span><span>'+c+'</span></div>';});
+  h+='</div>';
+  // False negatives
+  h+='<div style="background:var(--red-light);border-radius:var(--radius-sm);padding:12px;">';
+  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--red);font-weight:600;margin-bottom:6px;">Falsos negativos</div>';
+  var fneg=['<strong>Antibioterapia previa:</strong> principal causa, reduce sensibilidad del cultivo al 50% o menos','<strong>Tincion de Gram:</strong> sensibilidad solo 45-50%. Un Gram negativo NO descarta artritis septica','<strong>Cristales presentes:</strong> gota y pseudogota pueden coexistir con artritis septica. Si hay duda clinica, tratar como septica'];
+  fneg.forEach(function(f){h+='<div style="font-size:12px;margin-bottom:4px;display:flex;gap:6px;align-items:baseline;"><span style="color:var(--red);">&#8226;</span><span>'+f+'</span></div>';});
+  h+='</div></div>';
+  h+='<div style="margin-top:4px;">'+makeRef('PRIOAM')+' '+makeRef('Macarena')+'</div>';
+  h+='</div></div>';
   return h;
 }
 
