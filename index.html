@@ -332,9 +332,9 @@ a.ref-tag:hover{background:var(--violet);color:#fff;text-decoration:none;}
 .abg-chart{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;}
 .abg-tree{display:flex;flex-direction:column;align-items:center;min-width:560px;padding:8px 0;}
 .abg-top{padding:10px 24px;border-radius:20px;font-weight:600;font-size:14px;color:#fff;background:var(--sky);font-family:'Source Sans 3',sans-serif;}
-.abg-connector{display:flex;flex-direction:column;align-items:center;}
-.abg-vline{width:2px;height:16px;background:var(--border);}
-.abg-hline{height:2px;background:var(--border);}
+.abg-connector{display:flex;flex-direction:column;align-items:center;width:100%;}
+.abg-vline{width:2px;height:16px;background:var(--border);flex-shrink:0;}
+.abg-hline{height:2px;background:var(--border);flex-shrink:0;}
 .abg-level{display:none;width:100%;flex-direction:column;align-items:center;animation:fadeSlide .35s ease;}
 .abg-level.visible{display:flex;}
 .abg-branches{display:grid;gap:12px;max-width:700px;width:100%;}
