@@ -732,17 +732,17 @@ var ICO={
 //  CLINICAL DATA
 // ─────────────────────────────────────────────
 var PROPHYLAXIS=[
-  {proc:'Artroplastia primaria (cadera/rodilla)',drug:'Cefazolina',dose:'2 g IV (3 g si >120 kg)',redose:'Cada 3-4 h',alt:'Vancomicina 15 mg/kg IV',ref:'ICM 2025, 3.1'},
-  {proc:'Revision protesica',drug:'Cefazolina',dose:'2 g IV',redose:'Cada 3-4 h',alt:'Vancomicina 15 mg/kg IV',ref:'ICM 2025, 3.1'},
-  {proc:'Fractura cerrada con osteosintesis',drug:'Cefazolina',dose:'2 g IV',redose:'Cada 3-4 h',alt:'Vancomicina 15 mg/kg IV',ref:'PRIOAM'},
-  {proc:'Fractura abierta Gustilo I-II',drug:'Cefazolina',dose:'2 g IV',redose:'Cada 8h x 24h',alt:'Vancomicina 15 mg/kg IV',ref:'ICM 2025, 3.3'},
-  {proc:'Fractura abierta Gustilo IIIA',drug:'Cefazolina + Gentamicina',dose:'2 g IV + 5 mg/kg/dia',redose:'CFZ c/8h x 72h',alt:'Vancomicina + Gentamicina',ref:'ICM 2025, 3.3'},
-  {proc:'Fractura abierta Gustilo IIIB-C',drug:'Cefazolina + Gentamicina',dose:'2 g IV + 5 mg/kg/dia',redose:'CFZ c/8h x 72h',alt:'Vanco + Genta + Metronidazol',ref:'ICM 2025, 3.3'},
-  {proc:'Artroscopia sin implante',drug:'No recomendada',dose:'-',redose:'-',alt:'-',ref:'PRIOAM'},
-  {proc:'Artroscopia con implante (LCA)',drug:'Cefazolina',dose:'2 g IV',redose:'Dosis unica',alt:'Vancomicina 15 mg/kg IV',ref:'PRIOAM'},
-  {proc:'Columna sin instrumentacion',drug:'Cefazolina',dose:'2 g IV',redose:'Cada 3-4 h',alt:'Vancomicina 15 mg/kg IV',ref:'ICM 2025, 3.1'},
-  {proc:'Columna con instrumentacion',drug:'Cefazolina',dose:'2 g IV',redose:'Cada 3-4h x 24h',alt:'Vancomicina 15 mg/kg IV',ref:'ICM 2025, 3.1'},
-  {proc:'Amputacion',drug:'Cefazolina + Metronidazol',dose:'2 g + 500 mg IV',redose:'Cada 8h x 24h',alt:'Vancomicina + Metronidazol',ref:'PRIOAM'}
+  {proc:'Artroplastia primaria (cadera/rodilla)',drug:'Cefazolina',dose:'2 g IV (3 g si >120 kg)',redose:'Cada 3-4 h',dur:'Dosis unica (max 24h)',alt:'Vancomicina 15 mg/kg IV',ref:'ICM 2025, 3.1'},
+  {proc:'Revision protesica',drug:'Cefazolina',dose:'2 g IV',redose:'Cada 3-4 h',dur:'Dosis unica (max 24h)',alt:'Vancomicina 15 mg/kg IV',ref:'ICM 2025, 3.1'},
+  {proc:'Fractura cerrada con osteosintesis',drug:'Cefazolina',dose:'2 g IV',redose:'Cada 3-4 h',dur:'Dosis unica (max 24h)',alt:'Vancomicina 15 mg/kg IV',ref:'PRIOAM'},
+  {proc:'Fractura abierta Gustilo I-II',drug:'Cefazolina',dose:'2 g IV',redose:'Cada 8h x 24h',dur:'24h desde la primera dosis',alt:'Vancomicina 15 mg/kg IV',ref:'ICM 2025, 3.3'},
+  {proc:'Fractura abierta Gustilo IIIA',drug:'Cefazolina + Gentamicina',dose:'2 g IV + 5 mg/kg/dia',redose:'CFZ c/8h x 72h',dur:'72h o hasta cierre de herida',alt:'Vancomicina + Gentamicina',ref:'ICM 2025, 3.3'},
+  {proc:'Fractura abierta Gustilo IIIB-C',drug:'Cefazolina + Gentamicina',dose:'2 g IV + 5 mg/kg/dia',redose:'CFZ c/8h x 72h',dur:'72h o hasta cobertura de partes blandas',alt:'Vanco + Genta + Metronidazol',ref:'ICM 2025, 3.3'},
+  {proc:'Artroscopia sin implante',drug:'No recomendada',dose:'-',redose:'-',dur:'-',alt:'-',ref:'PRIOAM'},
+  {proc:'Artroscopia con implante (LCA)',drug:'Cefazolina',dose:'2 g IV',redose:'Dosis unica',dur:'Dosis unica',alt:'Vancomicina 15 mg/kg IV',ref:'PRIOAM'},
+  {proc:'Columna sin instrumentacion',drug:'Cefazolina',dose:'2 g IV',redose:'Cada 3-4 h',dur:'Dosis unica (max 24h)',alt:'Vancomicina 15 mg/kg IV',ref:'ICM 2025, 3.1'},
+  {proc:'Columna con instrumentacion',drug:'Cefazolina',dose:'2 g IV',redose:'Cada 3-4h x 24h',dur:'24h',alt:'Vancomicina 15 mg/kg IV',ref:'ICM 2025, 3.1'},
+  {proc:'Amputacion',drug:'Cefazolina + Metronidazol',dose:'2 g + 500 mg IV',redose:'Cada 8h x 24h',dur:'24h',alt:'Vancomicina + Metronidazol',ref:'PRIOAM'}
 ];
 
 // ── ICM 2025 DATA: Sample collection & Risk factors ──
@@ -1384,6 +1384,7 @@ function renderProfilaxis(){
     h+='<div class="rx-row"><span class="rx-label">Farmaco</span><span class="rx-value drug">'+esc(drug)+'</span></div>';
     if(dose)h+='<div class="rx-row"><span class="rx-label">Dosis</span><span class="rx-value">'+esc(dose)+'</span></div>';
     h+='<div class="rx-row"><span class="rx-label">Redosis</span><span class="rx-value">'+esc(p.redose)+'</span></div>';
+    h+='<div class="rx-row"><span class="rx-label">Duracion postop</span><span class="rx-value">'+esc(p.dur)+'</span></div>';
     h+='<div class="rx-divider"></div>';
     if(showAlt){
       h+='<div class="rx-row"><span class="rx-label">1a eleccion</span><span class="rx-value" style="color:var(--text-muted);font-weight:400;text-decoration:line-through;">'+esc(p.drug)+' '+esc(p.dose)+'</span></div>';
