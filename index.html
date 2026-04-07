@@ -218,6 +218,7 @@ a{color:var(--sky);text-decoration:none;}a:hover{text-decoration:underline;}
 .theory-card[data-accent="amber"]::before{background:var(--amber);}
 .theory-card[data-accent="red"]::before{background:var(--red);}
 .theory-head{display:flex;align-items:start;gap:10px;}
+.theory-head>div:last-child{flex:1;min-width:0;}
 .theory-icon{font-size:20px;flex-shrink:0;margin-top:2px;}
 .theory-brief{font-size:14px;color:var(--text-muted);}
 .theory-full{max-height:0;overflow:hidden;transition:max-height 0.5s ease-out;font-size:13px;color:var(--text-muted);line-height:1.7;}
@@ -1493,9 +1494,9 @@ function renderMegaCard(ic){
 // ─────────────────────────────────────────────
 function renderDAIRFactores(){
   var h='<div style="font-size:13px;">';
-  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" class="dair-factores-grid">';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;" class="dair-factores-grid">';
   // Left: temporal window (green, like indicaciones)
-  h+='<div style="background:var(--emerald-light);border-radius:var(--radius-sm);padding:12px;"><div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--emerald);font-weight:600;margin-bottom:6px;">Ventana temporal — tasa de exito</div>';
+  h+='<div style="background:var(--emerald-light);border-radius:var(--radius-sm);padding:16px 20px;"><div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--emerald);font-weight:600;margin-bottom:6px;">Ventana temporal — tasa de exito</div>';
   var tw=[
     'Sintomas &lt;2 dias → <strong>89%</strong>',
     'Sintomas &lt;7 dias → <strong>71,6%</strong>',
@@ -1508,7 +1509,7 @@ function renderDAIRFactores(){
   tw.forEach(function(t){h+='<div style="font-size:13px;margin-bottom:4px;display:flex;gap:6px;align-items:baseline;"><span style="color:var(--emerald);">&#8226;</span><span>'+t+'</span></div>';});
   h+='</div>';
   // Right: risk factors (red, like contraindicaciones)
-  h+='<div style="background:var(--red-light);border-radius:var(--radius-sm);padding:12px;"><div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--red);font-weight:600;margin-bottom:6px;">Factores asociados a fracaso</div>';
+  h+='<div style="background:var(--red-light);border-radius:var(--radius-sm);padding:16px 20px;"><div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--red);font-weight:600;margin-bottom:6px;">Factores asociados a fracaso</div>';
   var facts=[
     'Edad ≥85 anos (riesgo ×4 de reinfeccion)',
     'Obesidad morbida (HR 2,77)',

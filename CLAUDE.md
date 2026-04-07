@@ -87,4 +87,5 @@ Navegacion: `goLanding()` / `goSection(id)` muestran/ocultan divs. Micro section
 - Evitar abreviaturas en la UI (IAP → "Infeccion Protesica", DAIR → "Lavado (DAIR)", S/I/R → sensible/intermedia/resistente en algoritmo, CoN → "coagulasa-negativos")
 - CSS: `.info-card>strong:first-child` para labels (no aplica a strong dentro de p)
 - Contraste labels: labels informativos (`.form-label`, `.landing-section-label`, `.rx-label`, table headers, etc.) usan `--text-muted`. Elementos decorativos (flechas, iconos busqueda, footer) mantienen `--text-light`
+- `.theory-head>div:last-child` tiene `flex:1;min-width:0` para que el contenido expandible ocupe todo el ancho del collapsible (sin esto, grids internos como DAIR factores no se expanden)
 - Responsive 480px: btn-home compacto, algoritmo 1 col con ramas dimmed ocultas (display:none), sir-grid 1 col, ls-input-grid 1 col. Responsive 700px: `.fascitis-grid` 1 col
