@@ -1493,29 +1493,22 @@ function renderMegaCard(ic){
 // ─────────────────────────────────────────────
 function renderDAIRFactores(){
   var h='<div style="font-size:13px;">';
-  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;" class="dair-factores-grid">';
-  // Left: temporal window
-  h+='<div>';
-  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--violet);font-weight:600;margin-bottom:8px;">Ventana temporal</div>';
-  h+='<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;">';
-  h+='<thead><tr style="border-bottom:2px solid var(--border);"><th style="text-align:left;padding:6px 8px;color:var(--text-muted);font-size:11px;">Momento</th><th style="text-align:center;padding:6px 8px;color:var(--text-muted);font-size:11px;">Exito</th></tr></thead><tbody>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" class="dair-factores-grid">';
+  // Left: temporal window (green, like indicaciones)
+  h+='<div style="background:var(--emerald-light);border-radius:var(--radius-sm);padding:12px;"><div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--emerald);font-weight:600;margin-bottom:6px;">Ventana temporal — tasa de exito</div>';
   var tw=[
-    ['Sintomas &lt;2 dias','89%'],
-    ['Sintomas &lt;7 dias','71,6%'],
-    ['Sintomas &gt;3 semanas','35%'],
-    ['DAIR &lt;4 sem postcirugía','92%'],
-    ['DAIR 4-12 sem postcirugía','87%'],
-    ['DAIR &gt;90 dias postcirugía','~60%'],
-    ['Cronica (&gt;3 meses)','&lt;45%']
+    'Sintomas &lt;2 dias → <strong>89%</strong>',
+    'Sintomas &lt;7 dias → <strong>71,6%</strong>',
+    'DAIR &lt;4 semanas postcirugía → <strong>92%</strong>',
+    'DAIR 4-12 semanas postcirugía → <strong>87%</strong>',
+    'DAIR &gt;90 dias postcirugía → <strong>~60%</strong>',
+    'Sintomas &gt;3 semanas → <strong>35%</strong>',
+    'Infeccion cronica (&gt;3 meses) → <strong>&lt;45%</strong>'
   ];
-  tw.forEach(function(r,i){
-    h+='<tr style="border-bottom:1px solid var(--border);'+(i%2===0?'background:var(--surface2);':'')+'">';
-    h+='<td style="padding:6px 8px;">'+r[0]+'</td><td style="padding:6px 8px;text-align:center;font-weight:600;">'+r[1]+'</td></tr>';
-  });
-  h+='</tbody></table></div></div>';
-  // Right: risk factors
-  h+='<div>';
-  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--red);font-weight:600;margin-bottom:8px;">Factores asociados a fracaso</div>';
+  tw.forEach(function(t){h+='<div style="font-size:13px;margin-bottom:4px;display:flex;gap:6px;align-items:baseline;"><span style="color:var(--emerald);">&#8226;</span><span>'+t+'</span></div>';});
+  h+='</div>';
+  // Right: risk factors (red, like contraindicaciones)
+  h+='<div style="background:var(--red-light);border-radius:var(--radius-sm);padding:12px;"><div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--red);font-weight:600;margin-bottom:6px;">Factores asociados a fracaso</div>';
   var facts=[
     'Edad ≥85 anos (riesgo ×4 de reinfeccion)',
     'Obesidad morbida (HR 2,77)',
@@ -1527,9 +1520,9 @@ function renderDAIRFactores(){
     'Inmunosupresores',
     'Tabaquismo (agudas tempranas)'
   ];
-  facts.forEach(function(f){h+='<div style="margin-bottom:4px;display:flex;gap:6px;align-items:baseline;"><span style="color:var(--red);">&#8226;</span><span>'+f+'</span></div>';});
+  facts.forEach(function(f){h+='<div style="font-size:13px;margin-bottom:4px;display:flex;gap:6px;align-items:baseline;"><span style="color:var(--red);">&#8226;</span><span>'+f+'</span></div>';});
   h+='</div>';
-  h+='</div>'; // close grid
+  h+='</div>';
   h+='<div style="margin-top:8px;">'+makeRef('ICM 2025, Parte III')+'</div>';
   return h+'</div>';
 }
