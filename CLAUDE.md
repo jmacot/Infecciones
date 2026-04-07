@@ -16,7 +16,7 @@ Usa **Sistema B "Radiologia Glass"** del ecosistema COT (ver `/Users/jma/Documen
 - Header: Slate Steel `#1e293b → #334155 → #475569`, accent line `#38bdf8→#a78bfa`
 - Glassmorphism: `backdrop-filter: blur()` + `background: rgba()` en cards/inputs
 - Dark mode: `[data-theme="dark"]` con sky toggle CSS puro
-- Iconos: SVG stroke-based inline (objeto `ICO`), NO emojis
+- Iconos landing: emojis en `<span class="lc-emoji">` para cards (🦿🦴🩹🧫💉🛡️🦠🔬). SVG stroke-based inline (objeto `ICO`) para iconos internos de secciones
 - Paleta: sky, violet, emerald, amber, red, slate (cada seccion tiene color acento)
 
 ## Arquitectura JS (index.html)
@@ -63,7 +63,7 @@ Navegacion: `goLanding()` / `goSection(id)` muestran/ocultan divs. Micro section
 - Tratamiento empirico (`renderEmpiric()`) visible en IAP y Osteoarticular antes del selector de microorganismo
 - `dosisI` en ORGANISMS: bloque amber dentro de la card IV de la cascada con badge "I" y label "Si sensibilidad intermedia"
 - Referencias clicables (`makeRef()`) con URLs especificas por patologia (contexto via `_refContext`)
-- ICO object: todos los iconos SVG con atributos inline `fill="none" stroke="currentColor"` (NO depender solo de CSS)
+- ICO object: iconos SVG con atributos inline `fill="none" stroke="currentColor"` (NO depender solo de CSS). Landing cards usan emojis (`.lc-emoji`), no ICO
 - Profilaxis sin theory card, patron progresivo: categoria → procedimiento → prescripcion
 - Micro usa sidebar-index con accordion + content panel
 - `esc()` para todo texto dinamico. innerHTML solo con datos hardcoded

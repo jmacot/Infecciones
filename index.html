@@ -128,7 +128,7 @@ a{color:var(--sky);text-decoration:none;}a:hover{text-decoration:underline;}
 .landing-section-label{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-light);margin:0 0 10px 4px;}
 .landing-primary{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
 .landing-featured{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
-.landing-featured .landing-card{display:flex;flex-direction:row;align-items:center;gap:16px;padding:20px 24px;}
+.landing-featured .landing-card{display:flex;flex-direction:row;align-items:center;gap:16px;padding:20px 40px 20px 24px;}
 .landing-featured .landing-card[data-color="amber"]{border-left:4px solid var(--amber);}
 .landing-featured .landing-card[data-color="violet"]{border-left:4px solid var(--violet);}
 .landing-featured .lc-icon{flex-shrink:0;}
@@ -485,6 +485,8 @@ a.ref-tag:hover{background:var(--violet);color:#fff;text-decoration:none;}
    ═══════════════════════════════════════════ */
 svg{max-width:100%;height:auto;}
 .lc-icon svg,.sec-ico svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.lc-emoji{font-size:26px;line-height:1;}
+.landing-card.secondary .lc-emoji{font-size:22px;}
 .theory-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 
 /* ═══════════════════════════════════════════
@@ -1070,16 +1072,16 @@ function renderEmpiric(key){
 }
 
 var SECTIONS_PRIMARY=[
-  {id:'iap',color:'violet',icon:ICO.prosthesis,title:'Infeccion Protesica Articular',desc:'Lavado (DAIR), revision en 1 y 2 tiempos',badge:'18 microorganismos'},
-  {id:'osteoart',color:'emerald',icon:ICO.bone,title:'Infecciones Osteoarticulares',desc:'Artritis septica, osteomielitis, espondilodiscitis',badge:'4 patologias'},
-  {id:'blandas',color:'amber',icon:ICO.bandage,title:'Partes Blandas',desc:'Celulitis, fascitis, herida Qx, mordeduras',badge:'5 escenarios'}
+  {id:'iap',color:'violet',icon:'<span class="lc-emoji">🦿</span>',title:'Infeccion Protesica Articular',desc:'Lavado (DAIR), revision en 1 y 2 tiempos',badge:'18 microorganismos'},
+  {id:'osteoart',color:'emerald',icon:'<span class="lc-emoji">🦴</span>',title:'Infecciones Osteoarticulares',desc:'Artritis septica, osteomielitis, espondilodiscitis',badge:'4 patologias'},
+  {id:'blandas',color:'amber',icon:'<span class="lc-emoji">🩹</span>',title:'Partes Blandas',desc:'Celulitis, fascitis, herida Qx, mordeduras',badge:'5 escenarios'}
 ];
-var SECTION_ANTIBIOGRAMA={id:'antibiograma',color:'amber',icon:ICO.antibiogram,title:'Interpretar el Antibiograma',desc:'Categorias S, I y R. Dosis estandar e incrementadas para infecciones osteoarticulares',badge:'EUCAST 2024'};
-var SECTION_LIQUIDO={id:'liquido',color:'violet',icon:ICO.syringe,title:'Liquido Sinovial',desc:'Analisis y clasificacion en urgencias. Introduce valores de la artrocentesis',badge:'Analizador'};
+var SECTION_ANTIBIOGRAMA={id:'antibiograma',color:'amber',icon:'<span class="lc-emoji">🧫</span>',title:'Interpretar el Antibiograma',desc:'Categorias S, I y R. Dosis estandar e incrementadas para infecciones osteoarticulares',badge:'EUCAST 2024'};
+var SECTION_LIQUIDO={id:'liquido',color:'violet',icon:'<span class="lc-emoji">💉</span>',title:'Liquido Sinovial',desc:'Analisis y clasificacion en urgencias. Introduce valores de la artrocentesis',badge:'Analizador'};
 var SECTIONS_SECONDARY=[
-  {id:'profilaxis',color:'sky',icon:ICO.shield,title:'Profilaxis Preoperatoria',desc:'Antibiotico antes de operar',badge:'11 procedimientos'},
-  {id:'micro',color:'red',icon:ICO.bacteria,title:'Consulta por Microorganismo',desc:'Buscar por germen del cultivo',badge:'18 fichas'},
-  {id:'espectro',color:'slate',icon:ICO.grid,title:'Espectro Antibacteriano',desc:'Tabla de actividad por antibiotico',badge:'42 antibioticos'}
+  {id:'profilaxis',color:'sky',icon:'<span class="lc-emoji">🛡️</span>',title:'Profilaxis Preoperatoria',desc:'Antibiotico antes de operar',badge:'11 procedimientos'},
+  {id:'micro',color:'red',icon:'<span class="lc-emoji">🦠</span>',title:'Consulta por Microorganismo',desc:'Buscar por germen del cultivo',badge:'18 fichas'},
+  {id:'espectro',color:'slate',icon:'<span class="lc-emoji">🔬</span>',title:'Espectro Antibacteriano',desc:'Tabla de actividad por antibiotico',badge:'42 antibioticos'}
 ];
 var SECTIONS=SECTIONS_PRIMARY.concat([SECTION_ANTIBIOGRAMA,SECTION_LIQUIDO]).concat(SECTIONS_SECONDARY);
 
