@@ -26,7 +26,7 @@ Los datos clinicos estan inline como arrays/objetos JS globales:
 - `ORGANISMS` — 18 microorganismos con tratamiento IV/oral, duraciones por escenario, alergias, y `dosisI` (dosis incrementada si sensibilidad intermedia)
 - `OA_INFO` — 4 tipos de infeccion osteoarticular
 - `PB_DATA` — 5 tipos de partes blandas
-- `EMPIRIC` — Tratamiento empirico por escenario (antes de cultivo)
+- `EMPIRIC` — Tratamiento empirico por escenario: `iap_dair`, `iap_rev`, `iap_mega`, `artritis`, `osteo_aguda`, `osteo_cronica`, `espondilo`
 - `MUESTRAS_CHECKLIST` — Checklist toma de muestras (ICM 2025, Cap. 18)
 - `FACTORES_RIESGO` — Factores de riesgo modificables para infeccion (ICM 2025, Cap. 1.4)
 - `DOSIS_INCREMENTADAS` — Tabla EUCAST 2024: dosis estandar vs incrementada por familia de antibiotico
