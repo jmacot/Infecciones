@@ -127,8 +127,10 @@ a{color:var(--sky);text-decoration:none;}a:hover{text-decoration:underline;}
 .landing{animation:fadeInUp .4s ease-out;}
 .landing-section-label{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-light);margin:0 0 10px 4px;}
 .landing-primary{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
-.landing-featured{margin-bottom:16px;}
-.landing-featured .landing-card{display:flex;flex-direction:row;align-items:center;gap:16px;padding:20px 24px;border-left:4px solid var(--amber);}
+.landing-featured{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.landing-featured .landing-card{display:flex;flex-direction:row;align-items:center;gap:16px;padding:20px 24px;}
+.landing-featured .landing-card[data-color="amber"]{border-left:4px solid var(--amber);}
+.landing-featured .landing-card[data-color="violet"]{border-left:4px solid var(--violet);}
 .landing-featured .lc-icon{flex-shrink:0;}
 .landing-featured .lc-title{font-size:16px;}
 .landing-featured .lc-desc{font-size:13px;max-width:none;}
@@ -361,6 +363,25 @@ a.ref-tag:hover{background:var(--violet);color:#fff;text-decoration:none;}
 .abg-detail-grid .dl{color:var(--text-light);font-weight:600;}
 .abg-reset{margin-top:12px;font-size:12px;color:var(--sky);cursor:pointer;font-family:'Source Code Pro',monospace;background:none;border:none;}
 .abg-reset:hover{text-decoration:underline;}
+
+/* Synovial fluid analyzer */
+.ls-input-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;max-width:500px;}
+@media(max-width:500px){.ls-input-grid{grid-template-columns:1fr;}}
+.ls-input-group{display:flex;flex-direction:column;gap:4px;}
+.ls-input-label{font-family:'Source Code Pro',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-light);font-weight:600;}
+.ls-input{padding:10px 12px;font-size:14px;font-family:'Source Sans 3',sans-serif;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);backdrop-filter:blur(var(--glass-blur));outline:none;transition:var(--transition);width:100%;}
+.ls-input:focus{border-color:var(--sky);box-shadow:0 0 0 2px rgba(2,132,199,.15);}
+[data-theme="dark"] .ls-input{background:var(--surface2);}
+.ls-result-card{border-radius:var(--radius);padding:16px 20px;margin-top:16px;position:relative;overflow:hidden;animation:fadeSlide .3s ease;}
+.ls-result-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.ls-result-card.tipo-normal{background:var(--emerald-light);}.ls-result-card.tipo-normal::before{background:var(--emerald);}
+.ls-result-card.tipo-noinfla{background:var(--sky-light);}.ls-result-card.tipo-noinfla::before{background:var(--sky);}
+.ls-result-card.tipo-infla{background:var(--amber-light);}.ls-result-card.tipo-infla::before{background:var(--amber);}
+.ls-result-card.tipo-septico{background:var(--red-light);}.ls-result-card.tipo-septico::before{background:var(--red);}
+.ls-result-card.tipo-hemartr{background:var(--violet-light);}.ls-result-card.tipo-hemartr::before{background:var(--violet);}
+.ls-tipo{font-family:'Source Serif 4',serif;font-size:18px;font-weight:700;margin-bottom:4px;}
+.ls-subtipo{font-size:13px;color:var(--text-muted);margin-bottom:8px;}
+.ls-plan{font-size:13px;line-height:1.6;}
 @keyframes fadeSlide{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
 
 /* FAQ accordion */
@@ -526,6 +547,7 @@ svg{max-width:100%;height:auto;}
   .landing-primary{grid-template-columns:1fr;}.landing-secondary{grid-template-columns:1fr;}
   .container{padding:12px;}
   .landing-card{padding:20px 18px;}
+  .landing-featured{grid-template-columns:1fr;}
   .landing-featured .landing-card{padding:14px 16px;gap:10px;}
   .landing-featured .lc-title{font-size:14px;}
   .landing-featured .lc-desc{font-size:12px;}
@@ -611,6 +633,7 @@ svg{max-width:100%;height:auto;}
 <div id="sec-blandas" class="section-view"></div>
 <div id="sec-micro" class="section-view"></div>
 <div id="sec-antibiograma" class="section-view"></div>
+<div id="sec-liquido" class="section-view"></div>
 
 <div class="disclaimer">
   <strong style="display:block;margin-bottom:6px;color:var(--text);font-size:13px;">Aviso importante</strong>
@@ -691,7 +714,8 @@ var ICO={
   search:'<svg viewBox="0 0 24 24"'+S0+'><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>',
   pointer:'<svg viewBox="0 0 24 24"'+S0+'><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
   flask:'<svg viewBox="0 0 24 24"'+S0+'><path d="M9 3h6M10 3v7.4L4.2 19.5A1.5 1.5 0 005.5 22h13a1.5 1.5 0 001.3-2.5L14 10.4V3"/><path d="M8.5 14h7"/></svg>',
-  antibiogram:'<svg viewBox="0 0 24 24"'+S0+'><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/><circle cx="14.5" cy="14.5" r="2"/><path d="M6 14.5h2M14.5 6v2"/></svg>'
+  antibiogram:'<svg viewBox="0 0 24 24"'+S0+'><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/><circle cx="14.5" cy="14.5" r="2"/><path d="M6 14.5h2M14.5 6v2"/></svg>',
+  syringe:'<svg viewBox="0 0 24 24"'+S0+'><path d="M18 2l4 4-3 3-1-1-4 4-1-1-3 3-5-5 3-3-1-1 4-4-1-1 3-3z"/><path d="M8.5 15.5L2 22"/><path d="M10 12l-2 2"/><path d="M13 9l-2 2"/></svg>'
 };
 
 // ─────────────────────────────────────────────
@@ -1049,12 +1073,13 @@ var SECTIONS_PRIMARY=[
   {id:'blandas',color:'amber',icon:ICO.bandage,title:'Partes Blandas',desc:'Celulitis, fascitis, herida Qx, mordeduras',badge:'5 escenarios'}
 ];
 var SECTION_ANTIBIOGRAMA={id:'antibiograma',color:'amber',icon:ICO.antibiogram,title:'Interpretar el Antibiograma',desc:'Categorias S, I y R. Dosis estandar e incrementadas para infecciones osteoarticulares',badge:'EUCAST 2024'};
+var SECTION_LIQUIDO={id:'liquido',color:'violet',icon:ICO.syringe,title:'Liquido Sinovial',desc:'Analisis y clasificacion en urgencias. Introduce valores de la artrocentesis',badge:'Analizador'};
 var SECTIONS_SECONDARY=[
   {id:'profilaxis',color:'sky',icon:ICO.shield,title:'Profilaxis Preoperatoria',desc:'Antibiotico antes de operar',badge:'11 procedimientos'},
   {id:'micro',color:'red',icon:ICO.bacteria,title:'Consulta por Microorganismo',desc:'Buscar por germen del cultivo',badge:'18 fichas'},
   {id:'espectro',color:'slate',icon:ICO.grid,title:'Espectro Antibacteriano',desc:'Tabla de actividad por antibiotico',badge:'42 antibioticos'}
 ];
-var SECTIONS=SECTIONS_PRIMARY.concat([SECTION_ANTIBIOGRAMA]).concat(SECTIONS_SECONDARY);
+var SECTIONS=SECTIONS_PRIMARY.concat([SECTION_ANTIBIOGRAMA,SECTION_LIQUIDO]).concat(SECTIONS_SECONDARY);
 
 // ─────────────────────────────────────────────
 //  STATE
@@ -1127,15 +1152,17 @@ function buildLanding(){
   });
   h+='</div>';
   h+='<div class="landing-section-label">Herramientas de consulta</div>';
-  // Featured: Antibiograma (full width)
-  var ab=SECTION_ANTIBIOGRAMA;
+  // Featured row: Antibiograma + Liquido Sinovial
   h+='<div class="landing-featured">';
-  h+='<div class="landing-card" data-color="'+ab.color+'" onclick="goSection(\''+ab.id+'\')" style="position:relative;">';
-  h+='<div class="lc-icon">'+ab.icon+'</div>';
-  h+='<div style="flex:1;"><div class="lc-title">'+esc(ab.title)+'</div><div class="lc-desc">'+esc(ab.desc)+'</div>';
-  h+='<div class="lc-badge">'+esc(ab.badge)+'</div></div>';
-  h+='<div class="lc-arrow">'+ARROW_RIGHT+'</div>';
-  h+='</div></div>';
+  [SECTION_ANTIBIOGRAMA,SECTION_LIQUIDO].forEach(function(ft){
+    h+='<div class="landing-card" data-color="'+ft.color+'" onclick="goSection(\''+ft.id+'\')" style="position:relative;">';
+    h+='<div class="lc-icon">'+ft.icon+'</div>';
+    h+='<div style="flex:1;"><div class="lc-title">'+esc(ft.title)+'</div><div class="lc-desc">'+esc(ft.desc)+'</div>';
+    h+='<div class="lc-badge">'+esc(ft.badge)+'</div></div>';
+    h+='<div class="lc-arrow">'+ARROW_RIGHT+'</div>';
+    h+='</div>';
+  });
+  h+='</div>';
   // Secondary grid
   h+='<div class="landing-secondary">';
   SECTIONS_SECONDARY.forEach(function(s){
@@ -1156,7 +1183,7 @@ function renderSection(id){
   var sec=SECTIONS.filter(function(s){return s.id===id;})[0];
   var el=document.getElementById('sec-'+id);
   // Set context for reference URL matching
-  var ctxMap={profilaxis:'profilaxis',iap:'protesica',osteoart:'osteo artritis espondilo',blandas:'celulitis fascitis mordedura pie diabetico partes blandas',micro:'',antibiograma:''};
+  var ctxMap={profilaxis:'profilaxis',iap:'protesica',osteoart:'osteo artritis espondilo',blandas:'celulitis fascitis mordedura pie diabetico partes blandas',micro:'',antibiograma:'',liquido:'artritis'};
   _refContext=ctxMap[id]||'';
   var anyAllergy=allergies.bl||allergies.qn||allergies.vc;
   var alNames=[];if(allergies.bl)alNames.push('Betalactamicos');if(allergies.qn)alNames.push('Quinolonas');if(allergies.vc)alNames.push('Vancomicina');
@@ -1169,6 +1196,7 @@ function renderSection(id){
   else if(id==='blandas') h+=renderBlandas();
   else if(id==='micro') h+=renderMicro();
   else if(id==='antibiograma') h+=renderAntibiograma();
+  else if(id==='liquido') h+=renderLiquido();
 
   el.innerHTML=h;
 
@@ -1802,6 +1830,108 @@ function renderAbgConceptos(){
   return h;
 }
 
+// ─────────────────────────────────────────────
+//  LIQUIDO SINOVIAL
+// ─────────────────────────────────────────────
+var LS_TIPOS=[
+  {id:'normal',label:'Normal',color:'emerald',aspecto:'Transparente, amarillo palido',viscosidad:'Alta (hebra >5 cm)',leucos:'<200',pmn:'<25%',glucosa:'Similar al suero',cristales:'Ausentes',
+   plan:'Articulacion normal. No requiere tratamiento antibiotico.'},
+  {id:'noinfla',label:'No inflamatorio (mecanico)',color:'sky',aspecto:'Transparente a ligeramente turbio, amarillo',viscosidad:'Alta',leucos:'200 – 2.000',pmn:'<25%',glucosa:'Normal',cristales:'Ausentes',
+   plan:'Sugestivo de artrosis, traumatismo, osteonecrosis o meniscopatia. No requiere antibiotico. Valorar segun clinica.'},
+  {id:'infla',label:'Inflamatorio',color:'amber',aspecto:'Turbio, amarillo oscuro',viscosidad:'Baja (hebra <3 cm)',leucos:'2.000 – 50.000',pmn:'>50%',glucosa:'Normal o ligeramente baja',cristales:'Posibles (urato, pirofosfato)',
+   plan:'<strong>Buscar cristales con luz polarizada</strong> (gota, pseudogota). Si no hay cristales: artritis reumatoide, reactiva, psoriasica. Si >20.000 leucocitos sin cristales: no descartar infeccion, valorar cultivo.'},
+  {id:'septico',label:'Septico (infeccioso)',color:'red',aspecto:'Turbio a purulento, amarillo-verdoso',viscosidad:'Muy baja',leucos:'>50.000 (frecuente >100.000)',pmn:'>90%',glucosa:'Baja (<40 mg/dL o <50% del suero)',cristales:'Generalmente ausentes',
+   plan:'<strong>Urgencia quirurgica.</strong> Lavado articular + cultivos + antibiotico empirico inmediato. Consultar con Traumatologia y Enfermedades Infecciosas. No esperar al resultado del cultivo para iniciar tratamiento.'},
+  {id:'hemartr',label:'Hemartros',color:'violet',aspecto:'Sanguinolento (rojo o xantocromico)',viscosidad:'Variable',leucos:'Variable',pmn:'Variable',glucosa:'Normal',cristales:'Ausentes',
+   plan:'Valorar trauma (fractura, rotura ligamentosa), coagulopatia, hemofilia, tumor (sinovitis villonodular, hemangioma). Si postoperatorio reciente: valorar infeccion sobreañadida.'}
+];
+
+function renderLiquido(){
+  var h=theoryCard('violet',
+    'La artrocentesis es <strong>obligatoria ante sospecha de artritis septica</strong>. El analisis del liquido sinovial permite clasificar el derrame y orientar el diagnostico diferencial.',
+    '<ul><li><strong>Tecnica:</strong> condiciones esteriles, sin anestesia intraarticular previa (puede inhibir cultivo)</li><li><strong>Muestras:</strong> tubo con EDTA (recuento celular), tubo seco (cristales, bioquimica), frasco de hemocultivo (cultivo)</li><li><strong>Urgente:</strong> recuento leucocitario + % polimorfonucleares + cristales con luz polarizada</li><li><strong>Glucosa:</strong> comparar con glucemia simultanea. Glucosa sinovial &lt;50% del suero sugiere infeccion</li><li><strong>Recuento &gt;50.000 leucocitos con &gt;90% PMN:</strong> artritis septica hasta demostrar lo contrario</li></ul>',
+    'PRIOAM | Macarena');
+
+  // Reference table
+  h+='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin:20px 0 8px;">Tabla de clasificacion del liquido sinovial</div>';
+  h+='<div class="table-wrap"><table class="di-table">';
+  h+='<thead><tr><th>Tipo</th><th>Aspecto</th><th>Viscosidad</th><th>Leucocitos/&#181;L</th><th>PMN</th><th>Glucosa</th></tr></thead><tbody>';
+  LS_TIPOS.forEach(function(t){
+    h+='<tr><td style="font-weight:600;color:var(--'+t.color+');">'+esc(t.label)+'</td>';
+    h+='<td>'+esc(t.aspecto)+'</td><td>'+esc(t.viscosidad)+'</td><td>'+esc(t.leucos)+'</td><td>'+esc(t.pmn)+'</td><td>'+esc(t.glucosa)+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+
+  // Interactive analyzer
+  h+='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin:24px 0 8px;">Analizador de liquido sinovial</div>';
+  h+='<div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">Introduce los valores de la artrocentesis para obtener una orientacion diagnostica.</div>';
+
+  h+='<div class="ls-input-grid">';
+  h+='<div class="ls-input-group"><label class="ls-input-label" for="lsLeucos">Leucocitos (cel/&#181;L)</label><input class="ls-input" type="number" id="lsLeucos" placeholder="ej: 45000" min="0" oninput="analizarLS()"></div>';
+  h+='<div class="ls-input-group"><label class="ls-input-label" for="lsPmn">% Polimorfonucleares</label><input class="ls-input" type="number" id="lsPmn" placeholder="ej: 92" min="0" max="100" oninput="analizarLS()"></div>';
+  h+='<div class="ls-input-group"><label class="ls-input-label" for="lsGlucosa">Glucosa sinovial (mg/dL)</label><input class="ls-input" type="number" id="lsGlucosa" placeholder="ej: 30" min="0" oninput="analizarLS()"></div>';
+  h+='<div class="ls-input-group"><label class="ls-input-label" for="lsAspecto">Aspecto macroscopico</label><select class="ls-input" id="lsAspecto" onchange="analizarLS()"><option value="">Seleccionar...</option><option value="claro">Transparente / claro</option><option value="turbio">Turbio / amarillo oscuro</option><option value="purulento">Purulento / verdoso</option><option value="sanguinolento">Sanguinolento / rojo</option></select></div>';
+  h+='</div>';
+
+  h+='<div id="lsResultado"></div>';
+
+  h+='<div class="info-card" style="margin-top:16px;"><strong>Referencias</strong> '+makeRef('PRIOAM')+' '+makeRef('Macarena')+'</div>';
+  return h;
+}
+
+function analizarLS(){
+  var leucos=parseFloat(document.getElementById('lsLeucos').value);
+  var pmn=parseFloat(document.getElementById('lsPmn').value);
+  var glucosa=parseFloat(document.getElementById('lsGlucosa').value);
+  var aspecto=document.getElementById('lsAspecto').value;
+  var container=document.getElementById('lsResultado');
+
+  // Need at least leucocytes
+  if(isNaN(leucos)){container.innerHTML='';return;}
+
+  var tipo,detalle='',plan='';
+
+  // Hemartros by aspect
+  if(aspecto==='sanguinolento'){
+    tipo=LS_TIPOS[4];// hemartr
+    detalle='Liquido sanguinolento. Valorar causa: traumatismo, coagulopatia, tumor.';
+  }
+  // Septico
+  else if(leucos>50000||(leucos>20000&&!isNaN(pmn)&&pmn>90)||(aspecto==='purulento')){
+    tipo=LS_TIPOS[3];// septico
+    detalle='Recuento leucocitario muy elevado';
+    if(!isNaN(pmn)&&pmn>90) detalle+=' con predominio de polimorfonucleares ('+pmn+'%)';
+    if(!isNaN(glucosa)&&glucosa<40) detalle+='. Glucosa sinovial baja ('+glucosa+' mg/dL) — muy sugestivo de infeccion';
+    detalle+='.';
+  }
+  // Inflamatorio
+  else if(leucos>2000){
+    tipo=LS_TIPOS[2];// infla
+    detalle='Recuento inflamatorio ('+Math.round(leucos)+' cel/&#181;L)';
+    if(!isNaN(pmn)) detalle+=', PMN '+pmn+'%';
+    detalle+='.';
+    if(leucos>20000) detalle+=' <strong>Recuento alto: no descartar infeccion.</strong> Valorar cultivo y cristales con luz polarizada.';
+    else detalle+=' Buscar cristales con luz polarizada (gota, pseudogota). Si ausentes: valorar artritis reumatoide, reactiva.';
+  }
+  // No inflamatorio
+  else if(leucos>200){
+    tipo=LS_TIPOS[1];// noinfla
+    detalle='Recuento bajo ('+Math.round(leucos)+' cel/&#181;L). Patron no inflamatorio: artrosis, traumatismo mecanico, meniscopatia.';
+  }
+  // Normal
+  else{
+    tipo=LS_TIPOS[0];// normal
+    detalle='Recuento dentro de la normalidad ('+Math.round(leucos)+' cel/&#181;L).';
+  }
+
+  var h='<div class="ls-result-card tipo-'+tipo.id+'">';
+  h+='<div class="ls-tipo" style="color:var(--'+tipo.color+');">'+esc(tipo.label)+'</div>';
+  h+='<div class="ls-subtipo">'+detalle+'</div>';
+  h+='<div class="ls-plan"><strong style="display:block;margin-bottom:4px;">Plan de actuacion:</strong>'+tipo.plan+'</div>';
+  h+='</div>';
+  container.innerHTML=h;
+}
+
 function abgAlgoSelect(levelId,branchId){
   var el=document.getElementById(branchId);
   if(!el)return;
@@ -1952,10 +2082,14 @@ var FAQ_DATA=[
    a:'<strong>Vancomicina: SI</strong> (valle 15-20 &#181;g/mL). <strong>Betalactamicos: no es rutina</strong>, pero considerar si fracaso clinico. <strong>Fluorquinolonas: no</strong> (farmacocinetica predecible). <strong>Linezolid:</strong> hemograma semanal (toxicidad hematologica).'},
   {q:'La perfusion extendida es siempre necesaria?',
    a:'En infecciones oseas: <strong>obligatoria si "I"</strong> para betalactamicos. <strong>Recomendada aunque sea "S"</strong> porque mejora T&gt;CMI y penetracion osea. Minimo 30 minutos; ideal 3-4 horas. Requiere acceso venoso adecuado.'},
-  {q:'Por que usar vancomicina si el "I" es de un betalactamico?',
-   a:'Si el paciente tiene SAMR (oxacilina R), es resistente a <strong>todos los betalactamicos</strong> (cefalosporinas, carbapenemas, penicilinas). En ese caso vancomicina es la primera linea. Ademas, en infeccion postoperatoria nosocomial, se anade vancomicina empiricamente hasta descartar SAMR (10-30% de S. aureus nosocomial).'},
-  {q:'Que es la CMI y puedo comparar entre antibioticos?',
-   a:'La CMI (concentracion minima inhibitoria) es la concentracion mas baja que inhibe el crecimiento. <strong>Solo se puede comparar entre cepas del mismo farmaco</strong>, nunca entre farmacos diferentes. Ceftazidima CMI 0.5 no es "mejor" que meropenem CMI 1 — tienen distintos puntos de corte, farmacocinetica y mecanismos.'}
+  {q:'Si es SAMR, sirve de algo la sensibilidad intermedia?',
+   a:'SAMR (oxacilina resistente) implica resistencia a <strong>todos los betalactamicos</strong> (cefalosporinas, carbapenemas, penicilinas), independientemente de lo que diga el antibiograma para cada uno. El tratamiento es <strong>vancomicina o daptomicina</strong>. La sensibilidad intermedia solo es relevante para los antibioticos alternativos (ej: si TMP-SMX sale "I", usar dosis incrementada). En infeccion postoperatoria nosocomial, se añade vancomicina empiricamente hasta descartar SAMR (10-30% de S. aureus nosocomial).'},
+  {q:'Cuando debo llamar a Enfermedades Infecciosas?',
+   a:'<strong>Siempre</strong> en infeccion protesica articular (obligatorio). Ademas: microorganismo multirresistente o sin opciones sensibles, fracaso clinico a los 7-10 dias, infeccion fungica o por micobacterias, bacteriemia persistente, y cuando necesites antibioticos de uso restringido (daptomicina, linezolid, ceftolozano-tazobactam).'},
+  {q:'El antibiograma del liquido sinovial y el de la biopsia pueden dar resultados distintos?',
+   a:'<strong>Si.</strong> El liquido sinovial puede ser negativo hasta en un 20-30% de infecciones protesicas confirmadas (especialmente en cronicas de bajo grado por C. acnes o S. epidermidis). Las biopsias de tejido periprotesico (minimo 3-4, ideal 5-6) tienen mayor sensibilidad. Ademas, la sonicacion del implante retirado puede rescatar germenes del biofilm que el liquido no detecta. <strong>Si hay discordancia, priorizar el resultado de las biopsias y la sonicacion.</strong>'},
+  {q:'Que hago si el cultivo es negativo pero sospecho infeccion?',
+   a:'Cultivo negativo no descarta infeccion (hasta 15-20% en protesica). Valorar: <strong>PCR sinovial</strong> (proteina C reactiva en liquido sinovial, alta sensibilidad), <strong>alfa-defensina</strong> (si disponible), <strong>sonicacion</strong> del implante, <strong>incubacion prolongada 14 dias</strong> (clave para C. acnes). Si la sospecha clinica es alta (PCR/VSG elevadas, derrame, dolor): considerar tratamiento empirico tras tomar nuevas muestras y consultar con Enfermedades Infecciosas.'}
 ];
 
 function renderAbgFAQ(){
