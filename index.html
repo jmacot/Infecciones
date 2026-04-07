@@ -1834,42 +1834,54 @@ function renderAbgConceptos(){
 //  LIQUIDO SINOVIAL
 // ─────────────────────────────────────────────
 var LS_TIPOS=[
-  {id:'normal',label:'Normal',color:'emerald',aspecto:'Transparente, amarillo palido',viscosidad:'Alta (hebra >5 cm)',leucos:'<200',pmn:'<25%',glucosa:'Similar al suero',cristales:'Ausentes',
+  {id:'normal',label:'Normal',color:'emerald',aspecto:'Transparente, amarillo palido',viscosidad:'Alta (hebra >5 cm)',leucos:'<200',pmn:'<25%',glucosa:'Ratio >0.8',cristales:'Ausentes',protesica:false,
    plan:'Articulacion normal. No requiere tratamiento antibiotico.'},
-  {id:'noinfla',label:'No inflamatorio (mecanico)',color:'sky',aspecto:'Transparente a ligeramente turbio, amarillo',viscosidad:'Alta',leucos:'200 – 2.000',pmn:'<25%',glucosa:'Normal',cristales:'Ausentes',
+  {id:'noinfla',label:'No inflamatorio (mecanico)',color:'sky',aspecto:'Transparente a ligeramente turbio',viscosidad:'Alta',leucos:'200 – 2.000',pmn:'<25%',glucosa:'Ratio 0.8-1',cristales:'Ausentes',protesica:false,
    plan:'Sugestivo de artrosis, traumatismo, osteonecrosis o meniscopatia. No requiere antibiotico. Valorar segun clinica.'},
-  {id:'infla',label:'Inflamatorio',color:'amber',aspecto:'Turbio, amarillo oscuro',viscosidad:'Baja (hebra <3 cm)',leucos:'2.000 – 50.000',pmn:'>50%',glucosa:'Normal o ligeramente baja',cristales:'Posibles (urato, pirofosfato)',
+  {id:'infla',label:'Inflamatorio',color:'amber',aspecto:'Turbio, amarillo oscuro',viscosidad:'Baja (hebra <3 cm)',leucos:'2.000 – 50.000',pmn:'>50%',glucosa:'Ratio 0.6-0.8',cristales:'Posibles (urato, pirofosfato)',protesica:false,
    plan:'<strong>Buscar cristales con luz polarizada</strong> (gota, pseudogota). Si no hay cristales: artritis reumatoide, reactiva, psoriasica. Si >20.000 leucocitos sin cristales: no descartar infeccion, valorar cultivo.'},
-  {id:'septico',label:'Septico (infeccioso)',color:'red',aspecto:'Turbio a purulento, amarillo-verdoso',viscosidad:'Muy baja',leucos:'>50.000 (frecuente >100.000)',pmn:'>90%',glucosa:'Baja (<40 mg/dL o <50% del suero)',cristales:'Generalmente ausentes',
-   plan:'<strong>Urgencia quirurgica.</strong> Lavado articular + cultivos + antibiotico empirico inmediato. Consultar con Traumatologia y Enfermedades Infecciosas. No esperar al resultado del cultivo para iniciar tratamiento.'},
-  {id:'hemartr',label:'Hemartros',color:'violet',aspecto:'Sanguinolento (rojo o xantocromico)',viscosidad:'Variable',leucos:'Variable',pmn:'Variable',glucosa:'Normal',cristales:'Ausentes',
+  {id:'septico',label:'Septico (articulacion nativa)',color:'red',aspecto:'Turbio a purulento, amarillo-verdoso',viscosidad:'Muy baja',leucos:'>50.000',pmn:'>75% (frecuente >90%)',glucosa:'Ratio <0.6 (glucosa <20 mg/dL)',cristales:'Generalmente ausentes',protesica:false,
+   plan:'<strong>Urgencia quirurgica.</strong> Lavado articular + cultivos (minimo 2 muestras: portagen + bote verde) + antibiotico empirico inmediato. Tomar 2 hemocultivos seriados ANTES del antibiotico. Consultar con Traumatologia y Enfermedades Infecciosas. No esperar al resultado del cultivo para iniciar tratamiento.'},
+  {id:'protesica',label:'Infeccion protesica articular',color:'red',aspecto:'Claro u opaco (puede no ser purulento)',viscosidad:'Variable',leucos:'1.100 – 3.000 (cronicas) / >10.000 (agudas)',pmn:'>64-80%',glucosa:'Variable',cristales:'Ausentes',protesica:true,
+   plan:'<strong>Atencion:</strong> los puntos de corte son mucho mas bajos que en articulacion nativa. Un liquido "claro" con 3.000 leucocitos y 70% PMN en una protesis ES infeccion. Enviar liquido sinovial para leucocitos, % PMN, PCR sinovial y alfa-defensina (si disponible). Minimo 3-4 biopsias periprotesicas + sonicacion del implante si se retira. Consulta obligatoria con Enfermedades Infecciosas.'},
+  {id:'hemartr',label:'Hemartros',color:'violet',aspecto:'Sanguinolento (rojo o xantocromico)',viscosidad:'Variable',leucos:'Variable',pmn:'Variable',glucosa:'Normal',cristales:'Ausentes',protesica:false,enTabla:false,
    plan:'Valorar trauma (fractura, rotura ligamentosa), coagulopatia, hemofilia, tumor (sinovitis villonodular, hemangioma). Si postoperatorio reciente: valorar infeccion sobreañadida.'}
 ];
 
 function renderLiquido(){
   var h=theoryCard('violet',
-    'La artrocentesis es <strong>obligatoria ante sospecha de artritis septica</strong>. El analisis del liquido sinovial permite clasificar el derrame y orientar el diagnostico diferencial.',
-    '<ul><li><strong>Tecnica:</strong> condiciones esteriles, sin anestesia intraarticular previa (puede inhibir cultivo)</li><li><strong>Muestras:</strong> tubo con EDTA (recuento celular), tubo seco (cristales, bioquimica), frasco de hemocultivo (cultivo)</li><li><strong>Urgente:</strong> recuento leucocitario + % polimorfonucleares + cristales con luz polarizada</li><li><strong>Glucosa:</strong> comparar con glucemia simultanea. Glucosa sinovial &lt;50% del suero sugiere infeccion</li><li><strong>Recuento &gt;50.000 leucocitos con &gt;90% PMN:</strong> artritis septica hasta demostrar lo contrario</li></ul>',
+    'La artrocentesis es <strong>obligatoria ante sospecha de artritis septica</strong>. El analisis del liquido sinovial permite clasificar el derrame y orientar el diagnostico diferencial. En protesis, los puntos de corte son <strong>mucho mas bajos</strong>.',
+    '<ul><li><strong>Tecnica:</strong> condiciones esteriles, aguja gruesa. <strong>NO introducir anestesico intraarticular</strong> — tiene efecto bactericida y puede negativizar el cultivo</li><li><strong>Muestras</strong> (minimo 2, ideal 3): tubo con EDTA (recuento celular), tubo seco (cristales, bioquimica, glucosa y proteinas), frasco de hemocultivo o portagen + bote verde (cultivo aerobio, anaerobio y hongos)</li><li><strong>ANTES del antibiotico:</strong> tomar 2 hemocultivos seriados + cultivo de posibles puertas de entrada</li><li><strong>Urgente:</strong> recuento leucocitario + % polimorfonucleares + cristales con luz polarizada</li><li><strong>Glucosa:</strong> comparar con glucemia simultanea. Ratio glucosa sinovial/sangre &lt;0.6 sugiere infeccion. Glucosa sinovial &lt;20 mg/dL es altamente sugestiva</li><li><strong>Tincion de Gram:</strong> especificidad alta (95-100%), pero <span class="hl">sensibilidad solo 45%</span>. Si muestra germenes: confirma artritis septica. <strong>Si NO muestra germenes: NO descarta infeccion</strong> (falsos negativos del 25-78%). No tomar decisiones basadas unicamente en un Gram negativo</li><li><strong>Articulacion nativa:</strong> &gt;50.000 leucocitos con &gt;75% PMN = artritis septica hasta demostrar lo contrario</li><li><strong>Protesis:</strong> &gt;3.000 leucocitos con &gt;65% PMN ya sugiere infeccion (puntos de corte mucho mas bajos)</li></ul>',
     'PRIOAM | Macarena');
 
   // Reference table
   h+='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin:20px 0 8px;">Tabla de clasificacion del liquido sinovial</div>';
   h+='<div class="table-wrap"><table class="di-table">';
-  h+='<thead><tr><th>Tipo</th><th>Aspecto</th><th>Viscosidad</th><th>Leucocitos/&#181;L</th><th>PMN</th><th>Glucosa</th></tr></thead><tbody>';
+  h+='<thead><tr><th>Tipo</th><th>Aspecto</th><th>Leucocitos/&#181;L</th><th>PMN</th><th>Glucosa (ratio sin/sangre)</th><th>Cristales</th></tr></thead><tbody>';
   LS_TIPOS.forEach(function(t){
+    if(t.enTabla===false) return;
     h+='<tr><td style="font-weight:600;color:var(--'+t.color+');">'+esc(t.label)+'</td>';
-    h+='<td>'+esc(t.aspecto)+'</td><td>'+esc(t.viscosidad)+'</td><td>'+esc(t.leucos)+'</td><td>'+esc(t.pmn)+'</td><td>'+esc(t.glucosa)+'</td></tr>';
+    h+='<td>'+esc(t.aspecto)+'</td><td>'+esc(t.leucos)+'</td><td>'+esc(t.pmn)+'</td><td>'+esc(t.glucosa)+'</td><td>'+esc(t.cristales)+'</td></tr>';
   });
   h+='</tbody></table></div>';
+  h+='<div class="note-box warn" style="margin-top:8px;"><strong style="display:block;margin-bottom:4px;">Protesis vs articulacion nativa</strong>En infeccion protesica los puntos de corte son mucho mas bajos: <strong>&gt;3.000 leucocitos y &gt;65% PMN</strong> ya sugieren infeccion. Un liquido "claro" con valores bajos en una protesis NO descarta infeccion. Solicitar ademas PCR sinovial y alfa-defensina si esta disponible.</div>';
 
   // Interactive analyzer
   h+='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin:24px 0 8px;">Analizador de liquido sinovial</div>';
   h+='<div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">Introduce los valores de la artrocentesis para obtener una orientacion diagnostica.</div>';
 
+  // Protesica toggle
+  h+='<div style="margin-bottom:12px;display:flex;align-items:center;gap:10px;">';
+  h+='<label class="ls-input-label" style="margin:0;">Tipo de articulacion</label>';
+  h+='<button class="sub-tab" id="lsTipoNativa" onclick="lsProtesica=false;document.getElementById(\'lsTipoNativa\').classList.add(\'active\');document.getElementById(\'lsTipoProtesica\').classList.remove(\'active\');analizarLS();" style="padding:6px 14px;">Nativa</button>';
+  h+='<button class="sub-tab" id="lsTipoProtesica" onclick="lsProtesica=true;document.getElementById(\'lsTipoProtesica\').classList.add(\'active\');document.getElementById(\'lsTipoNativa\').classList.remove(\'active\');analizarLS();" style="padding:6px 14px;">Protesis</button>';
+  h+='</div>';
+
   h+='<div class="ls-input-grid">';
   h+='<div class="ls-input-group"><label class="ls-input-label" for="lsLeucos">Leucocitos (cel/&#181;L)</label><input class="ls-input" type="number" id="lsLeucos" placeholder="ej: 45000" min="0" oninput="analizarLS()"></div>';
   h+='<div class="ls-input-group"><label class="ls-input-label" for="lsPmn">% Polimorfonucleares</label><input class="ls-input" type="number" id="lsPmn" placeholder="ej: 92" min="0" max="100" oninput="analizarLS()"></div>';
-  h+='<div class="ls-input-group"><label class="ls-input-label" for="lsGlucosa">Glucosa sinovial (mg/dL)</label><input class="ls-input" type="number" id="lsGlucosa" placeholder="ej: 30" min="0" oninput="analizarLS()"></div>';
+  h+='<div class="ls-input-group"><label class="ls-input-label" for="lsGlucSin">Glucosa sinovial (mg/dL)</label><input class="ls-input" type="number" id="lsGlucSin" placeholder="ej: 30" min="0" oninput="analizarLS()"></div>';
+  h+='<div class="ls-input-group"><label class="ls-input-label" for="lsGlucSang">Glucemia simultanea (mg/dL)</label><input class="ls-input" type="number" id="lsGlucSang" placeholder="ej: 100" min="0" oninput="analizarLS()"></div>';
   h+='<div class="ls-input-group"><label class="ls-input-label" for="lsAspecto">Aspecto macroscopico</label><select class="ls-input" id="lsAspecto" onchange="analizarLS()"><option value="">Seleccionar...</option><option value="claro">Transparente / claro</option><option value="turbio">Turbio / amarillo oscuro</option><option value="purulento">Purulento / verdoso</option><option value="sanguinolento">Sanguinolento / rojo</option></select></div>';
   h+='</div>';
 
@@ -1879,32 +1891,62 @@ function renderLiquido(){
   return h;
 }
 
+var lsProtesica=false;
 function analizarLS(){
   var leucos=parseFloat(document.getElementById('lsLeucos').value);
   var pmn=parseFloat(document.getElementById('lsPmn').value);
-  var glucosa=parseFloat(document.getElementById('lsGlucosa').value);
+  var glucSin=parseFloat(document.getElementById('lsGlucSin').value);
+  var glucSang=parseFloat(document.getElementById('lsGlucSang').value);
   var aspecto=document.getElementById('lsAspecto').value;
   var container=document.getElementById('lsResultado');
 
-  // Need at least leucocytes
   if(isNaN(leucos)){container.innerHTML='';return;}
 
-  var tipo,detalle='',plan='';
+  // Ratio glucosa
+  var ratio=NaN;
+  if(!isNaN(glucSin)&&!isNaN(glucSang)&&glucSang>0) ratio=glucSin/glucSang;
+
+  var tipo,detalle='',extras='';
+
+  // Ratio info
+  if(!isNaN(ratio)){
+    extras+='<div style="margin-top:6px;font-size:12px;color:var(--text-muted);">Ratio glucosa sinovial/sangre: <strong>'+ratio.toFixed(2)+'</strong>';
+    if(ratio<0.6) extras+=' — <span style="color:var(--red);font-weight:600;">muy sugestivo de infeccion</span>';
+    else if(ratio<0.8) extras+=' — <span style="color:var(--amber);font-weight:600;">compatible con inflamacion/infeccion</span>';
+    else extras+=' — normal';
+    extras+='</div>';
+  }
 
   // Hemartros by aspect
   if(aspecto==='sanguinolento'){
-    tipo=LS_TIPOS[4];// hemartr
+    tipo=LS_TIPOS[5];// hemartr
     detalle='Liquido sanguinolento. Valorar causa: traumatismo, coagulopatia, tumor.';
   }
-  // Septico
-  else if(leucos>50000||(leucos>20000&&!isNaN(pmn)&&pmn>90)||(aspecto==='purulento')){
-    tipo=LS_TIPOS[3];// septico
-    detalle='Recuento leucocitario muy elevado';
-    if(!isNaN(pmn)&&pmn>90) detalle+=' con predominio de polimorfonucleares ('+pmn+'%)';
-    if(!isNaN(glucosa)&&glucosa<40) detalle+='. Glucosa sinovial baja ('+glucosa+' mg/dL) — muy sugestivo de infeccion';
-    detalle+='.';
+  // PROTESICA: puntos de corte mas bajos
+  else if(lsProtesica){
+    if(leucos>3000||(!isNaN(pmn)&&pmn>65)||(aspecto==='purulento')||(aspecto==='turbio'&&leucos>1100)){
+      tipo=LS_TIPOS[4];// protesica
+      detalle='Articulacion protesica con '+Math.round(leucos)+' leucocitos/&#181;L';
+      if(!isNaN(pmn)) detalle+=' y '+pmn+'% PMN';
+      detalle+='. <strong>Supera los puntos de corte para infeccion protesica</strong> (>3.000 leucos y >65% PMN).';
+      if(!isNaN(ratio)&&ratio<0.6) detalle+=' Ratio glucosa bajo ('+ratio.toFixed(2)+'), muy sugestivo.';
+    } else if(leucos>1100){
+      tipo=LS_TIPOS[4];// protesica
+      detalle='Articulacion protesica con '+Math.round(leucos)+' leucocitos/&#181;L. <strong>Zona gris</strong> (1.100-3.000): no descartar infeccion cronica de bajo grado. Solicitar PCR sinovial, alfa-defensina, y valorar biopsias.';
+    } else {
+      tipo=LS_TIPOS[0];// normal
+      detalle='Recuento bajo en articulacion protesica ('+Math.round(leucos)+' leucos/&#181;L). Infeccion improbable pero no descartada si alta sospecha clinica.';
+    }
   }
-  // Inflamatorio
+  // NATIVA: puntos de corte clasicos
+  else if(leucos>50000||(leucos>20000&&!isNaN(pmn)&&pmn>75)||(aspecto==='purulento')){
+    tipo=LS_TIPOS[3];// septico nativa
+    detalle='Recuento leucocitario muy elevado ('+Math.round(leucos)+' cel/&#181;L)';
+    if(!isNaN(pmn)&&pmn>75) detalle+=' con predominio de polimorfonucleares ('+pmn+'%)';
+    if(!isNaN(glucSin)&&glucSin<20) detalle+='. Glucosa sinovial muy baja ('+glucSin+' mg/dL)';
+    else if(!isNaN(ratio)&&ratio<0.6) detalle+='. Ratio glucosa bajo ('+ratio.toFixed(2)+')';
+    detalle+='. <strong>Artritis septica hasta demostrar lo contrario.</strong>';
+  }
   else if(leucos>2000){
     tipo=LS_TIPOS[2];// infla
     detalle='Recuento inflamatorio ('+Math.round(leucos)+' cel/&#181;L)';
@@ -1913,12 +1955,10 @@ function analizarLS(){
     if(leucos>20000) detalle+=' <strong>Recuento alto: no descartar infeccion.</strong> Valorar cultivo y cristales con luz polarizada.';
     else detalle+=' Buscar cristales con luz polarizada (gota, pseudogota). Si ausentes: valorar artritis reumatoide, reactiva.';
   }
-  // No inflamatorio
   else if(leucos>200){
     tipo=LS_TIPOS[1];// noinfla
     detalle='Recuento bajo ('+Math.round(leucos)+' cel/&#181;L). Patron no inflamatorio: artrosis, traumatismo mecanico, meniscopatia.';
   }
-  // Normal
   else{
     tipo=LS_TIPOS[0];// normal
     detalle='Recuento dentro de la normalidad ('+Math.round(leucos)+' cel/&#181;L).';
@@ -1927,8 +1967,13 @@ function analizarLS(){
   var h='<div class="ls-result-card tipo-'+tipo.id+'">';
   h+='<div class="ls-tipo" style="color:var(--'+tipo.color+');">'+esc(tipo.label)+'</div>';
   h+='<div class="ls-subtipo">'+detalle+'</div>';
-  h+='<div class="ls-plan"><strong style="display:block;margin-bottom:4px;">Plan de actuacion:</strong>'+tipo.plan+'</div>';
+  h+=extras;
+  h+='<div class="ls-plan" style="margin-top:8px;"><strong style="display:block;margin-bottom:4px;">Plan de actuacion:</strong>'+tipo.plan+'</div>';
   h+='</div>';
+
+  // Gram reminder
+  h+='<div class="note-box" style="margin-top:8px;"><strong>Recuerda sobre la tincion de Gram:</strong> especificidad alta (95-100%) pero sensibilidad solo del 45%. Si muestra germenes: confirma infeccion. <strong>Si NO muestra germenes: NO descarta artritis septica</strong> (falsos negativos 25-78%). No tomar decisiones basadas unicamente en un Gram negativo.</div>';
+
   container.innerHTML=h;
 }
 
