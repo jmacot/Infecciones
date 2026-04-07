@@ -1494,8 +1494,8 @@ function renderMegaCard(ic){
 function renderDAIRFactores(){
   var h='<div style="font-size:13px;">';
   h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" class="dair-factores-grid">';
-  // Left: temporal window
-  h+='<div style="padding:4px 0;"><div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--violet);font-weight:600;margin-bottom:6px;">Ventana temporal — tasa de exito</div>';
+  // Left: temporal window (green, like indicaciones)
+  h+='<div style="background:var(--emerald-light);border-radius:var(--radius-sm);padding:12px;"><div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--emerald);font-weight:600;margin-bottom:6px;">Ventana temporal — tasa de exito</div>';
   var tw=[
     'Sintomas &lt;2 dias → <strong>89%</strong>',
     'Sintomas &lt;7 dias → <strong>71,6%</strong>',
@@ -1505,10 +1505,10 @@ function renderDAIRFactores(){
     'Sintomas &gt;3 semanas → <strong>35%</strong>',
     'Infeccion cronica (&gt;3 meses) → <strong>&lt;45%</strong>'
   ];
-  tw.forEach(function(t){h+='<div style="font-size:13px;margin-bottom:4px;display:flex;gap:6px;align-items:baseline;"><span style="color:var(--violet);">&#8226;</span><span>'+t+'</span></div>';});
+  tw.forEach(function(t){h+='<div style="font-size:13px;margin-bottom:4px;display:flex;gap:6px;align-items:baseline;"><span style="color:var(--emerald);">&#8226;</span><span>'+t+'</span></div>';});
   h+='</div>';
-  // Right: risk factors
-  h+='<div style="padding:4px 0;"><div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);font-weight:600;margin-bottom:6px;">Factores asociados a fracaso</div>';
+  // Right: risk factors (red, like contraindicaciones)
+  h+='<div style="background:var(--red-light);border-radius:var(--radius-sm);padding:12px;"><div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--red);font-weight:600;margin-bottom:6px;">Factores asociados a fracaso</div>';
   var facts=[
     'Edad ≥85 anos (riesgo ×4 de reinfeccion)',
     'Obesidad morbida (HR 2,77)',
@@ -1520,7 +1520,7 @@ function renderDAIRFactores(){
     'Inmunosupresores',
     'Tabaquismo (agudas tempranas)'
   ];
-  facts.forEach(function(f){h+='<div style="font-size:13px;margin-bottom:4px;display:flex;gap:6px;align-items:baseline;"><span style="color:var(--text-muted);">&#8226;</span><span>'+f+'</span></div>';});
+  facts.forEach(function(f){h+='<div style="font-size:13px;margin-bottom:4px;display:flex;gap:6px;align-items:baseline;"><span style="color:var(--red);">&#8226;</span><span>'+f+'</span></div>';});
   h+='</div>';
   h+='</div>';
   h+='<div style="margin-top:8px;">'+makeRef('ICM 2025, Parte III')+'</div>';
