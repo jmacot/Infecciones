@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Guia de antibioterapia en infecciones musculoesqueleticas para traumatologos. Herramienta clinica single-file HTML con dos archivos principales:
 
-- **`index.html`** — App principal (~2100 lineas). Landing page con jerarquia: 3 cards primarias (infecciones) + 2 featured (antibiograma, liquido sinovial) + 3 secundarias (consulta). Secciones clinicas con resumen expandible, tratamiento empirico, secuencia terapeutica IV→Oral en cascada, datos ICM 2025, interpretacion de antibiograma y analizador de liquido sinovial.
+- **`index.html`** — App principal (~2300 lineas). Landing page con jerarquia: 3 cards primarias (infecciones) + 2 featured (antibiograma, liquido sinovial) + 3 secundarias (consulta). Secciones clinicas con resumen expandible, tratamiento empirico, secuencia terapeutica IV→Oral en cascada, datos ICM 2025, interpretacion de antibiograma, analizador de liquido sinovial y calculadora LRINEC.
 - **`espectro-antibac.html`** — Tabla de espectro antibacteriano (42 antibioticos x 15 microorganismos) con filtros por familia, germen y actividad. Archivo independiente en nueva pestana.
 
 ## Sistema de diseno
@@ -27,6 +27,7 @@ Los datos clinicos estan inline como arrays/objetos JS globales:
 - `OA_INFO` — 4 tipos de infeccion osteoarticular
 - `PB_DATA` — 5 tipos de partes blandas
 - `EMPIRIC` — Tratamiento empirico por escenario: `iap_dair`, `iap_rev`, `iap_mega`, `artritis`, `osteo_aguda`, `osteo_cronica`, `espondilo`
+- `LRINEC_PARAMS` — 6 parametros de la calculadora LRINEC (PCR, leucocitos, Hb, Na, creatinina, glucosa) con rangos y puntuacion
 - `MUESTRAS_CHECKLIST` — Checklist toma de muestras (ICM 2025, Cap. 18)
 - `FACTORES_RIESGO` — Factores de riesgo modificables para infeccion (ICM 2025, Cap. 1.4)
 - `DOSIS_INCREMENTADAS` — Tabla EUCAST 2024: dosis estandar vs incrementada por familia de antibiotico
@@ -36,7 +37,7 @@ Los datos clinicos estan inline como arrays/objetos JS globales:
 - `SECTIONS_PRIMARY` / `SECTIONS_SECONDARY` — Cards de la landing con jerarquia
 - `REF_URLS` — Mapa de URLs de referencias por patologia (PRIOAM, Macarena, IDSA, OVIVA, EUCAST)
 
-Estado global: `allergies` (bl/qn/vc), `currentView`, sub-tabs (`currentIAPSub`, `currentOASub`, `currentPBSub`, `abgSub`), `microSelectedOrg`, `microScenario`, `profiCat`, `profiProc`, `_refContext`, `lsProtesica`.
+Estado global: `allergies` (bl/qn/vc), `currentView`, sub-tabs (`currentIAPSub`, `currentOASub`, `currentPBSub`, `abgSub`), `microSelectedOrg`, `microScenario`, `profiCat`, `profiProc`, `_refContext`, `lsProtesica`, `_lrinec` (array 6 valores calculadora).
 
 Navegacion: `goLanding()` / `goSection(id)` muestran/ocultan divs. Micro section usa sidebar+content con DOM parcial (`selectMicroOrg`, `changeMicroScenario`).
 
@@ -57,6 +58,22 @@ Navegacion: `goLanding()` / `goSection(id)` muestran/ocultan divs. Micro section
 - Nota destacada: protesis vs nativa (>3.000 leucos y >65% PMN ya sugiere infeccion)
 - Analizador interactivo (`analizarLS()`): toggle nativa/protesica (`lsProtesica`), inputs leucocitos + %PMN + glucosa sinovial + glucemia simultanea + aspecto. Calcula ratio glucosa sinovial/sangre automaticamente. Clasifica y muestra plan de actuacion + recordatorio Gram
 
+## Seccion Infeccion Protesica
+
+4 sub-pestanas via `currentIAPSub`:
+- **dair**: Lavado (DAIR) — indicaciones/contraindicaciones, punto clave, empirico `iap_dair`
+- **rev1t**: Revision 1 tiempo — germen sensible, sin fistula
+- **rev2t**: Revision 2 tiempos — gold standard cronica, espaciador
+- **mega**: Megaprotesis tumoral — card visual especifica (`renderMegaCard`) con stats (15-43% infeccion, microbiologia), tabla comparativa convencional vs mega, algoritmo aguda/cronica, factores de riesgo. Empirico `iap_mega`. NO usa el layout generico de indicaciones/contraindicaciones
+
+## Seccion Osteoarticular
+
+4 sub-pestanas via `currentOASub`. Artritis septica incluye bloque de muestras (`renderArtritisMuestras()`) antes del empirico: tabla de tubos con colores de tapon (rojo/lila/verde + hemocultivo), contaminantes frecuentes (estafilococos coagulasa-negativos, C. acnes, viridans), falsos negativos (AB previo, Gram, cristales).
+
+## Seccion Partes Blandas
+
+5 sub-pestanas via `currentPBSub`. Fascitis necrotizante incluye calculadora LRINEC (`renderLRINEC()`) en grid 2 columnas (cascada izquierda, LRINEC derecha). Todos los parametros visibles a la vez, toggle para deseleccionar, resultado parcial/completo, boton limpiar. Responsive: 1 col en movil (`.fascitis-grid`).
+
 ## Convenciones especificas
 
 - Alergias modifican recomendaciones en cascada via `refreshCurrentView()`
@@ -67,6 +84,7 @@ Navegacion: `goLanding()` / `goSection(id)` muestran/ocultan divs. Micro section
 - Profilaxis sin theory card, patron progresivo: categoria → procedimiento → prescripcion
 - Micro usa sidebar-index con accordion + content panel
 - `esc()` para todo texto dinamico. innerHTML solo con datos hardcoded
-- Evitar abreviaturas en la UI (IAP → "Infeccion Protesica Articular", DAIR → "Lavado (DAIR)", S/I/R → sensible/intermedia/resistente en algoritmo)
+- Evitar abreviaturas en la UI (IAP → "Infeccion Protesica", DAIR → "Lavado (DAIR)", S/I/R → sensible/intermedia/resistente en algoritmo, CoN → "coagulasa-negativos")
 - CSS: `.info-card>strong:first-child` para labels (no aplica a strong dentro de p)
-- Responsive 480px: btn-home compacto, algoritmo 1 col con ramas dimmed ocultas (display:none), sir-grid 1 col, ls-input-grid 1 col
+- Contraste labels: labels informativos (`.form-label`, `.landing-section-label`, `.rx-label`, table headers, etc.) usan `--text-muted`. Elementos decorativos (flechas, iconos busqueda, footer) mantienen `--text-light`
+- Responsive 480px: btn-home compacto, algoritmo 1 col con ramas dimmed ocultas (display:none), sir-grid 1 col, ls-input-grid 1 col. Responsive 700px: `.fascitis-grid` 1 col
