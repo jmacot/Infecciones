@@ -49,7 +49,7 @@ a{color:var(--sky);text-decoration:none;}a:hover{text-decoration:underline;}
 .btn-home{position:fixed;top:12px;left:12px;z-index:200;display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:999px;font-family:'Source Code Pro',monospace;font-size:10px;font-weight:500;background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.75);text-decoration:none;transition:var(--transition);}
 .btn-home:hover{background:rgba(255,255,255,0.25);color:#fff;text-decoration:none;}
 [data-theme="dark"] .btn-home{background:rgba(0,0,0,0.3);border-color:rgba(255,255,255,0.1);}
-@media(max-width:480px){.btn-home{padding:4px 8px;font-size:9px;top:8px;left:8px;}}
+/* btn-home mobile: handled in main 480px block */
 .mesh-bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;}
 .mesh-orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:0.22;animation:glowPulse 8s ease-in-out infinite alternate;}
 [data-theme="dark"] .mesh-orb{opacity:0.1;}
@@ -532,6 +532,8 @@ svg{max-width:100%;height:auto;}
   .micro-sidebar{position:static;max-height:none;}
 }
 @media(max-width:480px){
+  .btn-home{padding:3px 6px;font-size:8px;top:10px;left:6px;}
+  .app-header{padding:12px 10px 12px 50px;}
   .hdr-sub{display:none;}
   .hdr-title{font-size:1.1rem;}
   .allergy-pill{padding:4px 8px;font-size:10px;}
@@ -540,6 +542,18 @@ svg{max-width:100%;height:auto;}
   .sub-tabs{gap:4px;}.sub-tab{padding:5px 10px;font-size:11px;}
   .data-table{font-size:11px;}.data-table th,.data-table td{padding:5px 6px;}
   .sec-header{flex-wrap:wrap;}
+  .abg-tree{min-width:0;}
+  .abg-branches.cols-3{grid-template-columns:1fr;gap:8px;}
+  .abg-branches.cols-2{grid-template-columns:1fr;gap:8px;}
+  .abg-branch{flex-direction:row;gap:10px;text-align:left;}
+  .abg-branch .abg-vline{display:none;}
+  .abg-result{max-width:none;}
+  .abg-desc{max-width:none;}
+  .abg-hline{display:none;}
+  .abg-top{font-size:13px;padding:8px 16px;}
+  .abg-cond{max-width:none;}
+  .abg-detail{max-width:100%;}
+  .sir-grid{grid-template-columns:1fr!important;}
   input[type="date"],input[type="time"],input[type="datetime-local"]{-webkit-appearance:none;appearance:none;min-width:0;width:100%!important;max-width:calc(100vw - 60px);box-sizing:border-box;min-height:44px;}
 }
 @media print{
