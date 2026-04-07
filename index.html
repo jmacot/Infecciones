@@ -1860,17 +1860,32 @@ function renderAbgAlgoritmo(){
   h+='<div class="abg-detail" id="ab-pno-detail" style="border-left:3px solid var(--emerald);"><div style="font-weight:700;color:var(--emerald);margin-bottom:8px;">No protesica: prescripcion directa</div><ul style="margin:0 0 0 16px;list-style:disc;font-size:13px;"><li>Osteomielitis: 4-6 semanas</li><li>Artritis septica: 3-4 semanas</li><li>Espondilodiscitis: 6-8 semanas</li></ul></div>';
   h+='</div>';// close L2
 
-  // ═══ LEVEL 3: Prescripcion + Monitorizacion (hidden until L2 selected) ═══
+  // ═══ LEVEL 3: Nodo final — Prescripcion y seguimiento (visible al seleccionar L2) ═══
   h+='<div class="abg-level" id="abgL3">';
   h+='<div class="abg-connector"><div class="abg-vline"></div></div>';
-  h+='<div class="abg-top" style="background:var(--slate);">Prescripcion y monitorizacion</div>';
-  h+='<div class="abg-connector"><div class="abg-vline"></div><div class="abg-hline" style="width:50%;max-width:360px;"></div></div>';
-  h+='<div class="abg-branches cols-2" style="max-width:420px;">';
-  h+='<div class="abg-branch" id="ab-rx" onclick="abgAlgoSelect(\'L3\',\'ab-rx\')"><div class="abg-vline"></div><div class="abg-result r-violet">Prescripcion</div><div class="abg-desc">Farmaco, dosis, perfusion, duracion</div></div>';
-  h+='<div class="abg-branch" id="ab-mon" onclick="abgAlgoSelect(\'L3\',\'ab-mon\')"><div class="abg-vline"></div><div class="abg-result r-sky">Monitorizacion</div><div class="abg-desc">Seguimiento clinico y analitico</div></div>';
+  h+='<div class="abg-top" style="background:var(--slate);">Prescripcion y seguimiento</div>';
+  h+='<div style="margin-top:12px;max-width:600px;width:100%;">';
+  // Prescripcion
+  h+='<div style="background:var(--surface);backdrop-filter:blur(var(--glass-blur));border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:10px;border-left:3px solid var(--violet);">';
+  h+='<div style="font-weight:700;color:var(--violet);margin-bottom:8px;font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;">Prescripcion</div>';
+  h+='<div class="abg-detail-grid">';
+  h+='<span class="dl">Farmaco</span><span>Especifico segun antibiograma</span>';
+  h+='<span class="dl">Dosis</span><span>Estandar (sensible) o incrementada (intermedia)</span>';
+  h+='<span class="dl">Perfusion</span><span>Minimo 30 min; ideal 3-4h si betalactamico</span>';
+  h+='<span class="dl">Duracion</span><span>Segun tipo de infeccion y escenario</span>';
+  h+='<span class="dl">Documentar</span><span>"Dosis incrementada por sensibilidad intermedia" si aplica</span>';
+  h+='</div></div>';
+  // Monitorizacion
+  h+='<div style="background:var(--surface);backdrop-filter:blur(var(--glass-blur));border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;border-left:3px solid var(--sky);">';
+  h+='<div style="font-weight:700;color:var(--sky);margin-bottom:8px;font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;">Seguimiento</div>';
+  h+='<div class="abg-detail-grid">';
+  h+='<span class="dl">Dia 7-10</span><span>Respuesta clinica (fiebre, PCR, herida)</span>';
+  h+='<span class="dl">Semanal</span><span>PCR / VSG; hemograma si linezolid</span>';
+  h+='<span class="dl">Si bacteriemia</span><span>Hemocultivos de control</span>';
+  h+='<span class="dl">Semana 6-8</span><span>Resonancia magnetica de control</span>';
+  h+='<span class="dl">Sin mejoria</span><span>Repetir cultivos, escalar cobertura, valorar cirugia</span>';
+  h+='</div></div>';
   h+='</div>';
-  h+='<div class="abg-detail" id="ab-rx-detail" style="border-left:3px solid var(--violet);"><div style="font-weight:700;color:var(--violet);margin-bottom:8px;">Prescripcion final</div><div class="abg-detail-grid"><span class="dl">Farmaco</span><span>Especifico segun antibiograma</span><span class="dl">Dosis</span><span>Estandar (sensible) o incrementada (intermedia)</span><span class="dl">Perfusion</span><span>Minimo 30 min; ideal 3-4h si betalactamico</span><span class="dl">Duracion</span><span>Segun tipo de infeccion y escenario</span><span class="dl">Documentar</span><span>"Dosis incrementada por sensibilidad intermedia" si aplica</span></div></div>';
-  h+='<div class="abg-detail" id="ab-mon-detail" style="border-left:3px solid #3b82f6;"><div style="font-weight:700;color:#1d4ed8;margin-bottom:8px;">Monitorizacion</div><div class="abg-detail-grid"><span class="dl">Dia 7-10</span><span>Respuesta clinica (fiebre, PCR, herida)</span><span class="dl">Semanal</span><span>PCR / VSG; hemograma si linezolid</span><span class="dl">Si bacteriemia</span><span>Hemocultivos de control</span><span class="dl">Semana 6-8</span><span>Resonancia magnetica de control</span><span class="dl">Sin mejoria</span><span>Repetir cultivos, escalar cobertura, valorar cirugia</span></div></div>';
   h+='</div>';// close L3
 
   h+='</div>';// close abg-tree
