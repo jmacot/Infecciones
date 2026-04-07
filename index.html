@@ -1722,7 +1722,15 @@ function renderAbgConceptos(){
   h+='</div>';
 
   // PK/PD table
-  h+='<div class="table-wrap" style="margin-top:12px;"><table class="di-table">';
+  h+='<div class="info-card" style="margin-top:12px;margin-bottom:12px;">';
+  h+='<p style="margin-bottom:8px;">No todos los antibioticos matan igual. Cada clase tiene un <strong>parametro diferente</strong> que predice si va a funcionar:</p>';
+  h+='<ul style="margin:0 0 0 16px;list-style:disc;font-size:13px;line-height:1.7;">';
+  h+='<li><strong>Betalactamicos</strong> (cefazolina, ceftazidima, meropenem): lo que importa es el <strong>tiempo</strong> que la concentracion esta por encima de la CMI. No importa que el pico sea altisimo si cae rapido → por eso intervalos cortos (cada 6-8h) o perfusion extendida.</li>';
+  h+='<li><strong>Aminoglucosidos</strong> (gentamicina, amikacina): al reves, lo que importa es el <strong>pico</strong>. Necesitas que sea al menos 10 veces la CMI → por eso dosis unica diaria alta. Matan mejor cuanto mas alto sea el pico, aunque luego caiga.</li>';
+  h+='<li><strong>Fluoroquinolonas</strong> (ciprofloxacino, levofloxacino): importa el <strong>area bajo la curva</strong> en 24h dividido por la CMI. Es un mix de concentracion y tiempo. Con dosis estandar suelen alcanzar el objetivo, por eso son tan buenas para paso a oral.</li>';
+  h+='<li><strong>Vancomicina</strong>: igual que fluoroquinolonas, importa el area bajo la curva pero con un objetivo muy alto (&ge;400) → por eso hay que <strong>monitorizar niveles sericos</strong> para confirmar que se alcanzan.</li>';
+  h+='</ul></div>';
+  h+='<div class="table-wrap"><table class="di-table">';
   h+='<thead><tr><th>Clase</th><th>Parametro predictivo</th><th>Objetivo</th><th>Implicacion</th></tr></thead><tbody>';
   h+='<tr><td style="font-weight:600;">Betalactamicos</td><td>T&gt;CMI (tiempo sobre CMI)</td><td>40-60% del intervalo</td><td>Intervalos cortos o perfusion extendida</td></tr>';
   h+='<tr><td style="font-weight:600;">Aminoglucosidos</td><td>Cmax/CMI (pico/CMI)</td><td>&ge; 10</td><td>Dosis unica diaria, picos altos</td></tr>';
