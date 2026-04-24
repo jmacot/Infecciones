@@ -2550,7 +2550,7 @@ function renderVAC(){
   h+='<div style="flex:1;min-width:0;">';
   h+='<span style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--sky);font-weight:700;">Principio físico</span>';
   h+='<p style="margin:6px 0 12px;">Presión subatmosférica controlada sobre la herida mediante apósito oclusivo + sistema de aspiración. Produce <strong>macro-deformación tisular</strong> que estimula proliferación celular, elimina exudado, reduce edema intersticial y aumenta la perfusión local.</p>';
-  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">';
   h+='<div style="background:var(--surface2);border-radius:var(--radius-sm);overflow:hidden;">';
   h+='<img src="img/VAC.png" alt="Sistema VAC" style="width:100%;height:180px;object-fit:contain;display:block;padding:8px;box-sizing:border-box;">';
   h+='<div style="padding:10px 12px;"><strong style="color:var(--violet);">VAC</strong><br><span style="font-size:12px;color:var(--text-muted);">Sistema reutilizable hospitalario para <em>heridas abiertas</em></span></div></div>';
@@ -2558,48 +2558,54 @@ function renderVAC(){
   h+='<img src="img/PICO.png" alt="Sistema PICO" style="width:100%;height:180px;object-fit:contain;display:block;padding:8px;box-sizing:border-box;">';
   h+='<div style="padding:10px 12px;"><strong style="color:var(--sky);">PICO / PREVENA</strong><br><span style="font-size:12px;color:var(--text-muted);">Desechable, para <em>incisiones cerradas</em> en paciente de riesgo</span></div></div>';
   h+='</div>';
+  h+='<div style="margin-bottom:8px;"><strong>VAC (sistema hospitalario)</strong> — controla el exudado habitualmente en 24h y resuelve el drenaje persistente postoperatorio en la mayoría de pacientes (ICM 2025, Cap. 16).</div>';
+  h+='<div style="margin-bottom:10px;"><strong>iNPWT — PICO / PREVENA</strong> — metaanálisis ICM 2025 (14 RCT, 4.100 pacientes): reducción significativa de ISQ/IAP/IRF vs apósito estándar en cirugía ortopédica mayor con cierre primario <strong>RR 0,54 (IC 95% 0,36–0,79)</strong>. PICO específicamente: RR 0,55 (IC 95% 0,30–0,98). Sin beneficios demostrados en cirugía de fracturas con lesión de partes blandas.</div>';
+  h+='<div class="note-box warn"><strong>Cautela en la evidencia:</strong> 8 de los 14 RCT fueron patrocinados por la industria. El análisis secuencial (TSA) no alcanzó el tamaño muestral requerido. La relación coste-efectividad no está establecida (ICM 2025, Cap. 14.5 — Nivel de evidencia: Moderado).</div>';
   h+='</div></div></div>';
 
-  // ── Cards VAC vs PICO (colapsadas) ──
-  h+='<div class="pkpd-grid" style="margin-top:16px;gap:16px;">';
+  // ── Cards VAC vs PICO (siempre abiertas) ──
+  h+='<div class="pkpd-grid" style="margin-top:20px;gap:16px;">';
 
-  // Card VAC colapsada
-  var vacInd='<div style="font-size:12px;font-weight:600;color:var(--emerald);margin-bottom:4px;">&#10003; Indicaciones</div>'+
-    '<ul style="margin:0 0 12px 14px;list-style:disc;font-size:13px;line-height:1.7;">'+
-    '<li>Heridas abiertas complejas (fracturas abiertas, desbridamiento)</li>'+
-    '<li>Drenaje persistente postoperatorio de alto riesgo</li>'+
-    '<li>Preparacion del lecho antes de injerto o colgajo</li>'+
-    '<li>Dehiscencia profunda de herida quirurgica</li>'+
-    '<li>Infeccion protesica con retencion (DAIR): cobertura temporal del espacio muerto</li>'+
-    '<li>Infecciones de columna profundas (reduce recurrencia y estancia hospitalaria)</li>'+
-    '</ul>'+
-    '<div style="font-size:12px;font-weight:600;color:var(--red);margin-bottom:4px;">&#10007; Contraindicaciones</div>'+
-    '<ul style="margin:0 0 0 14px;list-style:disc;font-size:13px;line-height:1.7;">'+
-    '<li>Tejido necrotico no desbridado (escaras secas)</li>'+
-    '<li>Vasos, nervios u organos expuestos sin cobertura adecuada</li>'+
-    '<li>Fistulas a organos o cavidades</li>'+
-    '<li>Tumores malignos en el lecho</li>'+
-    '<li>Coagulopatia no corregida</li>'+
-    '</ul>';
-  h+=renderCollapsible('vac-ind','VAC — Sistema abierto','violet',vacInd);
+  // Card VAC
+  h+='<div class="info-card" style="border-top:3px solid var(--violet);padding:16px 18px;">';
+  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--violet);font-weight:700;margin-bottom:10px;">VAC — Sistema abierto</div>';
+  h+='<div style="font-size:12px;font-weight:600;color:var(--emerald);margin-bottom:4px;">&#10003; Indicaciones</div>';
+  h+='<ul style="margin:0 0 12px 14px;list-style:disc;font-size:13px;line-height:1.7;">';
+  h+='<li>Heridas abiertas complejas (fracturas abiertas, desbridamiento)</li>';
+  h+='<li>Drenaje persistente postoperatorio de alto riesgo</li>';
+  h+='<li>Preparación del lecho antes de injerto o colgajo</li>';
+  h+='<li>Dehiscencia profunda de herida quirúrgica</li>';
+  h+='<li>Infección protésica con retención (DAIR): cobertura temporal del espacio muerto</li>';
+  h+='<li>Infecciones de columna profundas (reduce recurrencia y estancia hospitalaria)</li>';
+  h+='</ul>';
+  h+='<div style="font-size:12px;font-weight:600;color:var(--red);margin-bottom:4px;">&#10007; Contraindicaciones</div>';
+  h+='<ul style="margin:0 0 0 14px;list-style:disc;font-size:13px;line-height:1.7;">';
+  h+='<li>Tejido necrótico no desbridado (escaras secas)</li>';
+  h+='<li>Vasos, nervios u órganos expuestos sin cobertura adecuada</li>';
+  h+='<li>Fístulas a órganos o cavidades</li>';
+  h+='<li>Tumores malignos en el lecho</li>';
+  h+='<li>Coagulopatía no corregida</li>';
+  h+='</ul>';
+  h+='</div>';
 
-  // Card PICO colapsada
-  var picoInd='<div style="font-size:12px;font-weight:600;color:var(--emerald);margin-bottom:4px;">&#10003; Indicaciones</div>'+
-    '<ul style="margin:0 0 12px 14px;list-style:disc;font-size:13px;line-height:1.7;">'+
-    '<li>Incision quirurgica cerrada de alto riesgo: obesidad, diabetes, revision protesica, reintervencion</li>'+
-    '<li>Fractura de extremidad inferior / acetabulo: reduccion de ISQ y dehiscencia</li>'+
-    '<li>Artroplastia primaria o de revision en paciente de alto riesgo (RR 0,55 IAP)</li>'+
-    '<li>Reduccion de seromas y hematomas postoperatorios</li>'+
-    '</ul>'+
-    '<div style="font-size:12px;font-weight:600;color:var(--red);margin-bottom:4px;">&#10007; Contraindicaciones / Limitaciones</div>'+
-    '<ul style="margin:0 0 0 14px;list-style:disc;font-size:13px;line-height:1.7;">'+
-    '<li>Heridas abiertas o cavitadas (no es un sistema para herida abierta)</li>'+
-    '<li>Infeccion activa establecida en la herida</li>'+
-    '<li>No ha demostrado beneficio en cirugia de fracturas con lesion de partes blandas (ICM 2025)</li>'+
-    '<li>Coste elevado; relacion coste-efectividad incierta</li>'+
-    '</ul>'+
-    '<div class="note-box warn" style="margin-top:10px;"><strong>Cautela:</strong> 8/14 RCT patrocinados por la industria. TSA no alcanzo el tamano muestral. Relacion coste-efectividad no establecida (ICM 2025, Cap. 14.5).</div>';
-  h+=renderCollapsible('pico-ind','PICO / iNPWT — Incision cerrada','sky',picoInd);
+  // Card PICO/iNPWT
+  h+='<div class="info-card" style="border-top:3px solid var(--sky);padding:16px 18px;">';
+  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--sky);font-weight:700;margin-bottom:10px;">PICO / iNPWT — Incisión cerrada</div>';
+  h+='<div style="font-size:12px;font-weight:600;color:var(--emerald);margin-bottom:4px;">&#10003; Indicaciones</div>';
+  h+='<ul style="margin:0 0 12px 14px;list-style:disc;font-size:13px;line-height:1.7;">';
+  h+='<li>Incisión quirúrgica cerrada de alto riesgo: obesidad, diabetes, revisión protésica, reintervención</li>';
+  h+='<li>Fractura de extremidad inferior / acetábulo: reducción de ISQ y dehiscencia</li>';
+  h+='<li>Artroplastia primaria o de revisión en paciente de alto riesgo (RR 0,55 IAP)</li>';
+  h+='<li>Reducción de seromas y hematomas postoperatorios</li>';
+  h+='</ul>';
+  h+='<div style="font-size:12px;font-weight:600;color:var(--red);margin-bottom:4px;">&#10007; Contraindicaciones / Limitaciones</div>';
+  h+='<ul style="margin:0 0 0 14px;list-style:disc;font-size:13px;line-height:1.7;">';
+  h+='<li>Heridas abiertas o cavitadas (no es un sistema para herida abierta)</li>';
+  h+='<li>Infección activa establecida en la herida</li>';
+  h+='<li>No ha demostrado beneficio en cirugía de fracturas con lesión de partes blandas (ICM 2025)</li>';
+  h+='<li>Coste elevado; relación coste-efectividad incierta</li>';
+  h+='</ul>';
+  h+='</div>';
 
   h+='</div>';// close grid
 
@@ -2615,7 +2621,7 @@ function renderVAC(){
     {id:'vce-coag', label:'Coagulopatia no corregida o sangrado activo'},
     {id:'vce-infeccion', label:'Infeccion establecida con tejido desvitalizado no desbridado'}
   ];
-  h+='<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;">';
   excl.forEach(function(e){
     h+='<label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;background:var(--surface);backdrop-filter:blur(var(--glass-blur));border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;line-height:1.5;transition:var(--transition);" onclick="vacChecklistUpdate()">';
     h+='<input type="checkbox" id="'+e.id+'" style="margin-top:2px;flex-shrink:0;" onchange="vacChecklistUpdate()"> '+esc(e.label);
