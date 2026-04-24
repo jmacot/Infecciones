@@ -59,9 +59,10 @@ a{color:var(--sky);text-decoration:none;}a:hover{text-decoration:underline;}
 /* ═══════════════════════════════════════════
    HEADER
    ═══════════════════════════════════════════ */
-.app-header{background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%);color:#fff;padding:44px 32px 20px 32px;position:sticky;top:0;z-index:50;overflow:hidden;border-radius:0 0 12px 12px;box-shadow:0 8px 32px rgba(30,41,59,0.25);}
-.app-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#38bdf8,#a78bfa);}
-.hdr-glow{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;}
+.app-header{background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%);color:#fff;padding:44px 32px 20px 32px;position:sticky;top:0;z-index:50;overflow:visible;border-radius:0 0 12px 12px;box-shadow:0 8px 32px rgba(30,41,59,0.25);}
+.app-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#38bdf8,#a78bfa);pointer-events:none;}
+.hdr-glows{position:absolute;inset:0;border-radius:0 0 12px 12px;overflow:hidden;pointer-events:none;z-index:0;}
+.hdr-glow{position:absolute;border-radius:50%;filter:blur(60px);}
 .hdr-glow.s{width:200px;height:200px;background:rgba(56,189,248,0.35);top:-80px;left:10%;}
 .hdr-glow.v{width:160px;height:160px;background:rgba(167,139,250,0.25);top:-60px;right:15%;}
 .hdr-inner{display:flex;align-items:center;justify-content:space-between;gap:10px;max-width:1100px;margin:0 auto;position:relative;}
@@ -607,8 +608,8 @@ svg{max-width:100%;height:auto;}
 
 <a class="back-home" href="https://jmacot.github.io/" title="Volver al inicio">&#8592; Inicio</a>
 <header class="app-header">
-  <div class="hdr-glow s"></div><div class="hdr-glow v"></div>
-  <div class="hdr-inner">
+  <div class="hdr-glows"><div class="hdr-glow s"></div><div class="hdr-glow v"></div></div>
+  <div class="hdr-inner" style="position:relative;z-index:1;">
     <div><div class="hdr-title">Infecciones COT</div><div class="hdr-sub">Guia de antibioterapia musculoesqueletica</div></div>
     <div style="display:flex;align-items:center;gap:10px;">
       <div class="allergy-pill" id="allergyPill" onclick="toggleAllergyDrop(event)">
