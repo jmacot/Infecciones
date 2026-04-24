@@ -2548,7 +2548,14 @@ function renderVAC(){
   h+=theoryCard('sky',
     '<div style="display:flex;flex-direction:column;gap:10px;">'+
     '<div><span style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--sky);font-weight:700;">Principio físico</span><br>Presión subatmosférica controlada sobre la herida mediante apósito oclusivo + sistema de aspiración. Produce <strong>macro-deformación tisular</strong> que estimula proliferación celular, elimina exudado, reduce edema intersticial y aumenta la perfusión local.</div>'+
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:var(--surface2);border-radius:var(--radius-sm);padding:10px 12px;"><strong style="color:var(--violet);">VAC</strong><br><span style="font-size:12px;color:var(--text-muted);">Sistema reutilizable hospitalario para <em>heridas abiertas</em></span></div><div style="background:var(--surface2);border-radius:var(--radius-sm);padding:10px 12px;"><strong style="color:var(--sky);">PICO / PREVENA</strong><br><span style="font-size:12px;color:var(--text-muted);">Desechable, para <em>incisiones cerradas</em> en paciente de riesgo</span></div></div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">'+
+    '<div style="background:var(--surface2);border-radius:var(--radius-sm);overflow:hidden;">'+
+    '<img src="img/VAC.png" alt="Sistema VAC" style="width:100%;height:140px;object-fit:cover;object-position:center;display:block;">'+
+    '<div style="padding:10px 12px;"><strong style="color:var(--violet);">VAC</strong><br><span style="font-size:12px;color:var(--text-muted);">Sistema reutilizable hospitalario para <em>heridas abiertas</em></span></div></div>'+
+    '<div style="background:var(--surface2);border-radius:var(--radius-sm);overflow:hidden;">'+
+    '<img src="img/PICO.png" alt="Sistema PICO" style="width:100%;height:140px;object-fit:cover;object-position:center top;display:block;">'+
+    '<div style="padding:10px 12px;"><strong style="color:var(--sky);">PICO / PREVENA</strong><br><span style="font-size:12px;color:var(--text-muted);">Desechable, para <em>incisiones cerradas</em> en paciente de riesgo</span></div></div>'+
+    '</div>'+
     '</div>',
     '<div style="margin-bottom:10px;"><strong>VAC (sistema abierto hospitalario)</strong> — presion regulable, deposito externo, heridas complejas abiertas. Suele controlar el exudado en 24h y resolver el drenaje persistente postoperatorio en la mayoria de los pacientes (ICM 2025, Cap. 16).</div>'+
     '<div style="margin-bottom:10px;"><strong>iNPWT — PICO / PREVENA</strong> (incisional NPWT) — apósito desechable de un solo uso para incisiones cerradas. Metaanalisis ICM 2025 (14 RCT, 4.100 pacientes): reduce significativamente ISQ/IAP/infeccion relacionada con fractura (IRF) vs apósito estandar en cirugia ortopedica mayor con cierre primario <strong>RR 0,54 (IC 95% 0,36–0,79)</strong>. PICO especificamente: RR 0,55 (IC 95% 0,30–0,98). Sin beneficios demostrados en cirugia de fracturas con lesion de partes blandas.</div>'+
