@@ -2546,8 +2546,10 @@ function renderVAC(){
 
   // ── Teoria (colapsable) ──
   h+=theoryCard('sky',
-    '<strong>Mecanismo de accion:</strong> La terapia de presion negativa (TPN/NPWT) aplica presion subatmosferica controlada sobre la herida mediante un apósito oclusivo conectado a un sistema de aspiracion. Produce macro-deformacion tisular → estimula proliferacion celular, elimina exudado e inflamacion, reduce edema intersticial y aumenta la perfusion local.<br><br>'+
-    '<strong>VAC</strong> (sistema hospitalario reutilizable) vs <strong>PICO/PREVENA</strong> (desechable, para incisiones cerradas): dos tecnologias distintas con indicaciones diferentes.',
+    '<div style="display:flex;flex-direction:column;gap:10px;">'+
+    '<div><span style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--sky);font-weight:700;">Principio físico</span><br>Presión subatmosférica controlada sobre la herida mediante apósito oclusivo + sistema de aspiración. Produce <strong>macro-deformación tisular</strong> que estimula proliferación celular, elimina exudado, reduce edema intersticial y aumenta la perfusión local.</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:var(--surface2);border-radius:var(--radius-sm);padding:10px 12px;"><strong style="color:var(--violet);">VAC</strong><br><span style="font-size:12px;color:var(--text-muted);">Sistema reutilizable hospitalario para <em>heridas abiertas</em></span></div><div style="background:var(--surface2);border-radius:var(--radius-sm);padding:10px 12px;"><strong style="color:var(--sky);">PICO / PREVENA</strong><br><span style="font-size:12px;color:var(--text-muted);">Desechable, para <em>incisiones cerradas</em> en paciente de riesgo</span></div></div>'+
+    '</div>',
     '<div style="margin-bottom:10px;"><strong>VAC (sistema abierto hospitalario)</strong> — presion regulable, deposito externo, heridas complejas abiertas. Suele controlar el exudado en 24h y resolver el drenaje persistente postoperatorio en la mayoria de los pacientes (ICM 2025, Cap. 16).</div>'+
     '<div style="margin-bottom:10px;"><strong>iNPWT — PICO / PREVENA</strong> (incisional NPWT) — apósito desechable de un solo uso para incisiones cerradas. Metaanalisis ICM 2025 (14 RCT, 4.100 pacientes): reduce significativamente ISQ/IAP/infeccion relacionada con fractura (IRF) vs apósito estandar en cirugia ortopedica mayor con cierre primario <strong>RR 0,54 (IC 95% 0,36–0,79)</strong>. PICO especificamente: RR 0,55 (IC 95% 0,30–0,98). Sin beneficios demostrados en cirugia de fracturas con lesion de partes blandas.</div>'+
     '<div class="note-box warn"><strong>Cautela en la evidencia:</strong> 8 de los 14 RCT del metaanalisis fueron patrocinados por la industria. El analisis secuencial (TSA) no alcanzo el tamano de muestra requerido. La relacion coste-efectividad no esta establecida (ICM 2025, Cap. 14.5 — Nivel de evidencia: Moderado).</div>',
@@ -2601,8 +2603,8 @@ function renderVAC(){
   h+='</div>';// close grid
 
   // ── Checklist de elegibilidad ──
-  h+='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin:24px 0 4px;">La herida es susceptible de TPN?</div>';
-  h+='<div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Marca los criterios presentes. Si ninguno aplica, la herida puede ser tributaria de TPN.</div>';
+  h+='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin:24px 0 4px;">¿La herida es susceptible de presión negativa?</div>';
+  h+='<div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Marca los criterios de exclusión presentes. Si ninguno aplica, la herida puede ser tributaria.</div>';
   h+='<div id="vacChecklist">';
   var excl=[
     {id:'vce-necro', label:'Tejido necrotico no desbridado (escara seca, esfacelo)'},
@@ -2624,17 +2626,17 @@ function renderVAC(){
   h+='</div>';// close vacChecklist
 
   // ── Algoritmo de decision ──
-  h+='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin:24px 0 4px;">Algoritmo: elegir sistema TPN</div>';
+  h+='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin:24px 0 4px;">Algoritmo: elegir sistema de presión negativa</div>';
   h+='<div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Si la herida es tributaria, selecciona en cada nivel para desplegar la siguiente rama.</div>';
   h+='<div class="abg-chart" id="vacChart">';
   h+='<div class="abg-tree">';
 
   // Nivel 1: ¿Tributaria de TPN?
-  h+='<div class="abg-top" style="background:var(--sky);">La herida es tributaria de TPN?</div>';
+  h+='<div class="abg-top" style="background:var(--sky);">¿La herida es tributaria de presión negativa?</div>';
   h+='<div class="abg-connector"><div class="abg-vline"></div><div class="abg-hline" style="width:60%;max-width:420px;"></div></div>';
   h+='<div class="abg-branches cols-2" style="max-width:500px;">';
   h+='<div class="abg-branch" id="vb-no" onclick="vacAlgoSelect(\'L1\',\'vb-no\')"><div class="abg-vline"></div><div class="abg-cond">No</div><div class="abg-vline"></div><div class="abg-result r-green">Cura convencional</div><div class="abg-desc">Apósito estandar / hidrofibra</div></div>';
-  h+='<div class="abg-branch" id="vb-si" onclick="vacAlgoSelect(\'L1\',\'vb-si\')"><div class="abg-vline"></div><div class="abg-cond">Si</div><div class="abg-vline"></div><div class="abg-result r-sky">Elegir sistema TPN</div><div class="abg-desc">Determinar tipo de herida</div></div>';
+  h+='<div class="abg-branch" id="vb-si" onclick="vacAlgoSelect(\'L1\',\'vb-si\')"><div class="abg-vline"></div><div class="abg-cond">Si</div><div class="abg-vline"></div><div class="abg-result r-sky">Elegir sistema</div><div class="abg-desc">Determinar tipo de herida</div></div>';
   h+='</div>';
   h+='<div class="abg-detail" id="vb-no-detail" style="border-left:3px solid var(--emerald);max-width:500px;width:100%;"><div style="font-weight:700;color:var(--emerald);margin-bottom:8px;">Apósito convencional</div>';
   h+='<ul style="margin:0 0 0 16px;list-style:disc;font-size:13px;line-height:1.7;"><li>Apósito absorbente estandar o de hidrofibra</li><li>Hidrofibra (Aquacel, Mepilex): reduce ISQ vs apósito clasico en artroplastia — nivel evidencia II (ICM 2025, Cap. 14.4)</li><li>Cambio cada 24-48h o antes si saturacion</li></ul></div>';
@@ -2700,7 +2702,7 @@ function vacChecklistUpdate(){
   res.style.background=isAbsolute?'var(--red,#ef4444)':'var(--amber,#f59e0b)';
   res.style.color='#fff';
   var msg=isAbsolute
-    ?'Contraindicación absoluta presente. Resolver el criterio antes de considerar TPN.'
+    ?'Contraindicación absoluta presente. Resolver el criterio antes de aplicar presión negativa.'
     :'Precaución — '+checked.map(function(id){return labels[id];}).join('; ')+'. Resolver antes de aplicar iNPWT.';
   res.textContent=msg;
 }
