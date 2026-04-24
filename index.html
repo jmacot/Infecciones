@@ -641,6 +641,7 @@ svg{max-width:100%;height:auto;}
 <div id="sec-micro" class="section-view"></div>
 <div id="sec-antibiograma" class="section-view"></div>
 <div id="sec-liquido" class="section-view"></div>
+<div id="sec-vac" class="section-view"></div>
 
 <div class="disclaimer">
   <strong style="display:block;margin-bottom:6px;color:var(--text);font-size:13px;">Aviso importante</strong>
@@ -1090,7 +1091,8 @@ var SECTION_LIQUIDO={id:'liquido',color:'violet',icon:'<span class="lc-emoji">�
 var SECTIONS_SECONDARY=[
   {id:'profilaxis',color:'sky',icon:'<span class="lc-emoji">🛡️</span>',title:'Profilaxis Preoperatoria',desc:'Antibiotico antes de operar',badge:'11 procedimientos'},
   {id:'micro',color:'red',icon:'<span class="lc-emoji">🦠</span>',title:'Consulta por Microorganismo',desc:'Buscar por germen del cultivo',badge:'18 fichas'},
-  {id:'espectro',color:'slate',icon:'<span class="lc-emoji">🔬</span>',title:'Espectro Antibacteriano',desc:'Tabla de actividad por antibiotico',badge:'42 antibioticos'}
+  {id:'espectro',color:'slate',icon:'<span class="lc-emoji">🔬</span>',title:'Espectro Antibacteriano',desc:'Tabla de actividad por antibiotico',badge:'42 antibioticos'},
+  {id:'vac',color:'sky',icon:'<span class="lc-emoji">🫧</span>',title:'Terapia de Presion Negativa',desc:'VAC y PICO: indicaciones, contraindicaciones y algoritmo de decision',badge:'2 sistemas'}
 ];
 var SECTIONS=SECTIONS_PRIMARY.concat([SECTION_ANTIBIOGRAMA,SECTION_LIQUIDO]).concat(SECTIONS_SECONDARY);
 
@@ -1196,7 +1198,7 @@ function renderSection(id){
   var sec=SECTIONS.filter(function(s){return s.id===id;})[0];
   var el=document.getElementById('sec-'+id);
   // Set context for reference URL matching
-  var ctxMap={profilaxis:'profilaxis',iap:'protesica',osteoart:'osteo artritis espondilo',blandas:'celulitis fascitis mordedura pie diabetico partes blandas',micro:'',antibiograma:'',liquido:'artritis'};
+  var ctxMap={profilaxis:'profilaxis',iap:'protesica',osteoart:'osteo artritis espondilo',blandas:'celulitis fascitis mordedura pie diabetico partes blandas',micro:'',antibiograma:'',liquido:'artritis',vac:''};
   _refContext=ctxMap[id]||'';
   var anyAllergy=allergies.bl||allergies.qn||allergies.vc;
   var alNames=[];if(allergies.bl)alNames.push('Betalactamicos');if(allergies.qn)alNames.push('Quinolonas');if(allergies.vc)alNames.push('Vancomicina');
@@ -1210,6 +1212,7 @@ function renderSection(id){
   else if(id==='micro') h+=renderMicro();
   else if(id==='antibiograma') h+=renderAntibiograma();
   else if(id==='liquido') h+=renderLiquido();
+  else if(id==='vac') h+=renderVAC();
 
   el.innerHTML=h;
 
@@ -2533,6 +2536,154 @@ function filterMicroSearch(){
       else{list.classList.remove('open');btn.classList.remove('open');}
     });
   }
+}
+
+// ─────────────────────────────────────────────
+//  TERAPIA DE PRESION NEGATIVA (VAC / PICO)
+// ─────────────────────────────────────────────
+function renderVAC(){
+  var h='';
+
+  // ── Teoria (colapsable) ──
+  h+=theoryCard('sky',
+    '<strong>Mecanismo de accion:</strong> La terapia de presion negativa (TPN/NPWT) aplica presion subatmosferica controlada sobre la herida mediante un apósito oclusivo conectado a un sistema de aspiracion. Produce macro-deformacion tisular → estimula proliferacion celular, elimina exudado e inflamacion, reduce edema intersticial y aumenta la perfusion local.<br><br>'+
+    '<strong>VAC</strong> (sistema hospitalario reutilizable) vs <strong>PICO/PREVENA</strong> (desechable, para incisiones cerradas): dos tecnologias distintas con indicaciones diferentes.',
+    '<div style="margin-bottom:10px;"><strong>VAC (sistema abierto hospitalario)</strong> — presion regulable, deposito externo, heridas complejas abiertas. Suele controlar el exudado en 24h y resolver el drenaje persistente postoperatorio en la mayoria de los pacientes (ICM 2025, Cap. 16).</div>'+
+    '<div style="margin-bottom:10px;"><strong>iNPWT — PICO / PREVENA</strong> (incisional NPWT) — apósito desechable de un solo uso para incisiones cerradas. Metaanalisis ICM 2025 (14 RCT, 4.100 pacientes): reduce significativamente ISQ/IAP/infeccion relacionada con fractura (IRF) vs apósito estandar en cirugia ortopedica mayor con cierre primario <strong>RR 0,54 (IC 95% 0,36–0,79)</strong>. PICO especificamente: RR 0,55 (IC 95% 0,30–0,98). Sin beneficios demostrados en cirugia de fracturas con lesion de partes blandas.</div>'+
+    '<div class="note-box warn"><strong>Cautela en la evidencia:</strong> 8 de los 14 RCT del metaanalisis fueron patrocinados por la industria. El analisis secuencial (TSA) no alcanzo el tamano de muestra requerido. La relacion coste-efectividad no esta establecida (ICM 2025, Cap. 14.5 — Nivel de evidencia: Moderado).</div>',
+    'ICM 2025'
+  );
+
+  // ── Cards VAC vs PICO ──
+  h+='<div class="pkpd-grid" style="margin-top:20px;gap:16px;">';
+
+  // Card VAC
+  h+='<div class="info-card" style="border-top:3px solid var(--violet);padding:16px 18px;">';
+  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--violet);font-weight:700;margin-bottom:10px;">VAC — Sistema abierto</div>';
+  h+='<div style="font-size:12px;font-weight:600;color:var(--emerald);margin-bottom:4px;">&#10003; Indicaciones</div>';
+  h+='<ul style="margin:0 0 12px 14px;list-style:disc;font-size:13px;line-height:1.7;">';
+  h+='<li>Heridas abiertas complejas (fracturas abiertas, desbridamiento)</li>';
+  h+='<li>Drenaje persistente postoperatorio (DPH) de alto riesgo</li>';
+  h+='<li>Preparacion del lecho antes de injerto o colgajo</li>';
+  h+='<li>Dehiscencia profunda de herida quirurgica</li>';
+  h+='<li>Infeccion protesica con retencion (DAIR): cobertura temporal del espacio muerto</li>';
+  h+='<li>Infecciones de columna profundas (reduce recurrencia y estancia hospitalaria)</li>';
+  h+='</ul>';
+  h+='<div style="font-size:12px;font-weight:600;color:var(--red);margin-bottom:4px;">&#10007; Contraindicaciones</div>';
+  h+='<ul style="margin:0 0 0 14px;list-style:disc;font-size:13px;line-height:1.7;">';
+  h+='<li>Tejido necrotico no desbridado (escaras secas)</li>';
+  h+='<li>Vasos, nervios u organos expuestos sin cobertura adecuada</li>';
+  h+='<li>Fistulas a organos o cavidades</li>';
+  h+='<li>Tumores malignos en el lecho</li>';
+  h+='<li>Coagulopatia no corregida</li>';
+  h+='</ul>';
+  h+='</div>';
+
+  // Card PICO/iNPWT
+  h+='<div class="info-card" style="border-top:3px solid var(--sky);padding:16px 18px;">';
+  h+='<div style="font-family:\'Source Code Pro\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--sky);font-weight:700;margin-bottom:10px;">PICO / iNPWT — Incision cerrada</div>';
+  h+='<div style="font-size:12px;font-weight:600;color:var(--emerald);margin-bottom:4px;">&#10003; Indicaciones</div>';
+  h+='<ul style="margin:0 0 12px 14px;list-style:disc;font-size:13px;line-height:1.7;">';
+  h+='<li>Incision quirurgica cerrada de alto riesgo: obesidad, diabetes, revision protesica, reintervencion</li>';
+  h+='<li>Fractura de extremidad inferior / acetabulo: reduccion de ISQ y dehiscencia</li>';
+  h+='<li>Artroplastia primaria o de revision en paciente de alto riesgo (RR 0,55 IAP)</li>';
+  h+='<li>Reduccion de seromas y hematomas postoperatorios</li>';
+  h+='</ul>';
+  h+='<div style="font-size:12px;font-weight:600;color:var(--red);margin-bottom:4px;">&#10007; Contraindicaciones / Limitaciones</div>';
+  h+='<ul style="margin:0 0 0 14px;list-style:disc;font-size:13px;line-height:1.7;">';
+  h+='<li>Heridas abiertas o cavitadas (no es un sistema para herida abierta)</li>';
+  h+='<li>Infeccion activa establecida en la herida</li>';
+  h+='<li>No ha demostrado beneficio en cirugia de fracturas con lesion de partes blandas (ICM 2025)</li>';
+  h+='<li>Coste elevado; relacion coste-efectividad incierta</li>';
+  h+='</ul>';
+  h+='</div>';
+
+  h+='</div>';// close grid
+
+  // ── Algoritmo de decision ──
+  h+='<div style="font-family:\'Source Serif 4\',serif;font-size:16px;font-weight:600;margin:24px 0 4px;">Algoritmo de decision</div>';
+  h+='<div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Selecciona en cada nivel para desplegar la siguiente rama. Pulsa de nuevo para deseleccionar.</div>';
+  h+='<div class="abg-chart" id="vacChart">';
+  h+='<div class="abg-tree">';
+
+  // Nivel 1: ¿Tributaria de TPN?
+  h+='<div class="abg-top" style="background:var(--sky);">La herida es tributaria de TPN?</div>';
+  h+='<div class="abg-connector"><div class="abg-vline"></div><div class="abg-hline" style="width:60%;max-width:420px;"></div></div>';
+  h+='<div class="abg-branches cols-2" style="max-width:500px;">';
+  h+='<div class="abg-branch" id="vb-no" onclick="vacAlgoSelect(\'L1\',\'vb-no\')"><div class="abg-vline"></div><div class="abg-cond">No</div><div class="abg-vline"></div><div class="abg-result r-green">Cura convencional</div><div class="abg-desc">Apósito estandar / hidrofibra</div></div>';
+  h+='<div class="abg-branch" id="vb-si" onclick="vacAlgoSelect(\'L1\',\'vb-si\')"><div class="abg-vline"></div><div class="abg-cond">Si</div><div class="abg-vline"></div><div class="abg-result r-sky">Elegir sistema TPN</div><div class="abg-desc">Determinar tipo de herida</div></div>';
+  h+='</div>';
+  h+='<div class="abg-detail" id="vb-no-detail" style="border-left:3px solid var(--emerald);max-width:500px;width:100%;"><div style="font-weight:700;color:var(--emerald);margin-bottom:8px;">Apósito convencional</div>';
+  h+='<ul style="margin:0 0 0 16px;list-style:disc;font-size:13px;line-height:1.7;"><li>Apósito absorbente estandar o de hidrofibra</li><li>Hidrofibra (Aquacel, Mepilex): reduce ISQ vs apósito clasico en artroplastia — nivel evidencia II (ICM 2025, Cap. 14.4)</li><li>Cambio cada 24-48h o antes si saturacion</li></ul></div>';
+
+  // Nivel 2 (oculto)
+  h+='<div class="abg-level" id="vacL2">';
+  h+='<div class="abg-connector"><div class="abg-vline"></div></div>';
+  h+='<div class="abg-top" style="background:var(--violet);">Tipo de herida</div>';
+  h+='<div class="abg-connector"><div class="abg-vline"></div><div class="abg-hline" style="width:60%;max-width:440px;"></div></div>';
+  h+='<div class="abg-branches cols-2" style="max-width:520px;">';
+  h+='<div class="abg-branch" id="vb-cerrada" onclick="vacAlgoSelect(\'L2\',\'vb-cerrada\')"><div class="abg-vline"></div><div class="abg-cond">Incision cerrada postoperatoria</div><div class="abg-vline"></div><div class="abg-result r-sky">PICO / PREVENA</div><div class="abg-desc">iNPWT — paciente alto riesgo</div></div>';
+  h+='<div class="abg-branch" id="vb-abierta" onclick="vacAlgoSelect(\'L2\',\'vb-abierta\')"><div class="abg-vline"></div><div class="abg-cond">Herida abierta / DPH / DAIR</div><div class="abg-vline"></div><div class="abg-result r-amber">VAC</div><div class="abg-desc">Sistema abierto hospitalario</div></div>';
+  h+='</div>';
+  h+='<div class="abg-detail" id="vb-cerrada-detail" style="border-left:3px solid var(--sky);max-width:520px;width:100%;">';
+  h+='<div style="font-weight:700;color:var(--sky);margin-bottom:8px;">iNPWT (PICO / PREVENA) — incision cerrada</div>';
+  h+='<ul style="margin:0 0 8px 16px;list-style:disc;font-size:13px;line-height:1.7;">';
+  h+='<li>Indicado si paciente de <strong>alto riesgo</strong>: obesidad (IMC &gt;35), diabetes, revision protesica, reintervencion, fractura de extremidad inferior o acetabulo</li>';
+  h+='<li>Aplicar en quirofano sobre la incision cerrada, antes del vendaje final</li>';
+  h+='<li>Duracion: 5-7 dias (hasta primer cambio ambulatorio)</li>';
+  h+='<li>RR ISQ/IAP/IRF: <strong>0,54</strong> (IC 95% 0,36–0,79) — PICO: RR 0,55 (ICM 2025, Cap. 14.5)</li>';
+  h+='</ul>';
+  h+='<div class="note-box" style="margin-top:0;">Sin diferencias en ISQ profunda, necrosis cutanea, seroma, hematoma o mortalidad. Efecto preventivo <strong>no demostrado en fracturas con lesion de partes blandas</strong>.</div>';
+  h+='</div>';
+  h+='<div class="abg-detail" id="vb-abierta-detail" style="border-left:3px solid var(--amber);max-width:520px;width:100%;">';
+  h+='<div style="font-weight:700;color:#92400e;margin-bottom:8px;">VAC — herida abierta / drenaje persistente</div>';
+  h+='<ul style="margin:0 0 8px 16px;list-style:disc;font-size:13px;line-height:1.7;">';
+  h+='<li><strong>Drenaje persistente postoperatorio (DPH):</strong> si persiste &gt;5-7 dias y se descarta infeccion activa. Controla exudado en ~24h, resuelve DPH en la mayoria de pacientes (ICM 2025, Cap. 16 — Nivel Moderado)</li>';
+  h+='<li><strong>Herida abierta compleja:</strong> tras desbridamiento de fractura abierta, osteomielitis o DAIR. Cubre el espacio muerto temporalmente</li>';
+  h+='<li><strong>Infeccion de columna profunda:</strong> reduce recurrencia de infeccion, necesidad de retirada de implante y estancia hospitalaria</li>';
+  h+='<li>Cambio de apósito: cada 48-72h bajo sedacion o analgesia adecuada</li>';
+  h+='<li>Antes de aplicar: asegurarse de que la herida esta desbridada (sin necrotico ni esfacelo)</li>';
+  h+='</ul>';
+  h+='<div class="note-box warn" style="margin-top:0;">El uso generalizado de VAC en DPH <strong>no ha demostrado ser coste-efectivo</strong>. Reservar para pacientes de alto riesgo. No usar como sustituto del desbridamiento quirurgico en heridas infectadas establecidas (ICM 2025, Cap. 16).</div>';
+  h+='</div>';
+  h+='</div>';// close vacL2
+
+  h+='</div>';// close abg-tree
+  h+='</div>';// close abg-chart
+  h+='<div style="text-align:center;margin-top:8px;"><button class="abg-reset" onclick="vacAlgoReset()">Restablecer algoritmo</button></div>';
+
+  // ── Referencia ──
+  h+='<div class="info-card" style="margin-top:16px;"><strong>Referencias</strong> — ICM 2025, Estambul. Cap. 14.5 (iNPWT, Nivel evidencia Moderado, consenso 77%) y Cap. 16 (Drenaje persistente, Nivel Moderado, consenso 84,9%). NICE MTG43 (2019). Autores: Yamada K et al. (Cap. 14.5); Mortazavi SMJ et al. (Cap. 16).</div>';
+
+  return h;
+}
+
+function vacAlgoSelect(levelId,branchId){
+  var el=document.getElementById(branchId);
+  if(!el)return;
+  var parent=el.parentElement;
+  var wasHighlighted=el.classList.contains('highlighted');
+  if(wasHighlighted){
+    parent.querySelectorAll(':scope>.abg-branch').forEach(function(b){b.classList.remove('dimmed','highlighted');});
+    document.querySelectorAll('#vacChart .abg-detail').forEach(function(d){d.classList.remove('visible');});
+    var lvl=parseInt(levelId.replace('L',''),10);
+    for(var i=lvl+1;i<=3;i++){var nxt=document.getElementById('vacL'+i);if(nxt)nxt.classList.remove('visible');}
+    return;
+  }
+  parent.querySelectorAll(':scope>.abg-branch').forEach(function(b){b.classList.add('dimmed');b.classList.remove('highlighted');});
+  el.classList.remove('dimmed');el.classList.add('highlighted');
+  document.querySelectorAll('#vacChart .abg-detail').forEach(function(d){d.classList.remove('visible');});
+  var detail=document.getElementById(branchId+'-detail');
+  if(detail)detail.classList.add('visible');
+  var lvl=parseInt(levelId.replace('L',''),10);
+  var nxt=document.getElementById('vacL'+(lvl+1));
+  if(nxt)nxt.classList.add('visible');
+  for(var i=lvl+2;i<=3;i++){var fut=document.getElementById('vacL'+i);if(fut){fut.classList.remove('visible');fut.querySelectorAll('.dimmed,.highlighted').forEach(function(e){e.classList.remove('dimmed','highlighted');});}}
+}
+function vacAlgoReset(){
+  document.querySelectorAll('#vacChart .dimmed,#vacChart .highlighted').forEach(function(e){e.classList.remove('dimmed','highlighted');});
+  document.querySelectorAll('#vacChart .abg-detail').forEach(function(d){d.classList.remove('visible');});
+  for(var i=2;i<=3;i++){var lv=document.getElementById('vacL'+i);if(lv)lv.classList.remove('visible');}
 }
 
 // ─────────────────────────────────────────────
