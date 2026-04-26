@@ -17,6 +17,7 @@ Herramienta clinica single-file HTML diseñada para consultar rapidamente el tra
 - **Profilaxis Preoperatoria** — 11 procedimientos COT con farmaco, dosis, redosificacion y alternativas. Factores de riesgo modificables (ICM 2025).
 - **Consulta por Microorganismo** — 18 fichas (8 Gram+, 6 Gram-, 1 anaerobio, 3 especiales) con secuencia IV → paso oral → duracion total adaptada por escenario clinico.
 - **Espectro Antibacteriano** — Tabla interactiva de 42 antibioticos x 15 microorganismos con filtros por familia, germen y actividad.
+- **Terapia de Presion Negativa (VAC / PICO)** — Principio fisico, indicaciones, contraindicaciones, checklist interactivo de elegibilidad e ilustraciones comparativas.
 
 ## Funcionalidades
 
